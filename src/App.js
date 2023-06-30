@@ -7,11 +7,7 @@ import { Navbar, Footer, Sidebar, ThemeSettings } from "./components";
 import {
   Dashboard,
   Calendar,
-  ChoreSchedule,
   Ecommerce,
-  ColorPicker,
-  ChoresConfig,
-  ChoresList,
   FamilyMembers,
   FamilyMeals,
   MealScheduler,
@@ -19,7 +15,6 @@ import {
   Planner,
   PlanDetails,
   Scheduler,
-  SharedLogins,
   Line,
   Bar,
   Pie,
@@ -81,10 +76,6 @@ function App() {
 
                 {/* PAGES & APPS */}
                 <Route path="/calendar" element={<Calendar />} />
-                <Route path="/chore-schedule" element={<ChoreSchedule />} />
-                <Route path="/chores-config" element={<ChoresConfig />} />
-                <Route path="/chores-list" element={<ChoresList />} />
-                <Route path="/color-picker" element={<ColorPicker />} />
                 <Route path="/family-members" element={<FamilyMembers />} />
                 <Route path="/family-meals" element={<FamilyMeals />} />
                 <Route path="/meal-scheduler" element={<MealScheduler />} />
@@ -92,7 +83,6 @@ function App() {
                 <Route path="/planner" element={<Planner />} />
                 <Route path="/plandetails/:planid" element={<PlanDetails />} />
                 <Route path="/scheduler" element={<Scheduler />} />
-                <Route path="/shared-logins" element={<SharedLogins />} />
 
                 {/* CHARTS */}
                 <Route path="/line" element={<Line />} />

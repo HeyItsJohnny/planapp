@@ -46,26 +46,6 @@ export const links = [
     ],
   },
   {
-    title: "Chores",
-    links: [
-      {
-        name: "chore schedule",
-        icon: <MdCleaningServices />,
-        linktoname: "chore-schedule",
-      },
-      {
-        name: "chores config.",
-        icon: <GrConfigure />,
-        linktoname: "chores-config",
-      },
-      {
-        name: "chores list",
-        icon: <BsListStars />,
-        linktoname: "chores-list",
-      },
-    ],
-  },
-  {
     title: "Meals",
     links: [
       {
@@ -92,16 +72,6 @@ export const links = [
         name: "family members",
         icon: <IoMdContacts />,
         linktoname: "family-members",
-      },
-      {
-        name: "shared logins",
-        icon: <RiLockPasswordLine />,
-        linktoname: "shared-logins",
-      },
-      {
-        name: "color picker",
-        icon: <BiColorFill />,
-        linktoname: "color-picker",
       },
     ],
   },
