@@ -69,9 +69,9 @@ export const links = [
     title: "Settings",
     links: [
       {
-        name: "family members",
+        name: "people invited",
         icon: <IoMdContacts />,
-        linktoname: "family-members",
+        linktoname: "people-invited",
       },
     ],
   },

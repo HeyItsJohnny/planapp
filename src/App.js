@@ -8,16 +8,8 @@ import {
   Dashboard,
   Calendar,
   Ecommerce,
-  FamilyMembers,
-  FamilyMeals,
-  MealScheduler,
-  MealSchedulerConfig,
-  Planner,
-  PlanDetails,
+  PeopleInvited,
   Scheduler,
-  Line,
-  Bar,
-  Pie,
 } from "./pages";
 
 import "./App.css";
@@ -76,18 +68,9 @@ function App() {
 
                 {/* PAGES & APPS */}
                 <Route path="/calendar" element={<Calendar />} />
-                <Route path="/family-members" element={<FamilyMembers />} />
-                <Route path="/family-meals" element={<FamilyMeals />} />
-                <Route path="/meal-scheduler" element={<MealScheduler />} />
-                <Route path="/meal-scheduler-config" element={<MealSchedulerConfig />} />
-                <Route path="/planner" element={<Planner />} />
-                <Route path="/plandetails/:planid" element={<PlanDetails />} />
+                <Route path="/people-invited" element={<PeopleInvited />} />
                 <Route path="/scheduler" element={<Scheduler />} />
 
-                {/* CHARTS */}
-                <Route path="/line" element={<Line />} />
-                <Route path="/bar" element={<Bar />} />
-                <Route path="/pie" element={<Pie />} />
               </Routes>
             </div>
           </div>

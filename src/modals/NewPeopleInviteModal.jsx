@@ -11,38 +11,48 @@ import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
 
 import { db } from "../firebase/firebase";
-import { setDoc, doc } from "firebase/firestore";
+import { addDoc, collection } from "firebase/firestore";
+import "react-phone-number-input/style.css";
+import PhoneInput from "react-phone-number-input";
 
-const NewMealModal = () => {
+const NewPeopleInviteModal = () => {
   const [show, setShow] = useState(false);
-  const [foodType, setFoodType] = useState("");
+  const [status, setStatus] = useState("");
+  const [phoneno, setPhoneNo] = useState();
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
   const { currentColor } = useStateContext();
 
-  const handleFoodTypeChange = (event) => {
-    setFoodType(event.target.value);
+  const handleStatusChange = (event) => {
+    setStatus(event.target.value);
+  };
+
+  const handlePhoneNoChange = (event) => {
+    setPhoneNo(event);
   };
 
   const handleReset = () => {
-    setFoodType("");
+    setStatus("");
+    setPhoneNo();
     handleClose();
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    addRecipeDoc(e);
+    addPeopleInvitedDoc(e);
     handleReset();
   };
 
-  async function addRecipeDoc(data) {
+  async function addPeopleInvitedDoc(data) {
     try {
-      await setDoc(doc(db, "familymeals", data.target.Meal.value), {
-        Description: data.target.Description.value,
-        FoodType: foodType,
+      await addDoc(collection(db, "people-invited"), {
+        Name: data.target.Name.value,
+        Phone: phoneno,
+        Email: data.target.Email.value,
+        Status: status,
       });
     } catch (error) {
       alert("There was an error adding to the database: " + error);
@@ -61,45 +71,54 @@ const NewMealModal = () => {
         className={`text-md p-3 hover:drop-shadow-xl`}
         onClick={handleShow}
       >
-        Add New Meal
+        Add New Person
       </button>
       <Dialog open={show} onClose={handleReset}>
         <form onSubmit={handleSubmit}>
-          <DialogTitle>New Family Meal</DialogTitle>
+          <DialogTitle>New Invite</DialogTitle>
           <DialogContent>
             <TextField
               autoFocus
               required
               margin="dense"
-              id="Meal"
-              label="Meal"
+              id="Name"
+              label="Name"
               type="text"
               fullWidth
               variant="standard"
             />
             <TextField
               margin="dense"
-              id="Description"
-              label="Description"
+              id="Email"
+              label="Email"
               type="text"
               fullWidth
               variant="standard"
             />
           </DialogContent>
           <DialogContent>
+              <InputLabel id="demo-simple-select-label">Phone Number</InputLabel>
+              <PhoneInput
+                defaultCountry="US"
+                value={phoneno}
+                onChange={handlePhoneNoChange}
+              />
+          </DialogContent>
+          <DialogContent>
             <FormControl fullWidth>
-              <InputLabel id="demo-simple-select-label">Food Type</InputLabel>
+              <InputLabel id="demo-simple-select-label">Status</InputLabel>
               <Select
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"
-                value={foodType}
-                label="Food Type"
-                onChange={handleFoodTypeChange}
+                value={status}
+                label="Status"
+                onChange={handleStatusChange}
                 required
               >
-                <MenuItem value="Breakfast">Breakfast</MenuItem>
-                <MenuItem value="Lunch">Lunch</MenuItem>
-                <MenuItem value="Dinner">Dinner</MenuItem>
+                <MenuItem value="No Response">No Response</MenuItem>
+                <MenuItem value="Attending">Attending</MenuItem>
+                <MenuItem value="Maybe">Maybe</MenuItem>
+                <MenuItem value="Not Attending">Not Attending</MenuItem>
               </Select>
             </FormControl>
           </DialogContent>
@@ -122,4 +141,4 @@ const NewMealModal = () => {
   );
 };
 
-export default NewMealModal;
+export default NewPeopleInviteModal;

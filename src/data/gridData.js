@@ -44,6 +44,17 @@ import product6 from "./product6.jpg";
 import product7 from "./product7.jpg";
 import product8 from "./product8.jpg";
 
+//NEW
+
+export const peopleInvitedGrid = [
+  { field: "Name", headerText: "Name", width: "150", textAlign: "Center" },
+  { field: "Phone", headerText: "Phone", width: "170", textAlign: "Center" },
+  { field: "Email", headerText: "Email", width: "170", textAlign: "Center" },
+  { field: "Status", headerText: "Status", width: "170", textAlign: "Center" },
+];
+
+//OLD 
+
 export const choresListSelectionGrid = [
   { type: 'checkbox', width: '50' },
   { field: "id", headerText: "Chore", width: "100", textAlign: "Center" },
@@ -69,11 +80,6 @@ export const familyPlansGrid = [
   { field: "PlanName", headerText: "Plans", width: "150", textAlign: "Center" },
   { field: "StartDate", headerText: "Start Date", width: "150", textAlign: "Center" },
   { field: "EndDate", headerText: "End Date", width: "150", textAlign: "Center" },
-];
-
-export const familyMembersGrid = [
-  { field: "Name", headerText: "Name", width: "150", textAlign: "Center" },
-  { field: "Role", headerText: "Role", width: "170", textAlign: "Center" },
 ];
 
 export const familyMealsSelectionGrid = [
