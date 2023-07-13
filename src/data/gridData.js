@@ -46,6 +46,12 @@ import product8 from "./product8.jpg";
 
 //NEW
 
+export const tripCostGrid = [
+  { field: "CostSummary", headerText: "Cost Summary", width: "150", textAlign: "Center" },
+  { field: "Cost", headerText: "Cost ($)", width: "150", textAlign: "Center" },
+];
+
+
 export const peopleInvitedGrid = [
   { field: "Name", headerText: "Name", width: "150", textAlign: "Center" },
   { field: "Phone", headerText: "Phone", width: "170", textAlign: "Center" },

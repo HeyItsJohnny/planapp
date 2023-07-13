@@ -26,7 +26,7 @@ export const links = [
       {
         name: "Costs",
         icon: <TbReportMoney />,
-        linktoname: "trip-cost",
+        linktoname: "trip-costs",
       },
       /*
       {

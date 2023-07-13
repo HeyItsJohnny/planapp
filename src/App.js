@@ -10,7 +10,7 @@ import {
   Ecommerce,
   PeopleInvited,
   Scheduler,
-  TripCost
+  TripCosts
 } from "./pages";
 
 import "./App.css";
@@ -69,7 +69,7 @@ function App() {
 
                 {/* PAGES & APPS */}
                 <Route path="/calendar" element={<Calendar />} />
-                <Route path="/trip-cost" element={<TripCost />} />
+                <Route path="/trip-costs" element={<TripCosts />} />
                 <Route path="/people-invited" element={<PeopleInvited />} />
                 <Route path="/scheduler" element={<Scheduler />} />
 
