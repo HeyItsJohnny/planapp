@@ -1,6 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { BsCurrencyDollar } from "react-icons/bs";
-import { GoPrimitiveDot } from "react-icons/go";
 import { MdOutlineSupervisorAccount } from 'react-icons/md';
 
 import { Button } from "../components";
@@ -11,10 +9,6 @@ import {
   query,
   onSnapshot,
   where,
-  orderBy,
-  doc,
-  deleteDoc,
-  updateDoc,
 } from "firebase/firestore";
 import { Link as RouterLink} from 'react-router-dom';
 
