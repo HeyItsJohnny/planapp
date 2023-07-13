@@ -52,6 +52,8 @@ const TripCosts = () => {
           id: doc.id,
           CostSummary: doc.data().CostSummary,
           Cost: "$" + doc.data().Cost,
+          Status: doc.data().Status,
+          Buyer: doc.data().Buyer
         };
         list.push(data);
       });

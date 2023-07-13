@@ -49,6 +49,8 @@ import product8 from "./product8.jpg";
 export const tripCostGrid = [
   { field: "CostSummary", headerText: "Cost Summary", width: "150", textAlign: "Center" },
   { field: "Cost", headerText: "Cost ($)", width: "150", textAlign: "Center" },
+  { field: "Status", headerText: "Status", width: "150", textAlign: "Center" },
+  { field: "Buyer", headerText: "Financed By", width: "150", textAlign: "Center" },
 ];
 
 

@@ -1,5 +1,5 @@
 import React from "react";
-import { AiOutlineCalendar } from "react-icons/ai";
+import { AiOutlinePieChart } from "react-icons/ai";
 import { BiColorFill } from "react-icons/bi";
 import { BsCalendarCheck, BsListStars } from "react-icons/bs";
 import { IoMdContacts } from "react-icons/io";
@@ -28,23 +28,11 @@ export const links = [
         icon: <TbReportMoney />,
         linktoname: "trip-costs",
       },
-      /*
       {
-        name: "family calendar",
-        icon: <AiOutlineCalendar />,
-        linktoname: "calendar",
+        name: "Breakdown",
+        icon: <AiOutlinePieChart />,
+        linktoname: "trip-costs-braekdown",
       },
-      {
-        name: "family plans",
-        icon: <BsCalendarCheck />,
-        linktoname: "planner",
-      },
-      {
-        name: "scheduler",
-        icon: <GrSchedules />,
-        linktoname: "scheduler",
-      },
-      */
     ],
   },
   {

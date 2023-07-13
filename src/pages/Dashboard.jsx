@@ -14,9 +14,23 @@ const Dashboard = () => {
   const [attending, setAttending] = useState(0);
   const [maybe, setMaybe] = useState(0);
   const [notAttending, setNotAttending] = useState(0);
+  const [totalCost, setTotalCost] = useState(0);
 
   const { currentColor } = useStateContext();
   const navigate = useNavigate();
+
+  const fetchTotalCostData = async () => {
+    const docCollection = query(
+      collection(db, "trip-costs")
+    );
+    onSnapshot(docCollection, (querySnapshot) => {
+      var totalCostVar = 0;
+      querySnapshot.forEach((doc) => {
+        totalCostVar = totalCostVar + Number(doc.data().Cost);
+      });
+      setTotalCost(totalCostVar);
+    });
+  };
 
   const fetchNoResponseData = async () => {
     const docCollection = query(
@@ -79,6 +93,7 @@ const Dashboard = () => {
   }
 
   useEffect(() => {
+    fetchTotalCostData();
     fetchNoResponseData();
     fetchAttendingData();
     fetchMaybeData();
@@ -92,10 +107,17 @@ const Dashboard = () => {
           <div className="flex justify-between items-center">
             <div>
               <p className="font-bold text-gray-400">Trip Cost</p>
-              <p className="text-2xl">$500.00</p>
+              <p className="text-2xl">${totalCost}</p>
             </div>
           </div>
           <div className="mt-6">
+            <Button
+              color="white"
+              bgColor={currentColor}
+              text="Breakdown"
+              borderRadius="10px"
+              size="md"
+            />
             <Button
               color="white"
               bgColor={currentColor}
