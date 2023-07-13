@@ -1,4 +1,5 @@
 export { default as PeopleInvited } from './PeopleInvited';
+export { default as TripCost } from './TripCost';
 
 export { default as Dashboard } from './Dashboard';
 export { default as Calendar } from './Calendar';

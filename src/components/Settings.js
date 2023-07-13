@@ -7,17 +7,12 @@ import { RiLockPasswordLine } from "react-icons/ri";
 import { GrSchedules, GrConfigure } from "react-icons/gr";
 import { GoDashboard } from "react-icons/go";
 import { BiFoodMenu } from "react-icons/bi";
-import { MdFoodBank, MdCleaningServices } from "react-icons/md";
+import { TbReportMoney } from "react-icons/tb";
 
 export const links = [
   {
     title: "Home",
     links: [
-      {
-        name: "Ecommerce - Sample",
-        icon: <GoDashboard />,
-        linktoname: "ecommerce",
-      },
       {
         name: "dashboard",
         icon: <GoDashboard />,
@@ -28,6 +23,12 @@ export const links = [
   {
     title: "Apps",
     links: [
+      {
+        name: "Costs",
+        icon: <TbReportMoney />,
+        linktoname: "trip-cost",
+      },
+      /*
       {
         name: "family calendar",
         icon: <AiOutlineCalendar />,
@@ -43,26 +44,7 @@ export const links = [
         icon: <GrSchedules />,
         linktoname: "scheduler",
       },
-    ],
-  },
-  {
-    title: "Meals",
-    links: [
-      {
-        name: "meal schedule",
-        icon: <BiFoodMenu />,
-        linktoname: "meal-scheduler",
-      },
-      {
-        name: "meal schedule config.",
-        icon: <GrConfigure />,
-        linktoname: "meal-scheduler-config",
-      },
-      {
-        name: "meal list",
-        icon: <MdFoodBank />,
-        linktoname: "family-meals",
-      },
+      */
     ],
   },
   {
