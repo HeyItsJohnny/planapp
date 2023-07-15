@@ -21,10 +21,10 @@ export const links = [
     ],
   },
   {
-    title: "Apps",
+    title: "Costs",
     links: [
       {
-        name: "Costs",
+        name: "Total Costs",
         icon: <TbReportMoney />,
         linktoname: "trip-costs",
       },
