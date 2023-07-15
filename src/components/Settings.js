@@ -31,7 +31,7 @@ export const links = [
       {
         name: "Breakdown",
         icon: <AiOutlinePieChart />,
-        linktoname: "trip-costs-braekdown",
+        linktoname: "trip-costs-breakdown",
       },
     ],
   },

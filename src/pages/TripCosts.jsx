@@ -40,6 +40,14 @@ import NewTripCostModal from "../modals/NewTripCostModal";
 const TripCosts = () => {
   const [tripCost, setTripCost] = useState([]);
 
+  const [show, setShow] = useState(false);
+  const [selectedRowData, setSelectedRowData] = useState({});
+  const [dialogStatus, setDialogStatus] = useState("");
+
+  const handleClose = () => setShow(false);
+
+  const { currentColor } = useStateContext();
+
   const fetchData = async () => {
     const docCollection = query(
       collection(db, "trip-costs"),
@@ -73,16 +81,46 @@ const TripCosts = () => {
     }
   };
 
+  function handleDoubleClick(args) {
+    setSelectedRowData(args.rowData);
+    setDialogStatus(args.rowData.Status);
+    setShow(true);
+  }
+
+  const handleStatusChange = (event) => {
+    setDialogStatus(event.target.value);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    updatePeopleInvitedDoc(e);
+    setDialogStatus("");
+    handleClose();
+  };
+
+  async function updatePeopleInvitedDoc() {
+    try {
+      const totalCostsRef = doc(db, "trip-costs", selectedRowData.id);
+      await updateDoc(totalCostsRef, {
+        Status: dialogStatus,
+      });
+    } catch (error) {
+      alert("There was an error updating the doc in the database: " + error);
+    }
+  }
+
   useEffect(() => {
     fetchData();
     return () => {
       setTripCost([]);
+      setSelectedRowData({});
     };
   }, []);
 
   return (
     <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl">
-      <Header category="Settings" title="People Invited" />
+      <Header category="Costs" title="Cost Summary" />
       <div className="mb-10">
         <NewTripCostModal />
       </div>
@@ -97,6 +135,7 @@ const TripCosts = () => {
           allowDeleting: true,
         }}
         width="auto"
+        recordDoubleClick={handleDoubleClick}
       >
         <ColumnsDirective>
           {tripCostGrid.map((item, index) => (
@@ -105,6 +144,64 @@ const TripCosts = () => {
         </ColumnsDirective>
         <Inject services={[Page, Search, Edit, Toolbar]} />
       </GridComponent>
+
+      <Dialog open={show} onClose={handleClose}>
+        <form onSubmit={handleSubmit}>
+          <DialogTitle>Update Status for {selectedRowData.CostSummary}</DialogTitle>
+          <DialogContent>
+            <TextField
+              autoFocus
+              margin="dense"
+              id="Buyer"
+              type="text"
+              fullWidth
+              variant="standard"
+              value={selectedRowData.Buyer}
+              InputProps={{ readOnly: true }}
+            />
+            <TextField
+              autoFocus
+              margin="dense"
+              id="Cost"
+              type="text"
+              fullWidth
+              variant="standard"
+              value={selectedRowData.Cost}
+              InputProps={{ readOnly: true }}
+            />
+          </DialogContent>
+          <DialogContent>
+            <FormControl fullWidth>
+              <InputLabel id="demo-simple-select-label">Status</InputLabel>
+              <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                value={dialogStatus}
+                label="Status"
+                onChange={handleStatusChange}
+                required
+              >
+                <MenuItem value="Not Paid">Not Paid</MenuItem>
+                <MenuItem value="Partically Paid">Partically Paid</MenuItem>
+                <MenuItem value="Paid">Paid</MenuItem>
+              </Select>
+            </FormControl>
+          </DialogContent>
+          <DialogActions>
+            <button
+              type="submit"
+              style={{
+                backgroundColor: currentColor,
+                color: "White",
+                borderRadius: "10px",
+              }}
+              className={`text-md p-3 hover:drop-shadow-xl`}
+            >
+              Save
+            </button>
+          </DialogActions>
+        </form>
+      </Dialog>
     </div>
   );
 };

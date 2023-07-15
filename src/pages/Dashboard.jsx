@@ -92,6 +92,10 @@ const Dashboard = () => {
     navigate("/people-invited/");
   }
 
+  function goToTotalCosts() {
+    navigate("/trip-costs/");
+  }
+
   useEffect(() => {
     fetchTotalCostData();
     fetchNoResponseData();
@@ -111,13 +115,6 @@ const Dashboard = () => {
             </div>
           </div>
           <div className="mt-6">
-            <Button
-              color="white"
-              bgColor={currentColor}
-              text="Breakdown"
-              borderRadius="10px"
-              size="md"
-            />
             <Button
               color="white"
               bgColor={currentColor}
