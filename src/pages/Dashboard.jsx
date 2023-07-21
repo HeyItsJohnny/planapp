@@ -135,9 +135,9 @@ const Dashboard = () => {
               <MdOutlineSupervisorAccount />
             </button>
             <p className="mt-3">
-              <span className="text-lg font-semibold">No Response</span>
+              <span className="text-lg font-semibold">No Response ({noReponse})</span>
             </p>
-            <p className="text-sm text-gray-400  mt-1">{noReponse}</p>
+            <p className="text-sm text-gray-400  mt-1"></p>
           </div>
           <div className="bg-white h-44 dark:text-gray-200 dark:bg-secondary-dark-bg md:w-56  p-4 pt-9 rounded-2xl ">
             <button
@@ -149,9 +149,9 @@ const Dashboard = () => {
               <CiCircleCheck />
             </button>
             <p className="mt-3">
-              <span className="text-lg font-semibold">Attending</span>
+              <span className="text-lg font-semibold">Attending ({attending})</span>
             </p>
-            <p className="text-sm text-gray-400  mt-1">{attending}</p>
+            <p className="text-sm text-gray-400  mt-1"></p>
           </div>
           <div className="bg-white h-44 dark:text-gray-200 dark:bg-secondary-dark-bg md:w-56  p-4 pt-9 rounded-2xl ">
             <button
@@ -163,9 +163,9 @@ const Dashboard = () => {
               <MdOutlineGppMaybe />
             </button>
             <p className="mt-3">
-              <span className="text-lg font-semibold">Maybe</span>
+              <span className="text-lg font-semibold">Maybe ({maybe})</span>
             </p>
-            <p className="text-sm text-gray-400  mt-1">{maybe}</p>
+            <p className="text-sm text-gray-400  mt-1"></p>
           </div>
           <div className="bg-white h-44 dark:text-gray-200 dark:bg-secondary-dark-bg md:w-56  p-4 pt-9 rounded-2xl ">
             <button
@@ -177,9 +177,9 @@ const Dashboard = () => {
               <TbNotesOff />
             </button>
             <p className="mt-3">
-              <span className="text-lg font-semibold">Not Attending</span>
+              <span className="text-lg font-semibold">Not Attending ({notAttending})</span>
             </p>
-            <p className="text-sm text-gray-400  mt-1">{notAttending}</p>
+            <p className="text-sm text-gray-400  mt-1"></p>
           </div>
         </div>
       </div>
