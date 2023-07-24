@@ -10,6 +10,7 @@ import {
   Ecommerce,
   PeopleInvited,
   Scheduler,
+  Itinerary,
   TripCostsBreakdown,
   TripCosts
 } from "./pages";
@@ -70,6 +71,7 @@ function App() {
 
                 {/* PAGES & APPS */}
                 <Route path="/calendar" element={<Calendar />} />
+                <Route path="/itinerary" element={<Itinerary />} />
                 <Route path="/trip-costs" element={<TripCosts />} />
                 <Route path="/trip-costs-breakdown" element={<TripCostsBreakdown />} />
                 <Route path="/people-invited" element={<PeopleInvited />} />

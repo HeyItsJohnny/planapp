@@ -1,6 +1,6 @@
 import React from "react";
 import { AiOutlinePieChart } from "react-icons/ai";
-import { BiColorFill } from "react-icons/bi";
+import { FaCarSide } from "react-icons/fa";
 import { BsCalendarCheck, BsListStars } from "react-icons/bs";
 import { IoMdContacts } from "react-icons/io";
 import { RiLockPasswordLine } from "react-icons/ri";
@@ -17,6 +17,16 @@ export const links = [
         name: "dashboard",
         icon: <GoDashboard />,
         linktoname: "dashboard",
+      },
+    ],
+  },
+  {
+    title: "Itinerary",
+    links: [
+      {
+        name: "itinerary",
+        icon: <FaCarSide />,
+        linktoname: "itinerary",
       },
     ],
   },
