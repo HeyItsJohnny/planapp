@@ -44,14 +44,14 @@ export const links = [
     title: "Costs",
     links: [
       {
-        name: "Total Costs",
-        icon: <TbReportMoney />,
-        linktoname: "trip-costs",
-      },
-      {
-        name: "Breakdown",
+        name: "Summary",
         icon: <AiOutlinePieChart />,
         linktoname: "trip-costs-breakdown",
+      },
+      {
+        name: "Details",
+        icon: <TbReportMoney />,
+        linktoname: "trip-costs",
       },
     ],
   },
