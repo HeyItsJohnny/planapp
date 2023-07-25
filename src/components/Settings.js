@@ -1,7 +1,7 @@
 import React from "react";
 import { AiOutlinePieChart } from "react-icons/ai";
 import { FaCarSide } from "react-icons/fa";
-import { BsCalendarCheck, BsListStars } from "react-icons/bs";
+import { MdTravelExplore } from "react-icons/md";
 import { IoMdContacts } from "react-icons/io";
 import { RiLockPasswordLine } from "react-icons/ri";
 import { GrSchedules, GrConfigure } from "react-icons/gr";
@@ -14,6 +14,11 @@ export const links = [
     title: "Home",
     links: [
       {
+        name: "ecommerce",
+        icon: <GoDashboard />,
+        linktoname: "ecommerce",
+      },
+      {
         name: "dashboard",
         icon: <GoDashboard />,
         linktoname: "dashboard",
@@ -21,12 +26,17 @@ export const links = [
     ],
   },
   {
-    title: "Itinerary",
+    title: "Trip",
     links: [
       {
         name: "itinerary",
         icon: <FaCarSide />,
         linktoname: "itinerary",
+      },
+      {
+        name: "places",
+        icon: <MdTravelExplore />,
+        linktoname: "places",
       },
     ],
   },
