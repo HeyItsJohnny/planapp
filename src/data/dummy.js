@@ -702,6 +702,7 @@ export const recentTransactions = [
     iconBg: '#E5FAFB',
     pcColor: 'red-600',
   },
+  
 ];
 
 export const weeklyStats = [
