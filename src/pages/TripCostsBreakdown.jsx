@@ -123,6 +123,45 @@ const TripCostsBreakdown = () => {
       <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white dark:bg-secondary-dark-bg rounded-3xl">
         <Header category="Costs" title="Cost Breakdown" />
       </div>
+      <div className="flex gap-10 flex-wrap justify-center">
+        <div className="bg-white dark:text-gray-200 dark:bg-secondary-dark-bg m-3 p-4 rounded-2xl md:w-780  ">
+          <div className="flex justify-between">
+            <p className="font-semibold text-xl">Payments Made</p>
+            <div className="flex items-center gap-4">
+              <p className="flex items-center gap-2 text-gray-600 hover:drop-shadow-xl">
+                <span>
+                  <GoPrimitiveDot />
+                </span>
+                <span>Costs</span>
+              </p>
+              <p className="flex items-center gap-2 text-green-400 hover:drop-shadow-xl">
+                <span>
+                  <GoPrimitiveDot />
+                </span>
+                <span>Payments</span>
+              </p>
+            </div>
+          </div>
+          <div className="mt-10 flex gap-10 flex-wrap justify-center">
+            <div className=" border-r-1 border-color m-4 pr-10">
+              <div>
+                <p>
+                  <span className="text-3xl font-semibold">${totalCost}</span>
+                </p>
+                <p className="text-gray-500 mt-1">Total Cost</p>
+              </div>
+              <div className="mt-8">
+                <p className="text-3xl font-semibold">$0</p>
+
+                <p className="text-gray-500 mt-1">Total Payments</p>
+              </div>
+            </div>
+            <div>
+              <Stacked currentMode={currentMode} width="320px" height="360px" />
+            </div>
+          </div>
+        </div>
+      </div>
       <div className="flex gap-10 m-4 flex-wrap justify-center">
         <div className="bg-white dark:text-gray-200 dark:bg-secondary-dark-bg p-6 rounded-2xl">
           <div className="flex justify-between items-center gap-2">
@@ -168,7 +207,7 @@ const TripCostsBreakdown = () => {
               id="pie-chart"
               data={tripCostPieChart}
               legendVisiblity={true}
-              height="450px"
+              height="350px"
             />
           </div>
         </div>
@@ -205,77 +244,6 @@ const TripCostsBreakdown = () => {
             </div>
 
             <p className="text-gray-400 text-md">Total: ${totalCost}</p>
-          </div>
-        </div>
-      </div>
-
-      <div className="flex gap-10 flex-wrap justify-center">
-        <div className="bg-white dark:text-gray-200 dark:bg-secondary-dark-bg m-3 p-4 rounded-2xl md:w-780  ">
-          <div className="flex justify-between">
-            <p className="font-semibold text-xl">Payments Made</p>
-            <div className="flex items-center gap-4">
-              <p className="flex items-center gap-2 text-gray-600 hover:drop-shadow-xl">
-                <span>
-                  <GoPrimitiveDot />
-                </span>
-                <span>Expense</span>
-              </p>
-              <p className="flex items-center gap-2 text-green-400 hover:drop-shadow-xl">
-                <span>
-                  <GoPrimitiveDot />
-                </span>
-                <span>Budget</span>
-              </p>
-            </div>
-          </div>
-          <div className="mt-10 flex gap-10 flex-wrap justify-center">
-            <div className=" border-r-1 border-color m-4 pr-10">
-              <div>
-                <p>
-                  <span className="text-3xl font-semibold">$93,438</span>
-                </p>
-                <p className="text-gray-500 mt-1">Total Cost</p>
-              </div>
-              <div className="mt-8">
-                <p className="text-3xl font-semibold">$48,487</p>
-
-                <p className="text-gray-500 mt-1">Total Payments</p>
-              </div>
-
-              <div className="mt-5">
-                {tripCost.map((item) => (
-                  <div key={item.id} className="flex justify-between mt-4">
-                    <div className="flex gap-4">
-                      <button
-                        type="button"
-                        style={{
-                          color: "#03C9D7",
-                          backgroundColor: "#E5FAFB",
-                        }}
-                        className="text-2xl rounded-lg p-4 hover:drop-shadow-xl"
-                      >
-                        <BsCurrencyDollar />
-                      </button>
-                      <div>
-                        <p className="text-md font-semibold">{item.Buyer}</p>
-                      </div>
-                    </div>
-                    <p>${item.Cost}</p>
-                  </div>
-                ))}
-              </div>
-              <div className="mt-10">
-                <Button
-                  color="white"
-                  bgColor={currentColor}
-                  text="Add Payment"
-                  borderRadius="10px"
-                />
-              </div>
-            </div>
-            <div>
-              <Stacked currentMode={currentMode} width="320px" height="360px" />
-            </div>
           </div>
         </div>
       </div>
