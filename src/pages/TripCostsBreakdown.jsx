@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useStateContext } from "../contexts/ContextProvider";
-import { BsCurrencyDollar } from 'react-icons/bs';
+import { BsCurrencyDollar } from "react-icons/bs";
 
 import {
   GridComponent,
@@ -22,6 +22,10 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
 
+import { GoPrimitiveDot } from "react-icons/go";
+
+import { SparklineAreaData, ecomPieChartData } from "../data/dummy";
+
 import { Stacked, Pie, Button, LineChart, SparkLine } from "../components";
 
 //DATA
@@ -41,12 +45,12 @@ import {
 
 import NewTripCostModal from "../modals/NewTripCostModal";
 
-
 const TripCostsBreakdown = () => {
   const { currentColor, currentMode } = useStateContext();
 
   //Trip States
   const [tripCost, setTripCost] = useState([]);
+  const [tripCostPieChart, setTripCostPieChart] = useState([]);
   const [tripPayments, setTripPayments] = useState([]);
   const [totalCost, setTotalCost] = useState(0);
 
@@ -60,14 +64,14 @@ const TripCostsBreakdown = () => {
         var data = {
           id: doc.id,
           Buyer: doc.data().Buyer,
-          Cost: Number(doc.data().Cost)
+          Cost: Number(doc.data().Cost),
         };
 
         list.push(data);
         totalCostVar = totalCostVar + Number(doc.data().Cost);
-
       });
       const uniqueNames = getTotalCostByName(list);
+      getPieChartData(uniqueNames, totalCostVar);
       setTripCost(uniqueNames);
       setTotalCost(totalCostVar);
     });
@@ -75,24 +79,42 @@ const TripCostsBreakdown = () => {
 
   function getTotalCostByName(data) {
     const totalAgeByName = {};
-  
-    data.forEach(person => {
+
+    data.forEach((person) => {
       if (totalAgeByName[person.Buyer]) {
         totalAgeByName[person.Buyer] += person.Cost;
       } else {
         totalAgeByName[person.Buyer] = person.Cost;
       }
     });
-  
-    const result = Object.keys(totalAgeByName).map(Buyer => ({ Buyer, Cost: totalAgeByName[Buyer] }));
-  
+
+    const result = Object.keys(totalAgeByName).map((Buyer) => ({
+      Buyer,
+      Cost: totalAgeByName[Buyer],
+    }));
+
     return result;
+  }
+
+  function getPieChartData(tripCostData, totalCostData) {
+    const list = [];
+    tripCostData.forEach((doc) => {
+      var data = {
+        x: doc.Buyer,
+        y: doc.Cost,
+        text: Math.round((doc.Cost / totalCostData) * 100) + "%",
+      };
+      list.push(data);
+    });
+    setTripCostPieChart(list);
   }
 
   useEffect(() => {
     fetchData();
     return () => {
       setTripCost([]);
+      setTripCostPieChart([]);
+      setTripPayments([]);
     };
   }, []);
 
@@ -113,8 +135,8 @@ const TripCostsBreakdown = () => {
                   <button
                     type="button"
                     style={{
-                      color: '#03C9D7',
-                      backgroundColor: '#E5FAFB',
+                      color: "#03C9D7",
+                      backgroundColor: "#E5FAFB",
                     }}
                     className="text-2xl rounded-lg p-4 hover:drop-shadow-xl"
                   >
@@ -139,10 +161,15 @@ const TripCostsBreakdown = () => {
 
         <div className="bg-white dark:text-gray-200 dark:bg-secondary-dark-bg p-6 rounded-2xl w-96 md:w-760">
           <div className="flex justify-between items-center gap-2 mb-10">
-            <p className="text-xl font-semibold">Sales Overview</p>
+            <p className="text-xl font-semibold">Trip Cost Overview</p>
           </div>
           <div className="md:w-full overflow-auto">
-            <LineChart />
+            <Pie
+              id="pie-chart"
+              data={tripCostPieChart}
+              legendVisiblity={true}
+              height="450px"
+            />
           </div>
         </div>
 
@@ -157,8 +184,8 @@ const TripCostsBreakdown = () => {
                   <button
                     type="button"
                     style={{
-                      color: '#03C9D7',
-                      backgroundColor: '#E5FAFB',
+                      color: "#03C9D7",
+                      backgroundColor: "#E5FAFB",
                     }}
                     className="text-2xl rounded-lg p-4 hover:drop-shadow-xl"
                   >
@@ -178,6 +205,77 @@ const TripCostsBreakdown = () => {
             </div>
 
             <p className="text-gray-400 text-md">Total: ${totalCost}</p>
+          </div>
+        </div>
+      </div>
+
+      <div className="flex gap-10 flex-wrap justify-center">
+        <div className="bg-white dark:text-gray-200 dark:bg-secondary-dark-bg m-3 p-4 rounded-2xl md:w-780  ">
+          <div className="flex justify-between">
+            <p className="font-semibold text-xl">Payments Made</p>
+            <div className="flex items-center gap-4">
+              <p className="flex items-center gap-2 text-gray-600 hover:drop-shadow-xl">
+                <span>
+                  <GoPrimitiveDot />
+                </span>
+                <span>Expense</span>
+              </p>
+              <p className="flex items-center gap-2 text-green-400 hover:drop-shadow-xl">
+                <span>
+                  <GoPrimitiveDot />
+                </span>
+                <span>Budget</span>
+              </p>
+            </div>
+          </div>
+          <div className="mt-10 flex gap-10 flex-wrap justify-center">
+            <div className=" border-r-1 border-color m-4 pr-10">
+              <div>
+                <p>
+                  <span className="text-3xl font-semibold">$93,438</span>
+                </p>
+                <p className="text-gray-500 mt-1">Total Cost</p>
+              </div>
+              <div className="mt-8">
+                <p className="text-3xl font-semibold">$48,487</p>
+
+                <p className="text-gray-500 mt-1">Total Payments</p>
+              </div>
+
+              <div className="mt-5">
+                {tripCost.map((item) => (
+                  <div key={item.id} className="flex justify-between mt-4">
+                    <div className="flex gap-4">
+                      <button
+                        type="button"
+                        style={{
+                          color: "#03C9D7",
+                          backgroundColor: "#E5FAFB",
+                        }}
+                        className="text-2xl rounded-lg p-4 hover:drop-shadow-xl"
+                      >
+                        <BsCurrencyDollar />
+                      </button>
+                      <div>
+                        <p className="text-md font-semibold">{item.Buyer}</p>
+                      </div>
+                    </div>
+                    <p>${item.Cost}</p>
+                  </div>
+                ))}
+              </div>
+              <div className="mt-10">
+                <Button
+                  color="white"
+                  bgColor={currentColor}
+                  text="Add Payment"
+                  borderRadius="10px"
+                />
+              </div>
+            </div>
+            <div>
+              <Stacked currentMode={currentMode} width="320px" height="360px" />
+            </div>
           </div>
         </div>
       </div>

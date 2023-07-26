@@ -1,7 +1,7 @@
 import React from "react";
 import { AiOutlinePieChart } from "react-icons/ai";
 import { FaCarSide } from "react-icons/fa";
-import { MdTravelExplore } from "react-icons/md";
+import { MdTravelExplore, MdPayment } from "react-icons/md";
 import { IoMdContacts } from "react-icons/io";
 import { RiLockPasswordLine } from "react-icons/ri";
 import { GrSchedules, GrConfigure } from "react-icons/gr";
@@ -34,9 +34,14 @@ export const links = [
         linktoname: "itinerary",
       },
       {
-        name: "places",
+        name: "places to visit",
         icon: <MdTravelExplore />,
         linktoname: "places",
+      },
+      {
+        name: "food",
+        icon: <BiFoodMenu />,
+        linktoname: "food",
       },
     ],
   },
@@ -52,6 +57,11 @@ export const links = [
         name: "Details",
         icon: <TbReportMoney />,
         linktoname: "trip-costs",
+      },
+      {
+        name: "Payments",
+        icon: <MdPayment />,
+        linktoname: "trip-payments",
       },
     ],
   },

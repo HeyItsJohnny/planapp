@@ -1,5 +1,6 @@
 export { default as PeopleInvited } from './PeopleInvited';
 export { default as TripCosts } from './TripCosts';
+export { default as TripPayments } from './TripPayments';
 export { default as TripCostsBreakdown } from './TripCostsBreakdown';
 export { default as Itinerary } from './Itinerary';
 export { default as Places } from './Places';
