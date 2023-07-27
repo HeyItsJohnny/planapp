@@ -39,7 +39,7 @@ const Places = () => {
     <>
       <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl">
         <Header category="Trip" title="Places" />
-        <p>DON"t know what to do here.</p>
+        <p>Add place you are staying at.</p>
       </div>
       <div className="flex gap-10 m-4 flex-wrap justify-center">
         <div className="bg-white dark:text-gray-200 dark:bg-secondary-dark-bg p-6 rounded-2xl w-96 md:w-760">
