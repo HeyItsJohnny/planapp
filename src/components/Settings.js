@@ -23,6 +23,11 @@ export const links = [
         icon: <GoDashboard />,
         linktoname: "dashboard",
       },
+      {
+        name: "chatGPT",
+        icon: <GoDashboard />,
+        linktoname: "chatgpt",
+      },
     ],
   },
   {

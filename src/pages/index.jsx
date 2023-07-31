@@ -4,6 +4,8 @@ export { default as TripPayments } from './TripPayments';
 export { default as TripCostsBreakdown } from './TripCostsBreakdown';
 export { default as Itinerary } from './Itinerary';
 export { default as Places } from './Places';
+export { default as Food } from './Food';
+export { default as ChatGPTExample } from './ChatGPTExample';
 
 export { default as Dashboard } from './Dashboard';
 export { default as Calendar } from './Calendar';

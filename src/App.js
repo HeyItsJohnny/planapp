@@ -10,10 +10,12 @@ import {
   Ecommerce,
   PeopleInvited,
   Places,
+  Food,
   Scheduler,
   Itinerary,
   TripCostsBreakdown,
   TripCosts,
+  ChatGPTExample,
   TripPayments
 } from "./pages";
 
@@ -73,6 +75,7 @@ function App() {
 
                 {/* PAGES & APPS */}
                 <Route path="/calendar" element={<Calendar />} />
+                <Route path="/food" element={<Food />} />
                 <Route path="/itinerary" element={<Itinerary />} />
                 <Route path="/places" element={<Places />} />
                 <Route path="/trip-costs" element={<TripCosts />} />
@@ -80,6 +83,7 @@ function App() {
                 <Route path="/trip-costs-breakdown" element={<TripCostsBreakdown />} />
                 <Route path="/people-invited" element={<PeopleInvited />} />
                 <Route path="/scheduler" element={<Scheduler />} />
+                <Route path="/chatgpt" element={<ChatGPTExample />} />
 
               </Routes>
             </div>
