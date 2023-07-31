@@ -24,7 +24,7 @@ export const links = [
         linktoname: "dashboard",
       },
       {
-        name: "chatGPT",
+        name: "chatGPT Example",
         icon: <GoDashboard />,
         linktoname: "chatgpt",
       },
