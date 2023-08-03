@@ -1,6 +1,5 @@
 export { default as Button } from './Button';
 export { default as ThemeSettings } from './ThemeSettings';
-export { default as AddNewPlan } from './AddNewPlan';
 export { default as Sidebar } from './Sidebar';
 
 export { default as Navbar } from './Navbar';
