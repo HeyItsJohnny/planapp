@@ -10,6 +10,7 @@ import { useStateContext } from "../contexts/ContextProvider";
 import { DropDownListComponent } from "@syncfusion/ej2-react-dropdowns";
 
 import { dropdownData } from "../data/dummy";
+import NewPlanModal from "../modals/NewPlanModal";
 
 const DropDown = ({ currentMode }) => (
   <div className="w-30 border-1 border-color px-2 py-1 rounded-md">
@@ -26,7 +27,7 @@ const DropDown = ({ currentMode }) => (
 );
 
 const Sidebar = () => {
-  const { activeMenu, setActiveMenu, screenSize, currentColor, currentMode, handleClick } = useStateContext();
+  const { activeMenu, setActiveMenu, screenSize, currentColor, currentMode} = useStateContext();
 
   const handleCloseSizeBar = () => {
     if (activeMenu && screenSize <= 900) {
@@ -69,14 +70,7 @@ const Sidebar = () => {
           <div className="flex justify-center items-center gap-2 mt-2">
             
             <DropDown currentMode={currentMode} />
-            <button
-              type="button"
-              style={{ backgroundColor: currentColor, color: "white", borderRadius: "10px"}}
-              className={`text-l p-3 hover:drop-shadow-xl`}
-              onClick={() => handleClick('addNewPlan')}
-            >
-              Add
-            </button>
+            <NewPlanModal />
           </div>
           <div className="mt-10">
             {links.map((item) => (
