@@ -6,6 +6,7 @@ const initialState = {
   chat: false,
   userProfile: false,
   notification: false,
+  addNewPlan: false,
 };
 
 export const ContextProvider = ({ children }) => {
