@@ -3073,15 +3073,19 @@ export const lineChartData = [
 export const dropdownData = [
   {
     Id: '1',
-    Time: 'March 2021',
+    Time: 'Taylor Swift Concert',
   },
   {
     Id: '2',
-    Time: 'April 2021',
+    Time: 'Martinez Trips',
   }, {
     Id: '3',
-    Time: 'May 2021',
+    Time: 'Bay Area Trips',
   },
+  {
+    Id: '4',
+    Time: 'Hawaii 2024',
+  }
 ];
 export const SparklineAreaData = [
   { x: 1, yval: 2 },
