@@ -38,7 +38,7 @@ const Places = () => {
   return (
     <>
       <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl">
-        <Header category="Trip" title="Places to Visit" />
+        <Header category="Trip" title="Places" />
         <p>Add place you are staying at.</p>
       </div>
       <div className="flex gap-10 m-4 flex-wrap justify-center">
