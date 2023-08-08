@@ -27,6 +27,16 @@ export const links = [
     ],
   },
   {
+    title: "Plan",
+    links: [
+      {
+        name: "details",
+        icon: <AiOutlinePieChart />,
+        linktoname: "plandetails",
+      }
+    ],
+  },
+  {
     title: "Examples",
     links: [
       {

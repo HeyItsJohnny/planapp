@@ -17,6 +17,7 @@ import {
   TripCosts,
   ChatGPTExample,
   TripPayments,
+  PlanDetails,
   Plans
 } from "./pages";
 
@@ -67,11 +68,14 @@ function App() {
             <div>
               {themeSettings && <ThemeSettings />}
               <Routes>
-                {/* DASHBOARD */}
+                {/* DASHBOARD AND STATIC HOMEPAGES*/}
                 <Route path="/" element={<Dashboard />} />
                 <Route path="/dashboard" element={<Dashboard />} />
-
                 <Route path="/plans" element={<Plans />} />
+
+                {/* PLAN SPECIFIC PAGES */}
+                <Route path="/plandetails/:planid" element={<PlanDetails />} />
+                <Route path="/plandetails" element={<PlanDetails />} />
 
                 {/* SAMPLE */}
                 <Route path="/ecommerce" element={<Ecommerce />} />
