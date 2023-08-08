@@ -15,6 +15,7 @@ export const ContextProvider = ({ children }) => {
   const [screenSize, setScreenSize] = useState(undefined);
   const [currentColor, setCurrentColor] = useState('#03C9D7');
   const [currentMode, setCurrentMode] = useState('Light');
+  const [currentPlan, setCurrentPlan] = useState('default');
   const [themeSettings, setThemeSettings] = useState(false);
   const [userSettings, setUserSettings] = useState(false);
 
@@ -28,6 +29,11 @@ export const ContextProvider = ({ children }) => {
     setCurrentColor(color);
     localStorage.setItem('colorMode', color);
     setThemeSettings(false);
+  }
+
+  const setPlan = (plan) => {
+    setCurrentPlan(plan);
+    //localStorage.setItem('plan', plan);
   }
 
   const handleClick = (clicked) => {
@@ -56,6 +62,9 @@ export const ContextProvider = ({ children }) => {
         userSettings,
         setUserSettings,
         handleExitClick,
+        currentPlan,
+        setCurrentPlan,
+        setPlan
     }}>
       {children}
     </StateContext.Provider>

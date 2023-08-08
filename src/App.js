@@ -16,7 +16,8 @@ import {
   TripCostsBreakdown,
   TripCosts,
   ChatGPTExample,
-  TripPayments
+  TripPayments,
+  Plans
 } from "./pages";
 
 import "./App.css";
@@ -69,6 +70,8 @@ function App() {
                 {/* DASHBOARD */}
                 <Route path="/" element={<Dashboard />} />
                 <Route path="/dashboard" element={<Dashboard />} />
+
+                <Route path="/plans" element={<Plans />} />
 
                 {/* SAMPLE */}
                 <Route path="/ecommerce" element={<Ecommerce />} />

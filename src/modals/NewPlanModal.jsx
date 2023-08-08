@@ -40,7 +40,7 @@ const NewPlanModal = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    //addNewPlanDoc(e);
+    addNewPlanDoc(e);
     handleReset();
   };
 
@@ -68,7 +68,7 @@ const NewPlanModal = () => {
         className={`text-md p-3 hover:drop-shadow-xl`}
         onClick={handleShow}
       >
-        Add
+        Add New Plan
       </button>
       <Dialog open={show} onClose={handleReset}>
         <form onSubmit={handleSubmit}>

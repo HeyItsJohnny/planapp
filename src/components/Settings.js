@@ -9,6 +9,40 @@ import { GoDashboard } from "react-icons/go";
 import { BiFoodMenu } from "react-icons/bi";
 import { TbReportMoney } from "react-icons/tb";
 
+
+export const links = [
+  {
+    title: "Home",
+    links: [
+      {
+        name: "dashboard",
+        icon: <GoDashboard />,
+        linktoname: "dashboard",
+      },
+      {
+        name: "plans",
+        icon: <GoDashboard />,
+        linktoname: "plans",
+      }
+    ],
+  },
+  {
+    title: "Examples",
+    links: [
+      {
+        name: "ecommerce",
+        icon: <GoDashboard />,
+        linktoname: "ecommerce",
+      },
+      {
+        name: "chatGPT Example",
+        icon: <GoDashboard />,
+        linktoname: "chatgpt",
+      }
+    ],
+  },
+];
+/*
 export const links = [
   {
     title: "Home",
@@ -81,6 +115,7 @@ export const links = [
     ],
   },
 ];
+*/
 
 export const themeColors = [
   {

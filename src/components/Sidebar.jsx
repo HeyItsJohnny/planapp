@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { SiShopware } from "react-icons/si";
 import { MdOutlineCancel } from "react-icons/md";
@@ -9,25 +9,13 @@ import { useStateContext } from "../contexts/ContextProvider";
 
 import { DropDownListComponent } from "@syncfusion/ej2-react-dropdowns";
 
-import { dropdownData } from "../data/dummy";
 import NewPlanModal from "../modals/NewPlanModal";
 
-const DropDown = ({ currentMode }) => (
-  <div className="w-30 border-1 border-color px-2 py-1 rounded-md">
-    <DropDownListComponent
-      id="time"
-      fields={{ text: "Time", value: "Id" }}
-      style={{ border: "none", color: currentMode === "Dark" && "white" }}
-      value="1"
-      dataSource={dropdownData}
-      popupHeight="220px"
-      popupWidth="200px"
-    />
-  </div>
-);
+import { db } from "../firebase/firebase";
+import { query, collection, orderBy, onSnapshot } from "firebase/firestore";
 
 const Sidebar = () => {
-  const { activeMenu, setActiveMenu, screenSize, currentColor, currentMode} = useStateContext();
+  const { activeMenu, setActiveMenu, screenSize, currentColor, currentMode } = useStateContext();
 
   const handleCloseSizeBar = () => {
     if (activeMenu && screenSize <= 900) {
@@ -63,14 +51,6 @@ const Sidebar = () => {
                 <MdOutlineCancel />
               </button>
             </TooltipComponent>
-          </div>
-          <div className="flex justify-between gap-2 mt-5">
-          <p className="text-gray-400 m-3 mt-4 uppercase">Plan</p>
-          </div>
-          <div className="flex justify-center items-center gap-2 mt-2">
-            
-            <DropDown currentMode={currentMode} />
-            <NewPlanModal />
           </div>
           <div className="mt-10">
             {links.map((item) => (
