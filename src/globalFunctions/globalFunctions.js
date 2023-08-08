@@ -9,6 +9,5 @@ export function convertDateFormat(inputDate) {
     .padStart(2, "0");
   const formattedDay = dateObject.getDate().toString().padStart(2, "0");
   const formattedDate = `${formattedMonth}/${formattedDay}/${year}`;
-
   return formattedDate;
 }
