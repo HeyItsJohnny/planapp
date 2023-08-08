@@ -26,6 +26,8 @@ const Plans = () => {
           Name: doc.data().Name,
           Type: doc.data().Type,
           SubType: doc.data().SubType,
+          StartDate: doc.data().StartDate,
+          EndDate: doc.data().EndDate
         };
         list.push(data);
       });
@@ -44,29 +46,11 @@ const Plans = () => {
     <>
       <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white rounded-3xl">
         <Header category="Home" title="Plans" />
-        <NewPlanModal />
-        {/*
-      <GridComponent
-        id="gridcomp"
-        dataSource={plans}
-        allowPaging
-        allowSorting
-        toolbar={["Search", "Delete"]}
-        editSettings={{
-          allowDeleting: true,
-        }}
-        width="auto"
-      >
-        <ColumnsDirective>
-          {plansGrid.map((item, index) => (
-            <ColumnDirective key={item.id} {...item} />
-          ))}
-        </ColumnsDirective>
-        <Inject services={[Page, Search, Edit, Toolbar]} />
-      </GridComponent>
-          */}
+        <NewPlanModal />         
       </div>
-        <div className="flex flex-wrap lg:flex-nowrap justify-center">
+
+      
+        <div className="flex flex-wrap justify-center">
           {plans.map((plan) => (
             <PlanComponent plan={plan} />
           ))}

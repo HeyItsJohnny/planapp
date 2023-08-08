@@ -49,7 +49,9 @@ const NewPlanModal = () => {
       await addDoc(collection(db, "plans"), {
         Name: data.target.Name.value,
         Type: planType,
-        SubType: planSubType
+        SubType: planSubType,
+        StartDate: data.target.StartDate.value,
+        EndDate: data.target.EndDate.value
       });
     } catch (error) {
       alert("There was an error adding to the database: " + error);
@@ -84,6 +86,24 @@ const NewPlanModal = () => {
               fullWidth
               variant="standard"
             />
+            <TextField
+              required
+              margin="none"
+              id="StartDate"
+              label="Start Date"
+              type="date"
+              fullWidth
+              variant="standard"
+            />
+            <TextField
+              required
+              margin="dense"
+              id="EndDate"
+              label="End Date"
+              type="date"
+              fullWidth
+              variant="standard"
+            />
           </DialogContent>
           <DialogContent>
             <FormControl fullWidth>
@@ -96,8 +116,7 @@ const NewPlanModal = () => {
                 onChange={handlePlanTypeChange}
                 required
               >
-                <MenuItem value="Half Day">Half Day</MenuItem>
-                <MenuItem value="Full Day">Full Day</MenuItem>
+                <MenuItem value="Day">Day</MenuItem>
                 <MenuItem value="Multiple Days">Multiple Days</MenuItem>
               </Select>
             </FormControl>
