@@ -9,6 +9,7 @@ import { constantLinks, planLinks } from "../components/Settings";
 import { useStateContext } from "../contexts/ContextProvider";
 
 const Sidebar = () => {
+  
   const {
     activeMenu,
     setActiveMenu,
@@ -17,6 +18,7 @@ const Sidebar = () => {
     currentMode,
     currentPlanIsSet,
     setCurrentPlanIsSet,
+    setCurrentSelectedPlan,
   } = useStateContext();
 
   const handleCloseSizeBar = () => {
@@ -27,6 +29,7 @@ const Sidebar = () => {
 
   const handleGoToHome = () => {
     setCurrentPlanIsSet(false);
+    setCurrentSelectedPlan('');
   };
 
   const activeLink =
@@ -59,7 +62,9 @@ const Sidebar = () => {
             </TooltipComponent>
           </div>
           <div className="mt-10">
-            {constantLinks.map((item) => (
+            {
+            !currentPlanIsSet && (
+            constantLinks.map((item) => (
               <div key={item.title}>
                 <p className="text-gray-400 m-3 mt-4 uppercase">{item.title}</p>
                 {item.links.map((link) => (
@@ -79,7 +84,9 @@ const Sidebar = () => {
                   </NavLink>
                 ))}
               </div>
-            ))}
+            ))
+            )
+            }
             {currentPlanIsSet &&
               planLinks.map((item) => (
                 <div key={item.title}>
@@ -87,6 +94,7 @@ const Sidebar = () => {
                     {item.title}
                   </p>
                   <NavLink
+                    to='plans'
                     onClick={handleGoToHome}
                     className={normalLink}
                   >

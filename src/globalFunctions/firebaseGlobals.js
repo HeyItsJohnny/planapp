@@ -32,6 +32,38 @@ export async function getPlans() {
   return list;
 }
 
+export async function deleteDocument(name, docid) {
+  try {
+    await deleteDoc(doc(db, name, docid));
+  } catch (error) {
+    alert("Error deleting data from Firestore:", error);
+  }
+};
+
+export async function updatePlanStartDate(planid, start) {
+  try {
+    const familyPlansRef = doc(db, "plans", planid);
+    await updateDoc(familyPlansRef, {
+      StartDate: start,
+    });
+  } catch (error) {
+    alert("Error editing data to Database: " + error);
+  }
+};
+
+
+
+export async function updatePlanEndDate(planid, end) {
+  try {
+    const familyPlansRef = doc(db, "plans", planid);
+    await updateDoc(familyPlansRef, {
+      EndDate: end,
+    });
+  } catch (error) {
+    alert("Error editing data to Database: " + error);
+  }
+};
+
 /*
 export const getUserProfile = async (uid) => {
   const userRef = firestore.collection('users').doc(uid);

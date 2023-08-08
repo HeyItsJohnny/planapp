@@ -3,25 +3,22 @@ import { useStateContext } from "../../contexts/ContextProvider";
 import { AiTwotoneDelete } from "react-icons/ai";
 import { TbListDetails } from "react-icons/tb";
 
-import { db } from "../../firebase/firebase";
-import { doc, deleteDoc } from "firebase/firestore";
-
 import { convertDateFormat } from "../../globalFunctions/globalFunctions";
+import { useNavigate } from "react-router-dom";
+import { deleteDocument } from "../../globalFunctions/firebaseGlobals";
 
 const PlanComponent = ({ plan }) => {
+  const navigate = useNavigate();
   const { currentColor, setPlan, setCurrentPlanIsSet } = useStateContext();
 
   const handleDetails = () => {
     setPlan(plan.id);             //Set Plan ID context
     setCurrentPlanIsSet(true);    //Set Plan ID to TRUE
+    navigate("/plandetails");
   };
 
   const handleDeletePlan = async () => {
-    try {
-      await deleteDoc(doc(db, "plans", plan.id));
-    } catch (error) {
-      alert("Error deleting data from Firestore:", error);
-    }
+    deleteDocument("plans", plan.id);
   };
 
   return (

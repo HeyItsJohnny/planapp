@@ -69,9 +69,9 @@ function App() {
               {themeSettings && <ThemeSettings />}
               <Routes>
                 {/* DASHBOARD AND STATIC HOMEPAGES*/}
-                <Route path="/" element={<Dashboard />} />
-                <Route path="/dashboard" element={<Dashboard />} />
+                <Route path="/" element={<Plans />} />
                 <Route path="/plans" element={<Plans />} />
+                <Route path="/dashboard" element={<Dashboard />} />
 
                 {/* PLAN SPECIFIC PAGES */}
                 <Route path="/plandetails/:planid" element={<PlanDetails />} />

@@ -14,12 +14,7 @@ export const constantLinks = [
     title: "Home",
     links: [
       {
-        name: "dashboard",
-        icon: <GoDashboard />,
-        linktoname: "dashboard"
-      },
-      {
-        name: "plans",
+        name: "my plans",
         icon: <GoDashboard />,
         linktoname: "plans"
       }
