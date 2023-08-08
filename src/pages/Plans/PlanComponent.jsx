@@ -1,6 +1,5 @@
 import React from "react";
 import { useStateContext } from "../../contexts/ContextProvider";
-import { MdOutlineSupervisorAccount } from "react-icons/md";
 import { AiTwotoneDelete } from "react-icons/ai";
 import { TbListDetails } from "react-icons/tb";
 
@@ -10,10 +9,11 @@ import { doc, deleteDoc } from "firebase/firestore";
 import { convertDateFormat } from "../../globalFunctions/globalFunctions";
 
 const PlanComponent = ({ plan }) => {
-  const { currentColor } = useStateContext();
+  const { currentColor, setPlan, setCurrentPlanIsSet } = useStateContext();
 
   const handleDetails = () => {
-    alert("DETAILS");
+    setPlan(plan.id);             //Set Plan ID context
+    setCurrentPlanIsSet(true);    //Set Plan ID to TRUE
   };
 
   const handleDeletePlan = async () => {

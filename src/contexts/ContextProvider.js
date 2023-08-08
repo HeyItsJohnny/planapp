@@ -6,7 +6,6 @@ const initialState = {
   chat: false,
   userProfile: false,
   notification: false,
-  addNewPlan: false,
 };
 
 export const ContextProvider = ({ children }) => {
@@ -15,7 +14,8 @@ export const ContextProvider = ({ children }) => {
   const [screenSize, setScreenSize] = useState(undefined);
   const [currentColor, setCurrentColor] = useState('#03C9D7');
   const [currentMode, setCurrentMode] = useState('Light');
-  const [currentPlan, setCurrentPlan] = useState('default');
+  const [currentSelectedPlan, setCurrentSelectedPlan] = useState('');
+  const [currentPlanIsSet, setCurrentPlanIsSet] = useState(false);
   const [themeSettings, setThemeSettings] = useState(false);
   const [userSettings, setUserSettings] = useState(false);
 
@@ -32,7 +32,7 @@ export const ContextProvider = ({ children }) => {
   }
 
   const setPlan = (plan) => {
-    setCurrentPlan(plan);
+    setCurrentSelectedPlan(plan);
     //localStorage.setItem('plan', plan);
   }
 
@@ -62,9 +62,11 @@ export const ContextProvider = ({ children }) => {
         userSettings,
         setUserSettings,
         handleExitClick,
-        currentPlan,
-        setCurrentPlan,
-        setPlan
+        setCurrentSelectedPlan,
+        currentSelectedPlan,
+        setPlan,
+        currentPlanIsSet,
+        setCurrentPlanIsSet
     }}>
       {children}
     </StateContext.Provider>

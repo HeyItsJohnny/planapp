@@ -9,30 +9,19 @@ import { GoDashboard } from "react-icons/go";
 import { BiFoodMenu } from "react-icons/bi";
 import { TbReportMoney } from "react-icons/tb";
 
-
-export const links = [
+export const constantLinks = [
   {
     title: "Home",
     links: [
       {
         name: "dashboard",
         icon: <GoDashboard />,
-        linktoname: "dashboard",
+        linktoname: "dashboard"
       },
       {
         name: "plans",
         icon: <GoDashboard />,
-        linktoname: "plans",
-      }
-    ],
-  },
-  {
-    title: "Plan",
-    links: [
-      {
-        name: "details",
-        icon: <AiOutlinePieChart />,
-        linktoname: "plandetails",
+        linktoname: "plans"
       }
     ],
   },
@@ -52,6 +41,20 @@ export const links = [
     ],
   },
 ];
+
+export const planLinks = [
+  {
+    title: "Plan",
+    links: [
+      {
+        name: "details",
+        icon: <AiOutlinePieChart />,
+        linktoname: "plandetails"
+      }
+    ],
+  },
+];
+
 /*
 export const links = [
   {

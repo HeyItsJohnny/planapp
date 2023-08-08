@@ -2,25 +2,31 @@ import React, { useState, useEffect } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { SiShopware } from "react-icons/si";
 import { MdOutlineCancel } from "react-icons/md";
+import { AiOutlineHome } from "react-icons/ai";
 import { TooltipComponent } from "@syncfusion/ej2-react-popups";
 
-import { links } from "../components/Settings";
+import { constantLinks, planLinks } from "../components/Settings";
 import { useStateContext } from "../contexts/ContextProvider";
 
-import { DropDownListComponent } from "@syncfusion/ej2-react-dropdowns";
-
-import NewPlanModal from "../modals/NewPlanModal";
-
-import { db } from "../firebase/firebase";
-import { query, collection, orderBy, onSnapshot } from "firebase/firestore";
-
 const Sidebar = () => {
-  const { activeMenu, setActiveMenu, screenSize, currentColor, currentMode } = useStateContext();
+  const {
+    activeMenu,
+    setActiveMenu,
+    screenSize,
+    currentColor,
+    currentMode,
+    currentPlanIsSet,
+    setCurrentPlanIsSet,
+  } = useStateContext();
 
   const handleCloseSizeBar = () => {
     if (activeMenu && screenSize <= 900) {
       setActiveMenu(false);
     }
+  };
+
+  const handleGoToHome = () => {
+    setCurrentPlanIsSet(false);
   };
 
   const activeLink =
@@ -53,7 +59,7 @@ const Sidebar = () => {
             </TooltipComponent>
           </div>
           <div className="mt-10">
-            {links.map((item) => (
+            {constantLinks.map((item) => (
               <div key={item.title}>
                 <p className="text-gray-400 m-3 mt-4 uppercase">{item.title}</p>
                 {item.links.map((link) => (
@@ -74,6 +80,37 @@ const Sidebar = () => {
                 ))}
               </div>
             ))}
+            {currentPlanIsSet &&
+              planLinks.map((item) => (
+                <div key={item.title}>
+                  <p className="text-gray-400 m-3 mt-4 uppercase">
+                    {item.title}
+                  </p>
+                  <NavLink
+                    onClick={handleGoToHome}
+                    className={normalLink}
+                  >
+                    <AiOutlineHome />
+                    <span className="capitalize">Home</span>
+                  </NavLink>
+                  {item.links.map((link) => (
+                    <NavLink
+                      to={`${link.linktoname}`}
+                      key={link.name}
+                      onClick={handleCloseSizeBar}
+                      style={({ isActive }) => ({
+                        backgroundColor: isActive ? currentColor : "",
+                      })}
+                      className={({ isActive }) =>
+                        isActive ? activeLink : normalLink
+                      }
+                    >
+                      {link.icon}
+                      <span className="capitalize">{link.name}</span>
+                    </NavLink>
+                  ))}
+                </div>
+              ))}
           </div>
         </>
       )}
