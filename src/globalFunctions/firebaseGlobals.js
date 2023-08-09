@@ -11,6 +11,7 @@ import {
   orderBy,
   deleteDoc,
   updateDoc,
+  addDoc
 } from "firebase/firestore";
 
 export async function getPlans() {
@@ -51,8 +52,6 @@ export async function updatePlanStartDate(planid, start) {
   }
 };
 
-
-
 export async function updatePlanEndDate(planid, end) {
   try {
     const familyPlansRef = doc(db, "plans", planid);
@@ -63,6 +62,58 @@ export async function updatePlanEndDate(planid, end) {
     alert("Error editing data to Database: " + error);
   }
 };
+
+export async function addToPlanCalendar(planid,data) {
+  try {
+    await addDoc(collection(db, "plans", planid, "calendar"),
+      {
+        Subject: data.Subject,
+        Location: data.Location ?? "",
+        Description: data.Description ?? "",
+        StartTime: data.StartTime ?? "",
+        EndTime: data.EndTime ?? "",
+        IsAllDay: data.IsAllDay ?? "",
+        RecurrenceRule: data.RecurrenceRule ?? "",
+        RecurrenceException: data.RecurrenceException ?? "",
+        CategoryColor: data.CategoryColor ?? "",
+        EventColor: data.EventColor ?? "",
+      }
+    );
+  } catch (error) {
+    alert("Error adding data to Database: " + error);
+  }
+}
+
+export async function updatePlanCalendar(planid,data) {
+  try {
+    const calendarEventsRef = doc(db,"plans",planid,"calendar",data.Id);
+    await updateDoc(calendarEventsRef, {
+      Subject: data.Subject,
+      Location: data.Location ?? "",
+      Description: data.Description ?? "",
+      StartTime: data.StartTime ?? "",
+      EndTime: data.EndTime ?? "",
+      IsAllDay: data.IsAllDay ?? "",
+      RecurrenceRule: data.RecurrenceRule ?? "",
+      RecurrenceException: data.RecurrenceException ?? "",
+      CategoryColor: data.CategoryColor ?? "",
+      EventColor: data.EventColor ?? "",
+    });
+  } catch (error) {
+    alert("Error editing data to Database: " + error);
+  }
+}
+
+export async function deletePlanCalendar(planid, docid) {
+  try {
+    await deleteDoc(doc(db,"plans",planid,"calendar",docid)
+    );
+  } catch (error) {
+    alert("Error deleting data from Database: " + error);
+  }
+}
+
+
 
 /*
 export const getUserProfile = async (uid) => {
