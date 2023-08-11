@@ -42,7 +42,7 @@ export const planLinks = [
     title: "Plan",
     links: [
       {
-        name: "details",
+        name: "summary",
         icon: <AiOutlinePieChart />,
         linktoname: "plandetails"
       }

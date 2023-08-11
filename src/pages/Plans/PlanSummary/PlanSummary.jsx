@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import useMediaQuery from "@mui/material/useMediaQuery";
 
 //Visual
-import { Header } from "../../components";
+import { Header } from "../../../components";
 import { Box, TextField } from "@mui/material";
 import {
   ScheduleComponent,
@@ -16,29 +16,32 @@ import {
   DragAndDrop,
 } from "@syncfusion/ej2-react-schedule";
 import { parseISO } from "date-fns";
+import PlanAirfareSummary from "./PlanAirfareSummary";
 
 //Data
-import { db } from "../../firebase/firebase";
+import { db } from "../../../firebase/firebase";
 import { doc, getDoc, query, collection, onSnapshot } from "firebase/firestore";
-import { useStateContext } from "../../contexts/ContextProvider";
+import { useStateContext } from "../../../contexts/ContextProvider";
 import {
   updatePlanStartDate,
   updatePlanEndDate,
   addToPlanCalendar,
   updatePlanCalendar,
-  deletePlanCalendar
-} from "../../globalFunctions/firebaseGlobals";
+  deletePlanCalendar,
+  updatePlanDestination,
+} from "../../../globalFunctions/firebaseGlobals";
 
-const PlanDetails = () => {
+const PlanSummary = () => {
   const { currentSelectedPlan } = useStateContext();
   const isNonMobile = useMediaQuery("(min-width:600px)");
-  
+
   //Itinerary
   const [planCalendar, setPlanCalendar] = useState([]);
   const [calendarView, setCalendarView] = useState("Week");
   const [selectedStartDate, setSelectedStartDate] = useState(new Date());
 
   const [plan, setPlan] = useState({});
+  const [destination, setDestination] = useState("");
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
 
@@ -48,9 +51,13 @@ const PlanDetails = () => {
       const docSnap = await getDoc(docRef);
       if (docSnap.exists()) {
         setPlan(docSnap.data());
+        setDestination(docSnap.data().Destination);
         setStartDate(docSnap.data().StartDate);
         setEndDate(docSnap.data().EndDate);
-        setCalendarViewComponents(docSnap.data().StartDate,docSnap.data().EndDate);
+        setCalendarViewComponents(
+          docSnap.data().StartDate,
+          docSnap.data().EndDate
+        );
       }
     } catch (err) {
       alert(err);
@@ -95,6 +102,11 @@ const PlanDetails = () => {
     updatePlanEndDate(currentSelectedPlan, args.target.value);
   };
 
+  const onChangeDestination = (args) => {
+    setDestination(args.target.value);
+    updatePlanDestination(currentSelectedPlan, args.target.value);
+  };
+
   const setCalendarViewComponents = (startDate, endDate) => {
     if (startDate === endDate) {
       setCalendarView("Day");
@@ -106,13 +118,13 @@ const PlanDetails = () => {
 
   const addCalendarEvent = async (args) => {
     if (args.requestType === "eventCreated") {
-      addToPlanCalendar(currentSelectedPlan,args.addedRecords[0]);
+      addToPlanCalendar(currentSelectedPlan, args.addedRecords[0]);
     } else if (args.requestType === "eventChanged") {
-      updatePlanCalendar(currentSelectedPlan,args.changedRecords[0]);
+      updatePlanCalendar(currentSelectedPlan, args.changedRecords[0]);
     } else if (args.requestType === "eventRemoved") {
-      deletePlanCalendar(currentSelectedPlan,args.deletedRecords[0].Id);
+      deletePlanCalendar(currentSelectedPlan, args.deletedRecords[0].Id);
     }
-  }
+  };
 
   useEffect(() => {
     setPlanFromContext();
@@ -126,7 +138,7 @@ const PlanDetails = () => {
   return (
     <>
       <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white dark:text-gray-200 dark:bg-secondary-dark-bg rounded-3xl">
-        <Header category="Plan Details" title={plan.Name} />
+        <Header category="Plan Summary" title={plan.Name} />
         <Box
           display="grid"
           gap="30px"
@@ -135,6 +147,27 @@ const PlanDetails = () => {
             "& > div": { gridColumn: isNonMobile ? undefined : "span 4" },
           }}
         >
+            <TextField
+            InputLabelProps={{
+              shrink: true,
+              className:
+                "bg-white dark:text-gray-200 dark:bg-secondary-dark-bg",
+            }}
+            margin="dense"
+            required
+            id="StartDate"
+            label="Destination"
+            type="text"
+            fullWidth
+            variant="filled"
+            value={destination}
+            onChange={onChangeDestination}
+            sx={{ gridColumn: "span 4" }}
+            InputProps={{
+              className:
+                "bg-white dark:text-gray-200 dark:bg-secondary-dark-bg",
+            }}
+          />
           <TextField
             InputLabelProps={{
               shrink: true,
@@ -179,6 +212,7 @@ const PlanDetails = () => {
           />
         </Box>
       </div>
+      <PlanAirfareSummary />
       <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white dark:text-gray-200 dark:bg-secondary-dark-bg rounded-3xl">
         <ScheduleComponent
           currentView={calendarView}
@@ -188,7 +222,7 @@ const PlanDetails = () => {
           selectedDate={selectedStartDate || new Date()}
         >
           <Inject
-            services={[Day, Week, WorkWeek, Agenda, Resize, DragAndDrop]}
+            services={[Day, Week, WorkWeek, Month, Agenda, Resize, DragAndDrop]}
           />
         </ScheduleComponent>
       </div>
@@ -196,4 +230,4 @@ const PlanDetails = () => {
   );
 };
 
-export default PlanDetails;
+export default PlanSummary;

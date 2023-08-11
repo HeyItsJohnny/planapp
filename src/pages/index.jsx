@@ -1,6 +1,6 @@
 export { default as Dashboard } from './Dashboard';
 export { default as Plans } from './Plans/Plans';
-export { default as PlanDetails } from './Plans/PlanDetails';
+export { default as PlanSummary } from './Plans/PlanSummary/PlanSummary';
 
 
 export { default as PeopleInvited } from './PeopleInvited';

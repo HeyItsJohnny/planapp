@@ -63,6 +63,18 @@ export async function updatePlanEndDate(planid, end) {
   }
 };
 
+export async function updatePlanDestination(planid, destination) {
+  try {
+    const familyPlansRef = doc(db, "plans", planid);
+    await updateDoc(familyPlansRef, {
+      Destination: destination,
+    });
+  } catch (error) {
+    alert("Error editing data to Database: " + error);
+  }
+};
+
+
 export async function addToPlanCalendar(planid,data) {
   try {
     await addDoc(collection(db, "plans", planid, "calendar"),
