@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 //DATA
 import { Header } from "../../components";
 import ItineraryAirfare from "./ItineraryAirfare";
+import ItineraryHousing from "./ItineraryHousing";
 
 const Itinerary = () => {
   return (
@@ -11,6 +12,7 @@ const Itinerary = () => {
         <Header category="Plan" title="Itinerary" />
       </div>
       <ItineraryAirfare />
+      <ItineraryHousing />
     </>
   );
 };
