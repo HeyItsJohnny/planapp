@@ -47,6 +47,11 @@ export const planLinks = [
         linktoname: "plansummary"
       },
       {
+        name: "budget",
+        icon: <TbReportMoney />,
+        linktoname: "planbudget"
+      },
+      {
         name: "itinerary",
         icon: <FaCarSide />,
         linktoname: "planitinerary"
@@ -55,7 +60,7 @@ export const planLinks = [
         name: "activities",
         icon: <MdDirectionsRun />,
         linktoname: "planactivities"
-      }
+      },
     ],
   },
 ];

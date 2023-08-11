@@ -3,7 +3,7 @@ export { default as Plans } from './Plans/Plans';
 export { default as PlanSummary } from './Plans/PlanSummary';
 export { default as Itinerary } from './Itinerary/Itinerary';
 export { default as PlanActivities } from './Activities/PlanActivities';
-
+export { default as PlanBudget } from './Budget/PlanBudget';
 
 export { default as PeopleInvited } from './PeopleInvited';
 export { default as TripCosts } from './TripCosts';

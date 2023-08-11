@@ -19,7 +19,8 @@ import {
   TripPayments,
   PlanSummary,
   Plans,
-  PlanActivities
+  PlanActivities,
+  PlanBudget
 } from "./pages";
 
 import "./App.css";
@@ -78,6 +79,7 @@ function App() {
                 <Route path="/plansummary" element={<PlanSummary />} />
                 <Route path="/planitinerary" element={<Itinerary />} />
                 <Route path="/planactivities" element={<PlanActivities />} />
+                <Route path="/planbudget" element={<PlanBudget />} />
 
                 {/* SAMPLE */}
                 <Route path="/ecommerce" element={<Ecommerce />} />
