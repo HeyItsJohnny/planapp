@@ -4,7 +4,6 @@ import React, { useState, useEffect } from "react";
 import { Header } from "../../components";
 import ItineraryAirfare from "./ItineraryAirfare";
 
-
 const Itinerary = () => {
   return (
     <>

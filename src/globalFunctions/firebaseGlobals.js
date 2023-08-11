@@ -74,7 +74,6 @@ export async function updatePlanDestination(planid, destination) {
   }
 };
 
-
 export async function addToPlanCalendar(planid,data) {
   try {
     await addDoc(collection(db, "plans", planid, "calendar"),
@@ -124,6 +123,17 @@ export async function deletePlanCalendar(planid, docid) {
     alert("Error deleting data from Database: " + error);
   }
 }
+
+export async function updatePlanAirfareDisplay(planid, displayValue) {
+  try {
+    const familyPlansRef = doc(db, "plans", planid);
+    await updateDoc(familyPlansRef, {
+      DisplayAirfare: displayValue,
+    });
+  } catch (error) {
+    alert("Error editing data to Database: " + error);
+  }
+};
 
 
 
