@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 
 //VISUAL
-import { Header } from "../../../components";
+import { Header } from "../../components";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { Box, TextField } from "@mui/material";
 
-const PlanAirfareSummary = () => {
+const ItineraryAirfare = () => {
   const [departureDate1, setDepartureDate1] = useState("");
   const [arrivalDate1, setArrivalDate1] = useState("");
   const [departureTime1, setDepartureTime1] = useState("");
@@ -52,7 +52,7 @@ const PlanAirfareSummary = () => {
 
   return (
     <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white dark:text-gray-200 dark:bg-secondary-dark-bg rounded-3xl">
-      <Header category="Plan Summary" title="Airfare" />
+      <Header category="Itinerary" title="Airfare" />
       <Box
         display="grid"
         gap="30px"
@@ -179,6 +179,7 @@ const PlanAirfareSummary = () => {
           InputLabelProps={{
             shrink: true,
             className: "bg-white dark:text-gray-200 dark:bg-secondary-dark-bg",
+
           }}
           margin="dense"
           required
@@ -215,8 +216,7 @@ const PlanAirfareSummary = () => {
         />
       </Box>
     </div>
-    
   );
 };
 
-export default PlanAirfareSummary;
+export default ItineraryAirfare;

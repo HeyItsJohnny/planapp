@@ -75,6 +75,7 @@ function App() {
 
                 {/* PLAN SPECIFIC PAGES */}
                 <Route path="/plansummary" element={<PlanSummary />} />
+                <Route path="/planitinerary" element={<Itinerary />} />
 
                 {/* SAMPLE */}
                 <Route path="/ecommerce" element={<Ecommerce />} />
@@ -82,7 +83,6 @@ function App() {
                 {/* PAGES & APPS */}
                 <Route path="/calendar" element={<Calendar />} />
                 <Route path="/food" element={<Food />} />
-                <Route path="/itinerary" element={<Itinerary />} />
                 <Route path="/places" element={<Places />} />
                 <Route path="/trip-costs" element={<TripCosts />} />
                 <Route path="/trip-payments" element={<TripPayments />} />

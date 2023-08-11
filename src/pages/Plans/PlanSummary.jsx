@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import useMediaQuery from "@mui/material/useMediaQuery";
 
 //Visual
-import { Header } from "../../../components";
+import { Header } from "../../components";
 import { Box, TextField } from "@mui/material";
 import {
   ScheduleComponent,
@@ -16,12 +16,11 @@ import {
   DragAndDrop,
 } from "@syncfusion/ej2-react-schedule";
 import { parseISO } from "date-fns";
-import PlanAirfareSummary from "./PlanAirfareSummary";
 
 //Data
-import { db } from "../../../firebase/firebase";
+import { db } from "../../firebase/firebase";
 import { doc, getDoc, query, collection, onSnapshot } from "firebase/firestore";
-import { useStateContext } from "../../../contexts/ContextProvider";
+import { useStateContext } from "../../contexts/ContextProvider";
 import {
   updatePlanStartDate,
   updatePlanEndDate,
@@ -29,7 +28,7 @@ import {
   updatePlanCalendar,
   deletePlanCalendar,
   updatePlanDestination,
-} from "../../../globalFunctions/firebaseGlobals";
+} from "../../globalFunctions/firebaseGlobals";
 
 const PlanSummary = () => {
   const { currentSelectedPlan } = useStateContext();
@@ -212,7 +211,6 @@ const PlanSummary = () => {
           />
         </Box>
       </div>
-      <PlanAirfareSummary />
       <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white dark:text-gray-200 dark:bg-secondary-dark-bg rounded-3xl">
         <ScheduleComponent
           currentView={calendarView}

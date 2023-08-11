@@ -44,7 +44,12 @@ export const planLinks = [
       {
         name: "summary",
         icon: <AiOutlinePieChart />,
-        linktoname: "plandetails"
+        linktoname: "plansummary"
+      },
+      {
+        name: "itinerary",
+        icon: <FaCarSide />,
+        linktoname: "planitinerary"
       }
     ],
   },
