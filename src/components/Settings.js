@@ -1,7 +1,7 @@
 import React from "react";
 import { AiOutlinePieChart } from "react-icons/ai";
 import { FaCarSide } from "react-icons/fa";
-import { MdTravelExplore, MdPayment } from "react-icons/md";
+import { MdDirectionsRun } from "react-icons/md";
 import { IoMdContacts } from "react-icons/io";
 import { RiLockPasswordLine } from "react-icons/ri";
 import { GrSchedules, GrConfigure } from "react-icons/gr";
@@ -50,6 +50,11 @@ export const planLinks = [
         name: "itinerary",
         icon: <FaCarSide />,
         linktoname: "planitinerary"
+      },
+      {
+        name: "activities",
+        icon: <MdDirectionsRun />,
+        linktoname: "planactivities"
       }
     ],
   },

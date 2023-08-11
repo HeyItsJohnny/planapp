@@ -18,7 +18,8 @@ import {
   ChatGPTExample,
   TripPayments,
   PlanSummary,
-  Plans
+  Plans,
+  PlanActivities
 } from "./pages";
 
 import "./App.css";
@@ -76,6 +77,7 @@ function App() {
                 {/* PLAN SPECIFIC PAGES */}
                 <Route path="/plansummary" element={<PlanSummary />} />
                 <Route path="/planitinerary" element={<Itinerary />} />
+                <Route path="/planactivities" element={<PlanActivities />} />
 
                 {/* SAMPLE */}
                 <Route path="/ecommerce" element={<Ecommerce />} />
