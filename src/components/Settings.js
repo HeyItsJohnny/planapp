@@ -57,9 +57,9 @@ export const planLinks = [
         linktoname: "planitinerary"
       },
       {
-        name: "activities",
+        name: "food & activities",
         icon: <MdDirectionsRun />,
-        linktoname: "planactivities"
+        linktoname: "planfoodandactivities"
       },
     ],
   },

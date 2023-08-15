@@ -19,7 +19,7 @@ import {
   TripPayments,
   PlanSummary,
   Plans,
-  PlanActivities,
+  PlanFoodAndActivites,
   PlanBudget
 } from "./pages";
 
@@ -78,7 +78,7 @@ function App() {
                 {/* PLAN SPECIFIC PAGES */}
                 <Route path="/plansummary" element={<PlanSummary />} />
                 <Route path="/planitinerary" element={<Itinerary />} />
-                <Route path="/planactivities" element={<PlanActivities />} />
+                <Route path="/planfoodandactivities" element={<PlanFoodAndActivites />} />
                 <Route path="/planbudget" element={<PlanBudget />} />
 
                 {/* SAMPLE */}
