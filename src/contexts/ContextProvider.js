@@ -1,4 +1,18 @@
-import React, { createContext, useContext, useState } from "react";
+import React, { createContext, useContext, useState, useEffect } from "react";
+
+//DATA
+import { db  } from "../firebase/firebase";
+import {
+  doc,
+  getDoc,
+  collection,
+  query,
+  onSnapshot,
+  orderBy,
+  deleteDoc,
+  updateDoc,
+  addDoc
+} from "firebase/firestore";
 
 const StateContext = createContext();
 
@@ -46,6 +60,26 @@ export const ContextProvider = ({ children }) => {
   const handleExitClick = (clicked) => {
     setIsClicked({ ...initialState, [clicked]: false});
   } 
+
+  const fetchPlansData = async () => {
+    if (currentSelectedPlan !== '') {
+      const docCollection = query(
+        collection(db, "plans", currentSelectedPlan, "calendar")
+      );
+      onSnapshot(docCollection, (querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+          setEnableAirfare(doc.data().EnableAirfare);
+          setEnableBudget(doc.data().EnableBudget);
+          setEnableLodging(doc.data().EnableLodging);
+        });
+      });
+    }
+    
+  };
+
+  useEffect(() => {
+    fetchPlansData();
+  }, []);
 
   return (
     <StateContext.Provider value={{ 

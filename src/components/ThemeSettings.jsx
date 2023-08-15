@@ -22,25 +22,27 @@ const ThemeSettings = () => {
     setThemeSettings,
     currentPlanIsSet,
     currentSelectedPlan,
+    setEnableBudget,
+    setEnableAirfare,
+    setEnableLodging
   } = useStateContext();
 
   const [plan, setPlan] = useState({});
   const [displayAirfare, setDisplayAirfare] = useState("");
 
-  const handleAirfareChange = (event) => {
-    setDisplayAirfare(event.target.value);
-  };
-
   const handleAirfareCheckboxChange = (event) => {
-    updatePlanEnableAirfare(currentSelectedPlan, event.target.value);
+    updatePlanEnableAirfare(currentSelectedPlan, event.target.checked);
+    setEnableAirfare(event.target.checked);
   };
 
   const handleLodgingCheckboxChange = (event) => {
-    updatePlanEnableLodging(currentSelectedPlan, event.target.value);
+    updatePlanEnableLodging(currentSelectedPlan, event.target.checked);
+    setEnableLodging(event.target.checked);
   };
 
   const handleBudgetCheckboxChange = (event) => {
-    updatePlanEnableBudget(currentSelectedPlan, event.target.value);
+    updatePlanEnableBudget(currentSelectedPlan, event.target.checked);
+    setEnableBudget(event.target.checked);
   };
 
   const setPlanFromContext = async () => {
