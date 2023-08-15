@@ -10,7 +10,7 @@ import Checkbox from '@mui/material/Checkbox';
 //Data
 import { db } from "../firebase/firebase";
 import { doc, getDoc } from "firebase/firestore";
-import { updatePlanAirfareDisplay } from "../globalFunctions/firebaseGlobals";
+import { updatePlanEnableAirfare, updatePlanEnableLodging, updatePlanEnableBudget } from "../globalFunctions/firebaseGlobals";
 
 
 const ThemeSettings = () => {
@@ -28,8 +28,19 @@ const ThemeSettings = () => {
   const [displayAirfare, setDisplayAirfare] = useState("");
 
   const handleAirfareChange = (event) => {
-    updatePlanAirfareDisplay(currentSelectedPlan, event.target.value);
     setDisplayAirfare(event.target.value);
+  };
+
+  const handleAirfareCheckboxChange = (event) => {
+    updatePlanEnableAirfare(currentSelectedPlan, event.target.value);
+  };
+
+  const handleLodgingCheckboxChange = (event) => {
+    updatePlanEnableLodging(currentSelectedPlan, event.target.value);
+  };
+
+  const handleBudgetCheckboxChange = (event) => {
+    updatePlanEnableBudget(currentSelectedPlan, event.target.value);
   };
 
   const setPlanFromContext = async () => {
@@ -134,11 +145,17 @@ const ThemeSettings = () => {
           {currentPlanIsSet && (
             <div className="flex-col border-t-1 border-color p-4 ml-4">
               <p className="font-semibold text-lg">Enable Airfare</p>
-              <Checkbox />
-              <p className="font-semibold text-lg">Enable Stay</p>
-              <Checkbox />
+              <Checkbox 
+                onChange={handleAirfareCheckboxChange}
+              />
+              <p className="font-semibold text-lg">Enable Lodging</p>
+              <Checkbox 
+                onChange={handleLodgingCheckboxChange}
+              />
               <p className="font-semibold text-lg">Enable Budget</p>
-              <Checkbox />
+              <Checkbox 
+                onChange={handleBudgetCheckboxChange}
+              />
             </div>
             
           )}

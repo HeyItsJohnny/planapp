@@ -16,6 +16,9 @@ export const ContextProvider = ({ children }) => {
   const [currentMode, setCurrentMode] = useState('Dark');
   const [currentSelectedPlan, setCurrentSelectedPlan] = useState('');
   const [currentPlanIsSet, setCurrentPlanIsSet] = useState(false);
+  const [enableAirfare, setEnableAirfare] = useState(false);
+  const [enableLodging, setEnableLodging] = useState(false);
+  const [enableBudget, setEnableBudget] = useState(false);
   const [themeSettings, setThemeSettings] = useState(false);
   const [userSettings, setUserSettings] = useState(false);
 
@@ -66,7 +69,13 @@ export const ContextProvider = ({ children }) => {
         currentSelectedPlan,
         setPlan,
         currentPlanIsSet,
-        setCurrentPlanIsSet
+        setCurrentPlanIsSet,
+        enableAirfare,
+        setEnableAirfare,
+        enableBudget,
+        setEnableBudget,
+        enableLodging,
+        setEnableLodging
     }}>
       {children}
     </StateContext.Provider>

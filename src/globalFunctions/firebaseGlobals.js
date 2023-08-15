@@ -124,16 +124,39 @@ export async function deletePlanCalendar(planid, docid) {
   }
 }
 
-export async function updatePlanAirfareDisplay(planid, displayValue) {
+export async function updatePlanEnableAirfare(planid, displayValue) {
   try {
     const familyPlansRef = doc(db, "plans", planid);
     await updateDoc(familyPlansRef, {
-      DisplayAirfare: displayValue,
+      EnableAirfare: displayValue,
     });
   } catch (error) {
     alert("Error editing data to Database: " + error);
   }
 };
+
+export async function updatePlanEnableLodging(planid, displayValue) {
+  try {
+    const familyPlansRef = doc(db, "plans", planid);
+    await updateDoc(familyPlansRef, {
+      EnableLodging: displayValue,
+    });
+  } catch (error) {
+    alert("Error editing data to Database: " + error);
+  }
+};
+
+export async function updatePlanEnableBudget(planid, displayValue) {
+  try {
+    const familyPlansRef = doc(db, "plans", planid);
+    await updateDoc(familyPlansRef, {
+      EnableBudget: displayValue,
+    });
+  } catch (error) {
+    alert("Error editing data to Database: " + error);
+  }
+};
+
 
 
 
