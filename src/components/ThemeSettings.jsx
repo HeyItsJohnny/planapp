@@ -5,11 +5,13 @@ import { TooltipComponent } from "@syncfusion/ej2-react-popups";
 
 import { themeColors } from "../components/Settings";
 import { useStateContext } from "../contexts/ContextProvider";
+import Checkbox from '@mui/material/Checkbox';
 
 //Data
 import { db } from "../firebase/firebase";
 import { doc, getDoc } from "firebase/firestore";
 import { updatePlanAirfareDisplay } from "../globalFunctions/firebaseGlobals";
+
 
 const ThemeSettings = () => {
   const {
@@ -131,36 +133,14 @@ const ThemeSettings = () => {
           )}
           {currentPlanIsSet && (
             <div className="flex-col border-t-1 border-color p-4 ml-4">
-              <p className="font-semibold text-lg">Display Airfare</p>
-              <div className="mt-4">
-                <input
-                  type="radio"
-                  id="yes"
-                  name="theme"
-                  value="Yes"
-                  className="cursor-pointer"
-                  onChange={handleAirfareChange}
-                  checked={displayAirfare === "Yes"}
-                />
-                <label htmlFor="light" className="ml-2 text-md cursor-pointer">
-                  Yes
-                </label>
-              </div>
-              <div className="mt-4">
-                <input
-                  type="radio"
-                  id="no"
-                  name="theme"
-                  value="No"
-                  className="cursor-pointer"
-                  onChange={handleAirfareChange}
-                  checked={displayAirfare === "No"}
-                />
-                <label htmlFor="dark" className="ml-2 text-md cursor-pointer">
-                  No
-                </label>
-              </div>
+              <p className="font-semibold text-lg">Enable Airfare</p>
+              <Checkbox />
+              <p className="font-semibold text-lg">Enable Stay</p>
+              <Checkbox />
+              <p className="font-semibold text-lg">Enable Budget</p>
+              <Checkbox />
             </div>
+            
           )}
         </div>
       </div>
