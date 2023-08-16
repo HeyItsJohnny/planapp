@@ -10,7 +10,7 @@ import Checkbox from '@mui/material/Checkbox';
 //Data
 import { db } from "../firebase/firebase";
 import { doc, getDoc } from "firebase/firestore";
-import { updatePlanEnableAirfare, updatePlanEnableLodging, updatePlanEnableBudget } from "../globalFunctions/firebaseGlobals";
+import { updatePlanEnableAirfare, updatePlanEnableLodging } from "../globalFunctions/firebaseGlobals";
 
 
 const ThemeSettings = () => {
@@ -22,11 +22,9 @@ const ThemeSettings = () => {
     setThemeSettings,
     currentPlanIsSet,
     currentSelectedPlan,
-    setEnableBudget,
     setEnableAirfare,
     setEnableLodging,
     enableAirfare,
-    enableBudget,
     enableLodging
   } = useStateContext();
 
@@ -39,11 +37,6 @@ const ThemeSettings = () => {
   const handleLodgingCheckboxChange = (event) => {
     updatePlanEnableLodging(currentSelectedPlan, event.target.checked);
     setEnableLodging(event.target.checked);
-  };
-
-  const handleBudgetCheckboxChange = (event) => {
-    updatePlanEnableBudget(currentSelectedPlan, event.target.checked);
-    setEnableBudget(event.target.checked);
   };
 
 
@@ -157,11 +150,6 @@ const ThemeSettings = () => {
               <Checkbox 
                 checked={enableLodging}
                 onChange={handleLodgingCheckboxChange}
-              />
-              <p className="font-semibold text-lg">Enable Budget</p>
-              <Checkbox 
-                checked={enableBudget}
-                onChange={handleBudgetCheckboxChange}
               />
             </div>
             

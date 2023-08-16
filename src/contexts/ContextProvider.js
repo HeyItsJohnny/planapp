@@ -32,7 +32,6 @@ export const ContextProvider = ({ children }) => {
   const [currentPlanIsSet, setCurrentPlanIsSet] = useState(false);
   const [enableAirfare, setEnableAirfare] = useState(false);
   const [enableLodging, setEnableLodging] = useState(false);
-  const [enableBudget, setEnableBudget] = useState(false);
   const [themeSettings, setThemeSettings] = useState(false);
   const [userSettings, setUserSettings] = useState(false);
 
@@ -69,7 +68,6 @@ export const ContextProvider = ({ children }) => {
       onSnapshot(docCollection, (querySnapshot) => {
         querySnapshot.forEach((doc) => {
           setEnableAirfare(doc.data().EnableAirfare);
-          setEnableBudget(doc.data().EnableBudget);
           setEnableLodging(doc.data().EnableLodging);
         });
       });
@@ -106,8 +104,6 @@ export const ContextProvider = ({ children }) => {
         setCurrentPlanIsSet,
         enableAirfare,
         setEnableAirfare,
-        enableBudget,
-        setEnableBudget,
         enableLodging,
         setEnableLodging
     }}>

@@ -5,54 +5,106 @@ import { Header } from "../../components";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { Box, TextField } from "@mui/material";
 
-const ItineraryHousing = () => {
+//DATA
+import { useStateContext } from "../../contexts/ContextProvider";
+import {
+  updatePlanLodgingCheckinDate,
+  updatePlanLodgingCheckinTime,
+  updatePlanLodgingCheckoutDate,
+  updatePlanLodgingCheckoutTime,
+  updatePlanLodgingAddress1,
+  updatePlanLodgingAddress2,
+  updatePlanLodgingAddressCity,
+  updatePlanLodgingAddressState,
+  updatePlanLodgingAddressZip
+} from "../../globalFunctions/firebaseGlobals";
+
+import { db } from "../../firebase/firebase";
+import { doc, getDoc, query, collection, onSnapshot } from "firebase/firestore";
+
+const ItineraryLodging = () => {
+  const { currentSelectedPlan } = useStateContext();
+
   const [checkinDate, setCheckinDate] = useState("");
   const [checkinTime, setCheckinTime] = useState("");
   const [checkoutDate, setCheckoutDate] = useState("");
   const [checkoutTime, setCheckoutTime] = useState("");
-  const [housingAddress1, setHousingAddress1] = useState("");
-  const [housingAddress2, setHousingAddress2] = useState("");
-  const [housingAddressCity, setHousingAddressCity] = useState("");
-  const [housingAddressState, setHousingAddressState] = useState("");
-  const [housingAddressZip, setHousingAddressZip] = useState("");
+  const [lodgingAddress1, setLodgingAddress1] = useState("");
+  const [lodgingAddress2, setLodgingAddress2] = useState("");
+  const [lodgingAddressCity, setLodgingAddressCity] = useState("");
+  const [lodgingAddressState, setLodgingAddressState] = useState("");
+  const [lodgingAddressZip, setLodgingAddressZip] = useState("");
 
   const isNonMobile = useMediaQuery("(min-width:600px)");
 
   const onChangeCheckinDate = (args) => {
     setCheckinDate(args.target.value);
+    updatePlanLodgingCheckinDate(currentSelectedPlan, args.target.value);
   };
 
   const onChangeCheckinTime = (args) => {
     setCheckinTime(args.target.value);
+    updatePlanLodgingCheckinTime(currentSelectedPlan, args.target.value);
   };
 
   const onChangeCheckoutDate = (args) => {
     setCheckoutDate(args.target.value);
+    updatePlanLodgingCheckoutDate(currentSelectedPlan, args.target.value);
   };
 
   const onChangeCheckoutTime = (args) => {
     setCheckoutTime(args.target.value);
+    updatePlanLodgingCheckoutTime(currentSelectedPlan, args.target.value);
   };
 
-  const onChangeHousingAddress1 = (args) => {
-    setHousingAddress1(args.target.value);
+  const onChangeLodgingAddress1 = (args) => {
+    setLodgingAddress1(args.target.value);
+    updatePlanLodgingAddress1(currentSelectedPlan, args.target.value);
   };
 
-  const onChangeHousingAddress2 = (args) => {
-    setHousingAddress2(args.target.value);
+  const onChangeLodgingAddress2 = (args) => {
+    setLodgingAddress2(args.target.value);
+    updatePlanLodgingAddress2(currentSelectedPlan, args.target.value);
   };
 
-  const onChangeHousingAddressCity = (args) => {
-    setHousingAddressCity(args.target.value);
+  const onChangeLodgingAddressCity = (args) => {
+    setLodgingAddressCity(args.target.value);
+    updatePlanLodgingAddressCity(currentSelectedPlan, args.target.value);
   };
 
-  const onChangeHousingAddressState = (args) => {
-    setHousingAddressState(args.target.value);
+  const onChangeLodgingAddressState = (args) => {
+    setLodgingAddressState(args.target.value);
+    updatePlanLodgingAddressState(currentSelectedPlan, args.target.value);
   };
 
-  const onChangeHousingAddressZip = (args) => {
-    setHousingAddressZip(args.target.value);
+  const onChangeLodgingAddressZip = (args) => {
+    setLodgingAddressZip(args.target.value);
+    updatePlanLodgingAddressZip(currentSelectedPlan, args.target.value);
   };
+
+  const setPlanFromContext = async () => {
+    try {
+      const docRef = doc(db, "plans", currentSelectedPlan);
+      const docSnap = await getDoc(docRef);
+      if (docSnap.exists()) {
+        setCheckinDate(docSnap.data().LodgingCheckinDate);
+        setCheckinTime(docSnap.data().LodgingCheckinTime);
+        setCheckoutDate(docSnap.data().LodgingCheckoutDate);
+        setCheckoutTime(docSnap.data().LodgingCheckoutTime);
+        setLodgingAddress1(docSnap.data().LodgingAddress1);
+        setLodgingAddress2(docSnap.data().LodgingAddress2);
+        setLodgingAddressCity(docSnap.data().LodgingAddressCity);
+        setLodgingAddressState(docSnap.data().LodgingAddressState);
+        setLodgingAddressZip(docSnap.data().LodgingAddressZip);
+      }
+    } catch (err) {
+      alert(err);
+    }
+  };
+
+  useEffect(() => {
+    setPlanFromContext();
+  }, []);
 
   return (
     <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white dark:text-gray-200 dark:bg-secondary-dark-bg rounded-3xl">
@@ -153,8 +205,8 @@ const ItineraryHousing = () => {
           type="text"
           fullWidth
           variant="filled"
-          value={housingAddress1}
-          onChange={onChangeHousingAddress1}
+          value={lodgingAddress1}
+          onChange={onChangeLodgingAddress1}
           sx={{ gridColumn: "span 2" }}
           InputProps={{
             className: "bg-white dark:text-gray-200 dark:bg-secondary-dark-bg",
@@ -172,8 +224,8 @@ const ItineraryHousing = () => {
           type="text"
           fullWidth
           variant="filled"
-          value={housingAddress2}
-          onChange={onChangeHousingAddress2}
+          value={lodgingAddress2}
+          onChange={onChangeLodgingAddress2}
           sx={{ gridColumn: "span 2" }}
           InputProps={{
             className: "bg-white dark:text-gray-200 dark:bg-secondary-dark-bg",
@@ -191,8 +243,8 @@ const ItineraryHousing = () => {
           type="text"
           fullWidth
           variant="filled"
-          value={housingAddressCity}
-          onChange={onChangeHousingAddressCity}
+          value={lodgingAddressCity}
+          onChange={onChangeLodgingAddressCity}
           sx={{ gridColumn: "span 1" }}
           InputProps={{
             className: "bg-white dark:text-gray-200 dark:bg-secondary-dark-bg",
@@ -210,8 +262,8 @@ const ItineraryHousing = () => {
           type="text"
           fullWidth
           variant="filled"
-          value={housingAddressState}
-          onChange={onChangeHousingAddressState}
+          value={lodgingAddressState}
+          onChange={onChangeLodgingAddressState}
           sx={{ gridColumn: "span 1" }}
           InputProps={{
             className: "bg-white dark:text-gray-200 dark:bg-secondary-dark-bg",
@@ -229,16 +281,17 @@ const ItineraryHousing = () => {
           type="text"
           fullWidth
           variant="filled"
-          value={housingAddressZip}
-          onChange={onChangeHousingAddressZip}
+          value={lodgingAddressZip}
+          onChange={onChangeLodgingAddressZip}
           sx={{ gridColumn: "span 2" }}
           InputProps={{
             className: "bg-white dark:text-gray-200 dark:bg-secondary-dark-bg",
           }}
         />
+
       </Box>
     </div>
   );
 };
 
-export default ItineraryHousing;
+export default ItineraryLodging;

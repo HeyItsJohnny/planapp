@@ -146,19 +146,107 @@ export async function updatePlanEnableLodging(planid, displayValue) {
   }
 };
 
-export async function updatePlanEnableBudget(planid, displayValue) {
+//Lodging Information -
+export async function updatePlanLodgingCheckinDate(planid, checkindate) {
   try {
     const familyPlansRef = doc(db, "plans", planid);
     await updateDoc(familyPlansRef, {
-      EnableBudget: displayValue,
+      LodgingCheckinDate: checkindate,
     });
   } catch (error) {
     alert("Error editing data to Database: " + error);
   }
 };
 
+export async function updatePlanLodgingCheckinTime(planid, checkintime) {
+  try {
+    const familyPlansRef = doc(db, "plans", planid);
+    await updateDoc(familyPlansRef, {
+      LodgingCheckinTime: checkintime,
+    });
+  } catch (error) {
+    alert("Error editing data to Database: " + error);
+  }
+};
 
+export async function updatePlanLodgingCheckoutDate(planid, checkoutdate) {
+  try {
+    const familyPlansRef = doc(db, "plans", planid);
+    await updateDoc(familyPlansRef, {
+      LodgingCheckoutDate: checkoutdate,
+    });
+  } catch (error) {
+    alert("Error editing data tso Database: " + error);
+  }
+};
 
+export async function updatePlanLodgingCheckoutTime(planid, checkouttime) {
+  try {
+    const familyPlansRef = doc(db, "plans", planid);
+    await updateDoc(familyPlansRef, {
+      LodgingCheckoutTime: checkouttime,
+    });
+  } catch (error) {
+    alert("Error editing data to Database: " + error);
+  }
+};
+
+export async function updatePlanLodgingAddress1(planid, address1) {
+  try {
+    const familyPlansRef = doc(db, "plans", planid);
+    await updateDoc(familyPlansRef, {
+      LodgingAddress1: address1,
+    });
+  } catch (error) {
+    alert("Error editing data to Database: " + error);
+  }
+};
+
+export async function updatePlanLodgingAddress2(planid, address2) {
+  try {
+    const familyPlansRef = doc(db, "plans", planid);
+    await updateDoc(familyPlansRef, {
+      LodgingAddress2: address2,
+    });
+  } catch (error) {
+    alert("Error editing data to Database: " + error);
+  }
+};
+
+export async function updatePlanLodgingAddressCity(planid, addresscity) {
+  try {
+    const familyPlansRef = doc(db, "plans", planid);
+    await updateDoc(familyPlansRef, {
+      LodgingAddressCity: addresscity,
+    });
+  } catch (error) {
+    alert("Error editing data to Database: " + error);
+  }
+};
+
+export async function updatePlanLodgingAddressState(planid, addressstate) {
+  try {
+    const familyPlansRef = doc(db, "plans", planid);
+    await updateDoc(familyPlansRef, {
+      LodgingAddressState: addressstate,
+    });
+  } catch (error) {
+    alert("Error editing data to Database: " + error);
+  }
+};
+
+export async function updatePlanLodgingAddressZip(planid, addresszip) {
+  try {
+    const familyPlansRef = doc(db, "plans", planid);
+    await updateDoc(familyPlansRef, {
+      LodgingAddressZip: addresszip,
+    });
+  } catch (error) {
+    alert("Error editing data to Database: " + error);
+  }
+};
+
+//Lodging Information +
 
 /*
 export const getUserProfile = async (uid) => {
