@@ -16,14 +16,14 @@ import {
   updatePlanLodgingAddress2,
   updatePlanLodgingAddressCity,
   updatePlanLodgingAddressState,
-  updatePlanLodgingAddressZip
+  updatePlanLodgingAddressZip,
 } from "../../globalFunctions/firebaseGlobals";
 
 import { db } from "../../firebase/firebase";
 import { doc, getDoc, query, collection, onSnapshot } from "firebase/firestore";
 
 const ItineraryLodging = () => {
-  const { currentSelectedPlan } = useStateContext();
+  const { currentSelectedPlan, currentColor } = useStateContext();
 
   const [checkinDate, setCheckinDate] = useState("");
   const [checkinTime, setCheckinTime] = useState("");
@@ -102,6 +102,11 @@ const ItineraryLodging = () => {
     }
   };
 
+  const handleAddToItinerary = () => {
+    //Add to itinerary
+    alert("Add to Itinerary");
+  };
+
   useEffect(() => {
     setPlanFromContext();
   }, []);
@@ -109,6 +114,21 @@ const ItineraryLodging = () => {
   return (
     <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white dark:text-gray-200 dark:bg-secondary-dark-bg rounded-3xl">
       <Header category="Itinerary" title="Lodging" />
+      <div className="mb-10">
+        <button
+          type="button"
+          style={{
+            backgroundColor: currentColor,
+            color: "White",
+            borderRadius: "10px",
+          }}
+          className={`text-md p-3 hover:drop-shadow-xl`}
+          onClick={handleAddToItinerary}
+        >
+          Add Lodging to Itinerary
+        </button>
+      </div>
+
       <Box
         display="grid"
         gap="30px"
@@ -217,8 +237,7 @@ const ItineraryLodging = () => {
             shrink: true,
             className: "bg-white dark:text-gray-200 dark:bg-secondary-dark-bg",
           }}
-          margin="dense"
-          required
+          margin="dense"          
           id="HousingAddress2"
           label="Address 2"
           type="text"
@@ -288,7 +307,6 @@ const ItineraryLodging = () => {
             className: "bg-white dark:text-gray-200 dark:bg-secondary-dark-bg",
           }}
         />
-
       </Box>
     </div>
   );

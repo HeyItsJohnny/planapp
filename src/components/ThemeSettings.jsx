@@ -45,8 +45,8 @@ const ThemeSettings = () => {
       const docRef = doc(db, "plans", currentSelectedPlan);
       const docSnap = await getDoc(docRef);
       if (docSnap.exists()) {
-        //setPlan(docSnap.data());
-        //setDisplayAirfare(docSnap.data().DisplayAirfare);
+        setEnableAirfare(docSnap.data().EnableAirfare);
+        setEnableLodging(docSnap.data().EnableLodging);
       }
     } catch (err) {
       alert(err);
@@ -55,7 +55,7 @@ const ThemeSettings = () => {
 
   useEffect(() => {
     if (currentPlanIsSet) {
-      //setPlanFromContext();
+      setPlanFromContext();
     }
     return () => {
       //setPlan([]);

@@ -53,7 +53,6 @@ const NewPlanModal = () => {
         StartDate: data.target.StartDate.value,
         EndDate: data.target.EndDate.value,
         EnableAirfare: false,
-        EnableBudget: false,
         EnableLodging: false
       });
     } catch (error) {
