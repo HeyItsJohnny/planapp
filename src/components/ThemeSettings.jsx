@@ -24,11 +24,12 @@ const ThemeSettings = () => {
     currentSelectedPlan,
     setEnableBudget,
     setEnableAirfare,
-    setEnableLodging
+    setEnableLodging,
+    enableAirfare,
+    enableBudget,
+    enableLodging
   } = useStateContext();
 
-  const [plan, setPlan] = useState({});
-  const [displayAirfare, setDisplayAirfare] = useState("");
 
   const handleAirfareCheckboxChange = (event) => {
     updatePlanEnableAirfare(currentSelectedPlan, event.target.checked);
@@ -45,13 +46,14 @@ const ThemeSettings = () => {
     setEnableBudget(event.target.checked);
   };
 
+
   const setPlanFromContext = async () => {
     try {
       const docRef = doc(db, "plans", currentSelectedPlan);
       const docSnap = await getDoc(docRef);
       if (docSnap.exists()) {
-        setPlan(docSnap.data());
-        setDisplayAirfare(docSnap.data().DisplayAirfare);
+        //setPlan(docSnap.data());
+        //setDisplayAirfare(docSnap.data().DisplayAirfare);
       }
     } catch (err) {
       alert(err);
@@ -60,10 +62,10 @@ const ThemeSettings = () => {
 
   useEffect(() => {
     if (currentPlanIsSet) {
-      setPlanFromContext();
+      //setPlanFromContext();
     }
     return () => {
-      setPlan([]);
+      //setPlan([]);
     };
   }, []);
 
@@ -148,14 +150,17 @@ const ThemeSettings = () => {
             <div className="flex-col border-t-1 border-color p-4 ml-4">
               <p className="font-semibold text-lg">Enable Airfare</p>
               <Checkbox 
+                checked={enableAirfare}
                 onChange={handleAirfareCheckboxChange}
               />
               <p className="font-semibold text-lg">Enable Lodging</p>
               <Checkbox 
+                checked={enableLodging}
                 onChange={handleLodgingCheckboxChange}
               />
               <p className="font-semibold text-lg">Enable Budget</p>
               <Checkbox 
+                checked={enableBudget}
                 onChange={handleBudgetCheckboxChange}
               />
             </div>

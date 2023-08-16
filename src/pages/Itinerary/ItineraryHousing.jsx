@@ -6,6 +6,10 @@ import useMediaQuery from "@mui/material/useMediaQuery";
 import { Box, TextField } from "@mui/material";
 
 const ItineraryHousing = () => {
+  const [checkinDate, setCheckinDate] = useState("");
+  const [checkinTime, setCheckinTime] = useState("");
+  const [checkoutDate, setCheckoutDate] = useState("");
+  const [checkoutTime, setCheckoutTime] = useState("");
   const [housingAddress1, setHousingAddress1] = useState("");
   const [housingAddress2, setHousingAddress2] = useState("");
   const [housingAddressCity, setHousingAddressCity] = useState("");
@@ -13,6 +17,22 @@ const ItineraryHousing = () => {
   const [housingAddressZip, setHousingAddressZip] = useState("");
 
   const isNonMobile = useMediaQuery("(min-width:600px)");
+
+  const onChangeCheckinDate = (args) => {
+    setCheckinDate(args.target.value);
+  };
+
+  const onChangeCheckinTime = (args) => {
+    setCheckinTime(args.target.value);
+  };
+
+  const onChangeCheckoutDate = (args) => {
+    setCheckoutDate(args.target.value);
+  };
+
+  const onChangeCheckoutTime = (args) => {
+    setCheckoutTime(args.target.value);
+  };
 
   const onChangeHousingAddress1 = (args) => {
     setHousingAddress1(args.target.value);
@@ -36,7 +56,7 @@ const ItineraryHousing = () => {
 
   return (
     <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white dark:text-gray-200 dark:bg-secondary-dark-bg rounded-3xl">
-      <Header category="Itinerary" title="Housing" />
+      <Header category="Itinerary" title="Lodging" />
       <Box
         display="grid"
         gap="30px"
@@ -45,6 +65,82 @@ const ItineraryHousing = () => {
           "& > div": { gridColumn: isNonMobile ? undefined : "span 4" },
         }}
       >
+        <TextField
+          InputLabelProps={{
+            shrink: true,
+            className: "bg-white dark:text-gray-200 dark:bg-secondary-dark-bg",
+          }}
+          margin="dense"
+          required
+          id="CheckinDate"
+          label="Checkin Date"
+          type="date"
+          fullWidth
+          variant="filled"
+          value={checkinDate}
+          onChange={onChangeCheckinDate}
+          sx={{ gridColumn: "span 1" }}
+          InputProps={{
+            className: "bg-white dark:text-gray-200 dark:bg-secondary-dark-bg",
+          }}
+        />
+        <TextField
+          InputLabelProps={{
+            shrink: true,
+            className: "bg-white dark:text-gray-200 dark:bg-secondary-dark-bg",
+          }}
+          margin="dense"
+          required
+          id="CheckinTime"
+          label="Checkin Time"
+          type="time"
+          fullWidth
+          variant="filled"
+          value={checkinTime}
+          onChange={onChangeCheckinTime}
+          sx={{ gridColumn: "span 1" }}
+          InputProps={{
+            className: "bg-white dark:text-gray-200 dark:bg-secondary-dark-bg",
+          }}
+        />
+        <TextField
+          InputLabelProps={{
+            shrink: true,
+            className: "bg-white dark:text-gray-200 dark:bg-secondary-dark-bg",
+          }}
+          margin="dense"
+          required
+          id="CheckoutDate"
+          label="Checkout Date"
+          type="date"
+          fullWidth
+          variant="filled"
+          value={checkoutDate}
+          onChange={onChangeCheckoutDate}
+          sx={{ gridColumn: "span 1" }}
+          InputProps={{
+            className: "bg-white dark:text-gray-200 dark:bg-secondary-dark-bg",
+          }}
+        />
+        <TextField
+          InputLabelProps={{
+            shrink: true,
+            className: "bg-white dark:text-gray-200 dark:bg-secondary-dark-bg",
+          }}
+          margin="dense"
+          required
+          id="CheckoutTime"
+          label="Checkout Time"
+          type="time"
+          fullWidth
+          variant="filled"
+          value={checkoutTime}
+          onChange={onChangeCheckoutTime}
+          sx={{ gridColumn: "span 1" }}
+          InputProps={{
+            className: "bg-white dark:text-gray-200 dark:bg-secondary-dark-bg",
+          }}
+        />
         <TextField
           InputLabelProps={{
             shrink: true,
