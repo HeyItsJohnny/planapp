@@ -4,6 +4,8 @@ import React, { useState, useEffect } from "react";
 import { Header } from "../../components";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { Box, TextField } from "@mui/material";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 //DATA
 import { useStateContext } from "../../contexts/ContextProvider";
@@ -17,7 +19,12 @@ import {
   updatePlanLodgingAddressCity,
   updatePlanLodgingAddressState,
   updatePlanLodgingAddressZip,
+  addCheckinCalendar,
+  addCheckoutCalendar,
+  deletePlanCalendar
 } from "../../globalFunctions/firebaseGlobals";
+
+import { convertDateTimeString } from "../../globalFunctions/globalFunctions";
 
 import { db } from "../../firebase/firebase";
 import { doc, getDoc, query, collection, onSnapshot } from "firebase/firestore";
@@ -103,8 +110,27 @@ const ItineraryLodging = () => {
   };
 
   const handleAddToItinerary = () => {
-    //Add to itinerary
-    alert("Add to Itinerary");
+    //Delete Current Check In
+    deletePlanCalendar(currentSelectedPlan,'LodgingCheckin');
+
+    //Checkin Date/Time
+    const LocalDateCheckinStartTime = convertDateTimeString(checkinDate,checkinTime);
+    const LocalDateCheckinEndTime = new Date(LocalDateCheckinStartTime);
+    LocalDateCheckinEndTime.setHours(LocalDateCheckinStartTime.getHours() + 1);
+
+    addCheckinCalendar(currentSelectedPlan,LocalDateCheckinStartTime,LocalDateCheckinEndTime);
+
+    //Delete Current Check Out
+    deletePlanCalendar(currentSelectedPlan,'LodgingCheckout');
+
+    //Checkout Date/Time
+    const LocalDateCheckoutStartTime = convertDateTimeString(checkoutDate,checkoutTime);
+    const LocalDateCheckoutEndTime = new Date(LocalDateCheckoutStartTime);
+    LocalDateCheckoutEndTime.setHours(LocalDateCheckoutStartTime.getHours() + 1);
+
+    addCheckoutCalendar(currentSelectedPlan,LocalDateCheckoutStartTime,LocalDateCheckoutEndTime);
+
+    toast("Lodging dates updated in the itinerary!");
   };
 
   useEffect(() => {
@@ -114,6 +140,7 @@ const ItineraryLodging = () => {
   return (
     <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white dark:text-gray-200 dark:bg-secondary-dark-bg rounded-3xl">
       <Header category="Itinerary" title="Lodging" />
+      <ToastContainer />
       <div className="mb-10">
         <button
           type="button"
@@ -127,6 +154,7 @@ const ItineraryLodging = () => {
         >
           Add Lodging to Itinerary
         </button>
+        
       </div>
 
       <Box

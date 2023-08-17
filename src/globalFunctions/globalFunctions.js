@@ -11,3 +11,17 @@ export function convertDateFormat(inputDate) {
   const formattedDate = `${formattedMonth}/${formattedDay}/${year}`;
   return formattedDate;
 }
+
+export function convertDateTimeString(dateString, timeString) {
+  if (dateString === "") {
+    return;
+  }
+  if (timeString === "") {
+    return;
+  }
+
+  const formattedDate = dateString + 'T' + timeString;
+  const localDate = new Date(formattedDate);
+
+  return localDate;
+}

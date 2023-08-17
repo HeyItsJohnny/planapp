@@ -31,7 +31,7 @@ import {
 } from "../../globalFunctions/firebaseGlobals";
 
 const PlanSummary = () => {
-  const { currentSelectedPlan } = useStateContext();
+  const { currentSelectedPlan, setEnableAirfare, setEnableLodging } = useStateContext();
   const isNonMobile = useMediaQuery("(min-width:600px)");
 
   //Itinerary
@@ -53,6 +53,8 @@ const PlanSummary = () => {
         setDestination(docSnap.data().Destination);
         setStartDate(docSnap.data().StartDate);
         setEndDate(docSnap.data().EndDate);
+        setEnableLodging(docSnap.data().EnableLodging);
+        setEnableAirfare(docSnap.data().EnableAirfare);
         setCalendarViewComponents(
           docSnap.data().StartDate,
           docSnap.data().EndDate
@@ -146,7 +148,7 @@ const PlanSummary = () => {
             "& > div": { gridColumn: isNonMobile ? undefined : "span 4" },
           }}
         >
-            <TextField
+          <TextField
             InputLabelProps={{
               shrink: true,
               className:

@@ -4,11 +4,10 @@ import { db  } from "../firebase/firebase";
 
 import {
   doc,
-  getDoc,
+  setDoc,
   collection,
   query,
   onSnapshot,
-  orderBy,
   deleteDoc,
   updateDoc,
   addDoc
@@ -76,6 +75,7 @@ export async function updatePlanDestination(planid, destination) {
 
 export async function addToPlanCalendar(planid,data) {
   try {
+    console.log(data.StartTime);
     await addDoc(collection(db, "plans", planid, "calendar"),
       {
         Subject: data.Subject,
@@ -245,6 +245,46 @@ export async function updatePlanLodgingAddressZip(planid, addresszip) {
     alert("Error editing data to Database: " + error);
   }
 };
+
+export async function addCheckinCalendar(planid,startdate,enddate) {
+  try {
+    //const firebaseTimestamp1 = firebase.firestore.Timestamp.fromDate(startdate);
+
+    await setDoc(doc(db, "plans", planid,  "calendar", 'LodgingCheckin'), {
+      CategoryColor: "",
+      Description: "",
+      EndTime: enddate,
+      EventColor: "",
+      IsAllDay: false,
+      Location: "",
+      RecurrenceException: "",
+      RecurrenceRule: "",
+      StartTime: startdate,
+      Subject: "Lodging Checkin"
+    });
+  } catch (error) {
+    alert("There was an error adding to the database: " + error);
+  }
+}
+
+export async function addCheckoutCalendar(planid,startdate,enddate) {
+  try {
+    await setDoc(doc(db, "plans", planid,  "calendar", 'LodgingCheckout'), {
+      CategoryColor: "",
+      Description: "",
+      EndTime: enddate,
+      EventColor: "",
+      IsAllDay: false,
+      Location: "",
+      RecurrenceException: "",
+      RecurrenceRule: "",
+      StartTime: startdate,
+      Subject: "Lodging Checkout"
+    });
+  } catch (error) {
+    alert("There was an error adding to the database: " + error);
+  }
+}
 
 //Lodging Information +
 
