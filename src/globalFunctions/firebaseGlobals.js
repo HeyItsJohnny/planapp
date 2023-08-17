@@ -257,6 +257,17 @@ export async function updatePlanLodgingAddressZip(planid, addresszip) {
   }
 };
 
+export async function updatePlanTotalBudget(planid, value) {
+  try {
+    const familyPlansRef = doc(db, "plans", planid);
+    await updateDoc(familyPlansRef, {
+      TotalPlanBudget: value,
+    });
+  } catch (error) {
+    alert("Error editing data to Database: " + error);
+  }
+};
+
 export async function addCheckinCalendar(planid,startdate,enddate) {
   try {
     //const firebaseTimestamp1 = firebase.firestore.Timestamp.fromDate(startdate);
