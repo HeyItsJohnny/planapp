@@ -1,12 +1,8 @@
 import React from "react";
-import { AiOutlinePieChart } from "react-icons/ai";
+import { AiOutlinePieChart, AiFillSetting } from "react-icons/ai";
 import { FaCarSide } from "react-icons/fa";
-import { MdDirectionsRun } from "react-icons/md";
-import { IoMdContacts } from "react-icons/io";
-import { RiLockPasswordLine } from "react-icons/ri";
-import { GrSchedules, GrConfigure } from "react-icons/gr";
+import { MdDirectionsRun, MdFastfood } from "react-icons/md";
 import { GoDashboard } from "react-icons/go";
-import { BiFoodMenu } from "react-icons/bi";
 import { TbReportMoney } from "react-icons/tb";
 
 export const constantLinks = [
@@ -60,6 +56,16 @@ export const planLinks = [
         name: "activities",
         icon: <MdDirectionsRun />,
         linktoname: "planactivities"
+      },
+      {
+        name: "food",
+        icon: <MdFastfood />,
+        linktoname: "planfood"
+      },
+      {
+        name: "list settings",
+        icon: <AiFillSetting />,
+        linktoname: "planlistsettings"
       },
     ],
   },
