@@ -16,6 +16,7 @@ import {
   DragAndDrop,
 } from "@syncfusion/ej2-react-schedule";
 import { parseISO } from "date-fns";
+import PlanSummaryToDos from "./PlanSummaryToDos";
 
 //Data
 import { db } from "../../firebase/firebase";
@@ -31,7 +32,13 @@ import {
 } from "../../globalFunctions/firebaseGlobals";
 
 const PlanSummary = () => {
-  const { currentSelectedPlan, setEnableAirfare, setEnableLodging } = useStateContext();
+  const {
+    currentSelectedPlan,
+    setEnableAirfare,
+    setEnableLodging,
+    setEnableToDos,
+    enableToDos
+  } = useStateContext();
   const isNonMobile = useMediaQuery("(min-width:600px)");
 
   //Itinerary
@@ -55,6 +62,7 @@ const PlanSummary = () => {
         setEndDate(docSnap.data().EndDate);
         setEnableLodging(docSnap.data().EnableLodging);
         setEnableAirfare(docSnap.data().EnableAirfare);
+        setEnableToDos(docSnap.data().EnableToDos);
         setCalendarViewComponents(
           docSnap.data().StartDate,
           docSnap.data().EndDate
@@ -213,6 +221,7 @@ const PlanSummary = () => {
           />
         </Box>
       </div>
+      {enableToDos && <PlanSummaryToDos />}
       <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white dark:text-gray-200 dark:bg-secondary-dark-bg rounded-3xl">
         <ScheduleComponent
           currentView={calendarView}

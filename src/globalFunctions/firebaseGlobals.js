@@ -146,6 +146,17 @@ export async function updatePlanEnableLodging(planid, displayValue) {
   }
 };
 
+export async function updatePlanEnableToDos(planid, displayValue) {
+  try {
+    const familyPlansRef = doc(db, "plans", planid);
+    await updateDoc(familyPlansRef, {
+      EnableToDos: displayValue,
+    });
+  } catch (error) {
+    alert("Error editing data to Database: " + error);
+  }
+};
+
 //Lodging Information -
 export async function updatePlanLodgingCheckinDate(planid, checkindate) {
   try {

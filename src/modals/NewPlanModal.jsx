@@ -53,7 +53,8 @@ const NewPlanModal = () => {
         StartDate: data.target.StartDate.value,
         EndDate: data.target.EndDate.value,
         EnableAirfare: false,
-        EnableLodging: false
+        EnableLodging: false,
+        EnableToDos: false
       });
     } catch (error) {
       alert("There was an error adding to the database: " + error);

@@ -5,13 +5,16 @@ import { TooltipComponent } from "@syncfusion/ej2-react-popups";
 
 import { themeColors } from "../components/Settings";
 import { useStateContext } from "../contexts/ContextProvider";
-import Checkbox from '@mui/material/Checkbox';
+import Checkbox from "@mui/material/Checkbox";
 
 //Data
 import { db } from "../firebase/firebase";
 import { doc, getDoc } from "firebase/firestore";
-import { updatePlanEnableAirfare, updatePlanEnableLodging } from "../globalFunctions/firebaseGlobals";
-
+import {
+  updatePlanEnableAirfare,
+  updatePlanEnableLodging,
+  updatePlanEnableToDos,
+} from "../globalFunctions/firebaseGlobals";
 
 const ThemeSettings = () => {
   const {
@@ -24,10 +27,11 @@ const ThemeSettings = () => {
     currentSelectedPlan,
     setEnableAirfare,
     setEnableLodging,
+    setEnableToDos,
     enableAirfare,
-    enableLodging
+    enableLodging,
+    enableToDos,
   } = useStateContext();
-
 
   const handleAirfareCheckboxChange = (event) => {
     updatePlanEnableAirfare(currentSelectedPlan, event.target.checked);
@@ -39,6 +43,10 @@ const ThemeSettings = () => {
     setEnableLodging(event.target.checked);
   };
 
+  const handleToDosCheckboxChange = (event) => {
+    updatePlanEnableToDos(currentSelectedPlan, event.target.checked);
+    setEnableToDos(event.target.checked);
+  };
 
   const setPlanFromContext = async () => {
     try {
@@ -47,6 +55,7 @@ const ThemeSettings = () => {
       if (docSnap.exists()) {
         setEnableAirfare(docSnap.data().EnableAirfare);
         setEnableLodging(docSnap.data().EnableLodging);
+        setEnableToDos(docSnap.data().EnableToDos);
       }
     } catch (err) {
       alert(err);
@@ -77,82 +86,83 @@ const ThemeSettings = () => {
               <MdOutlineCancel />
             </button>
           </div>
-          {!currentPlanIsSet && (
-            <div className="flex-col border-t-1 border-color p-4 ml-4">
-              <p className="font-semibold text-lg">Theme Options</p>
-              <div className="mt-4">
-                <input
-                  type="radio"
-                  id="light"
-                  name="theme"
-                  value="Light"
-                  className="cursor-pointer"
-                  onChange={setMode}
-                  checked={currentMode === "Light"}
-                />
-                <label htmlFor="light" className="ml-2 text-md cursor-pointer">
-                  Light
-                </label>
-              </div>
-              <div className="mt-4">
-                <input
-                  type="radio"
-                  id="dark"
-                  name="theme"
-                  value="Dark"
-                  className="cursor-pointer"
-                  onChange={setMode}
-                  checked={currentMode === "Dark"}
-                />
-                <label htmlFor="dark" className="ml-2 text-md cursor-pointer">
-                  Dark
-                </label>
-              </div>
+          <div className="flex-col border-t-1 border-color p-4 ml-4">
+            <p className="font-semibold text-lg">Theme Options</p>
+            <div className="mt-4">
+              <input
+                type="radio"
+                id="light"
+                name="theme"
+                value="Light"
+                className="cursor-pointer"
+                onChange={setMode}
+                checked={currentMode === "Light"}
+              />
+              <label htmlFor="light" className="ml-2 text-md cursor-pointer">
+                Light
+              </label>
             </div>
-          )}
-          {!currentPlanIsSet && (
-            <div className="flex-col border-t-1 border-color p-4 ml-4">
-              <p className="font-semibold text-lg">Theme Colors</p>
-              <div className="flex gap-3">
-                {themeColors.map((item, index) => (
-                  <TooltipComponent
-                    key={index}
-                    content={item.name}
-                    position="TopCenter"
-                  >
-                    <div className="re;atove mt-2 cursor-pointer flex gap-5 items-center">
-                      <button
-                        type="button"
-                        className="h-10 w-10 rounded-full cursor-pointer"
-                        style={{ backgroundColor: item.color }}
-                        onClick={() => setColor(item.color)}
-                      >
-                        <BsCheck
-                          className={`ml-2 text-2xl text-white ${
-                            item.color === currentColor ? "block" : "hidden"
-                          }`}
-                        />
-                      </button>
-                    </div>
-                  </TooltipComponent>
-                ))}
-              </div>
+            <div className="mt-4">
+              <input
+                type="radio"
+                id="dark"
+                name="theme"
+                value="Dark"
+                className="cursor-pointer"
+                onChange={setMode}
+                checked={currentMode === "Dark"}
+              />
+              <label htmlFor="dark" className="ml-2 text-md cursor-pointer">
+                Dark
+              </label>
             </div>
-          )}
+          </div>
+
+          <div className="flex-col border-t-1 border-color p-4 ml-4">
+            <p className="font-semibold text-lg">Theme Colors</p>
+            <div className="flex gap-3">
+              {themeColors.map((item, index) => (
+                <TooltipComponent
+                  key={index}
+                  content={item.name}
+                  position="TopCenter"
+                >
+                  <div className="re;atove mt-2 cursor-pointer flex gap-5 items-center">
+                    <button
+                      type="button"
+                      className="h-10 w-10 rounded-full cursor-pointer"
+                      style={{ backgroundColor: item.color }}
+                      onClick={() => setColor(item.color)}
+                    >
+                      <BsCheck
+                        className={`ml-2 text-2xl text-white ${
+                          item.color === currentColor ? "block" : "hidden"
+                        }`}
+                      />
+                    </button>
+                  </div>
+                </TooltipComponent>
+              ))}
+            </div>
+          </div>
           {currentPlanIsSet && (
             <div className="flex-col border-t-1 border-color p-4 ml-4">
-              <p className="font-semibold text-lg">Enable Airfare</p>
-              <Checkbox 
-                checked={enableAirfare}
-                onChange={handleAirfareCheckboxChange}
+              <p className="font-semibold text-lg">Enable To Dos</p>
+              <Checkbox
+                checked={enableToDos}
+                onChange={handleToDosCheckboxChange}
               />
               <p className="font-semibold text-lg">Enable Lodging</p>
-              <Checkbox 
+              <Checkbox
                 checked={enableLodging}
                 onChange={handleLodgingCheckboxChange}
               />
+              <p className="font-semibold text-lg">Enable Airfare</p>
+              <Checkbox
+                checked={enableAirfare}
+                onChange={handleAirfareCheckboxChange}
+              />
             </div>
-            
           )}
         </div>
       </div>

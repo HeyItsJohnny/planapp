@@ -32,6 +32,7 @@ export const ContextProvider = ({ children }) => {
   const [currentPlanIsSet, setCurrentPlanIsSet] = useState(false);
   const [enableAirfare, setEnableAirfare] = useState(false);
   const [enableLodging, setEnableLodging] = useState(false);
+  const [enableToDos, setEnableToDos] = useState(false);
   const [themeSettings, setThemeSettings] = useState(false);
   const [userSettings, setUserSettings] = useState(false);
 
@@ -69,6 +70,7 @@ export const ContextProvider = ({ children }) => {
         querySnapshot.forEach((doc) => {
           setEnableAirfare(doc.data().EnableAirfare);
           setEnableLodging(doc.data().EnableLodging);
+          setEnableToDos(doc.data().EnableToDos);
         });
       });
     }
@@ -105,7 +107,9 @@ export const ContextProvider = ({ children }) => {
         enableAirfare,
         setEnableAirfare,
         enableLodging,
-        setEnableLodging
+        setEnableLodging,
+        enableToDos,
+        setEnableToDos
     }}>
       {children}
     </StateContext.Provider>
