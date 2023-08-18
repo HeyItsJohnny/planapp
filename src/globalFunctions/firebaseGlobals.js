@@ -310,6 +310,36 @@ export async function addCheckoutCalendar(planid,startdate,enddate) {
 
 //Lodging Information +
 
+//Settings -
+export async function addToDoSettings(planid,data) {
+  try {
+    console.log(data.StartTime);
+    await addDoc(collection(db, "plans", planid, "todosettings"),
+      {
+        ToDo: data.target.ToDo.value,
+      }
+    );
+  } catch (error) {
+    alert("Error adding data to Database: " + error);
+  }
+}
+
+export async function addCalendarSettings(planid,data) {
+  try {
+    console.log(data.StartTime);
+    await addDoc(collection(db, "plans", planid, "calendarsettings"),
+      {
+        CalendarEvent: data.target.CalendarEvent.value,
+        StartTime: data.target.StartTime.value,
+        EndTime: data.target.EndTime.value,
+      }
+    );
+  } catch (error) {
+    alert("Error adding data to Database: " + error);
+  }
+}
+//Settings +
+
 /*
 export const getUserProfile = async (uid) => {
   const userRef = firestore.collection('users').doc(uid);

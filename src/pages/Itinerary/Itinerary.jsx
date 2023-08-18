@@ -18,6 +18,8 @@ const Itinerary = () => {
     <>
       <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white dark:text-gray-200 dark:bg-secondary-dark-bg rounded-3xl">
         <Header category="Plan" title="Itinerary" />
+        <p>Add Space to add in everyday calendar events</p>
+        <p>Also Add in Itinerary Calendar</p>
       </div>
       {enableAirfare && <ItineraryAirfare />}
       {enableLodging && <ItineraryLodging />}

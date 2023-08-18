@@ -44,6 +44,16 @@ import product6 from "./product6.jpg";
 import product7 from "./product7.jpg";
 import product8 from "./product8.jpg";
 
+//NEW 2.0
+export const toDoSettingsGrid = [
+  { field: "ToDo", headerText: "To Dos", width: "150", textAlign: "Center" },
+];
+
+export const calendarSettingsGrid = [
+  { field: "CalendarEvent", headerText: "Calendar Event", width: "150", textAlign: "Center" },
+  { field: "StartTime", headerText: "Start Time", width: "150", textAlign: "Center" },
+  { field: "EndTime", headerText: "End Time", width: "150", textAlign: "Center" }
+];
 //NEW
 
 export const plansGrid = [
