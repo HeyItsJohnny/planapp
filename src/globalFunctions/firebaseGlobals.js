@@ -340,6 +340,23 @@ export async function addCalendarSettings(planid,data) {
 }
 //Settings +
 
+//Budget -
+export async function addBudgetCosts(planid,data,category) {
+  try {
+    console.log(data.StartTime);
+    await addDoc(collection(db, "plans", planid, "budgetcosts"),
+      {
+        BudgetCategory: category,
+        Cost: data.target.Cost.value,
+        Summary: data.target.Summary.value
+      }
+    );
+  } catch (error) {
+    alert("Error adding data to Database: " + error);
+  }
+}
+//Budget +
+
 /*
 export const getUserProfile = async (uid) => {
   const userRef = firestore.collection('users').doc(uid);
