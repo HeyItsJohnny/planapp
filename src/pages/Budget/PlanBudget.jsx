@@ -39,7 +39,7 @@ const PlanBudget = () => {
       if (docSnap.exists()) {
         setPlan(docSnap.data());
         setTotalBudget(docSnap.data().TotalPlanBudget);
-        getBudgetData2(docSnap.data().TotalPlanBudget);
+        getBudgetData(docSnap.data().TotalPlanBudget);
       }
     } catch (err) {
       alert(err);
@@ -49,11 +49,11 @@ const PlanBudget = () => {
   const onChangeTotalBudget = (args) => {
     setTotalBudget(args.target.value);
     updatePlanTotalBudget(currentSelectedPlan, args.target.value);
-    getBudgetData2(args.target.value);
+    getBudgetData(args.target.value);
   };
 
   //Visual data
-  const getBudgetData = async () => {
+  const getBudgetData = async (TotalBudget) => {
     try {
       const docCollection = query(
         collection(db, "plans", currentSelectedPlan, "budgetcosts")
@@ -74,38 +74,7 @@ const PlanBudget = () => {
           totalCostVar = totalCostVar + Number(doc.data().Cost);
         });
         const BudByCategory = getBudgetByCategory(list);
-        setBudgetPieChart(getBudgetPieChartData(BudByCategory, totalCostVar, totalBudget));
-        setBudgetBreakdown(BudByCategory);
-        setTotalCost(totalCostVar);
-      });
-    } catch (err) {
-      alert(err);
-    }
-  };
-
-  //Additional Function to get once Budget is changed
-  const getBudgetData2 = async (TotalBudget2) => {
-    try {
-      const docCollection = query(
-        collection(db, "plans", currentSelectedPlan, "budgetcosts")
-      );
-      onSnapshot(docCollection, (querySnapshot) => {
-        const list = [];
-        var totalCostVar = 0;
-
-        querySnapshot.forEach((doc) => {
-          var data = {
-            id: doc.id,
-            BudgetCategory: doc.data().BudgetCategory,
-            Summary: doc.data().Summary,
-            Cost: Number(doc.data().Cost),
-          };
-
-          list.push(data);
-          totalCostVar = totalCostVar + Number(doc.data().Cost);
-        });
-        const BudByCategory = getBudgetByCategory(list);
-        setBudgetPieChart(getBudgetPieChartData(BudByCategory, totalCostVar, TotalBudget2));
+        setBudgetPieChart(getBudgetPieChartData(BudByCategory, totalCostVar, TotalBudget));
         setBudgetBreakdown(BudByCategory);
         setTotalCost(totalCostVar);
       });
