@@ -39,6 +39,7 @@ const PlanBudget = () => {
       if (docSnap.exists()) {
         setPlan(docSnap.data());
         setTotalBudget(docSnap.data().TotalPlanBudget);
+        getBudgetData2(docSnap.data().TotalPlanBudget);
       }
     } catch (err) {
       alert(err);
@@ -116,7 +117,7 @@ const PlanBudget = () => {
   useEffect(() => {
     if (currentSelectedPlan !== "") {
       setPlanFromContext();
-      getBudgetData();
+      //getBudgetData();
     }
     return () => {
       setPlan([]);
