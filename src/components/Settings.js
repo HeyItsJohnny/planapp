@@ -17,6 +17,16 @@ export const constantLinks = [
     ],
   },
   {
+    title: "settings",
+    links: [
+      {
+        name: "plans",
+        icon: <GoDashboard />,
+        linktoname: "plansettings"
+      }
+    ],
+  },
+  {
     title: "Examples",
     links: [
       {

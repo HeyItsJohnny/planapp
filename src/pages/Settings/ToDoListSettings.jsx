@@ -12,7 +12,7 @@ import {
 } from "@syncfusion/ej2-react-grids";
 
 //DATA
-import { calendarSettingsGrid } from "../../data/gridData";
+import { toDoSettingsGrid } from "../../data/gridData";
 import { Header } from "../../components";
 
 import { db } from "../../firebase/firebase";
@@ -24,38 +24,31 @@ import {
   deleteDoc,
 } from "firebase/firestore";
 
-import NewCalendarSettingsModal from "../../modals/NewCalendarSettingsModal";
-
-const PlanCalendarListSettings = () => {
-  const { currentSelectedPlan } = useStateContext();
-  const [calendarSettings, setCalendarSettings] = useState([]);
+import NewToDoSettingsModal from "../../modals/NewToDoSettingsModal";
+const ToDoListSettings = () => {
+  const [toDoSettings, setToDoSettings] = useState([]);
 
   const fetchData = async () => {
-    const docCollection = query(
-      collection(db, "plans", currentSelectedPlan, "calendarsettings")
-    );
+    const docCollection = query(collection(db, "todosettings"));
     onSnapshot(docCollection, (querySnapshot) => {
       const list = [];
       querySnapshot.forEach((doc) => {
         var data = {
           id: doc.id,
-          CalendarEvent: doc.data().CalendarEvent,
-          StartTime: doc.data().StartTime,
-          EndTime: doc.data().EndTime
+          ToDo: doc.data().ToDo,
         };
         list.push(data);
       });
-      setCalendarSettings(list);
+      setToDoSettings(list);
     });
   };
 
   const handleActionComplete = async (args) => {
     if (args.requestType === "delete") {
+      const deletedData = [...toDoSettings];
       const deletedRow = args.data[0];
       try {
-        await deleteDoc(
-          doc(db, "plans", currentSelectedPlan, "calendarsettings", deletedRow.id)
-        );
+        await deleteDoc(doc(db, "todosettings", deletedRow.id));
       } catch (error) {
         alert("Error deleting data from Firestore:", error);
       }
@@ -63,23 +56,21 @@ const PlanCalendarListSettings = () => {
   };
 
   useEffect(() => {
-    if (currentSelectedPlan !== "") {
-      fetchData();
-    }
+    fetchData();
     return () => {
-      setCalendarSettings([]);
+      setToDoSettings([]);
     };
   }, []);
 
   return (
     <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white dark:text-gray-200 dark:bg-secondary-dark-bg rounded-3xl">
-      <Header category="Settings" title="Everyday Calendar Events" />
+      <Header category="Settings" title="Consistent To Dos" />
       <div className="mb-10">
-        <NewCalendarSettingsModal />
+        <NewToDoSettingsModal />
       </div>
       <GridComponent
         id="gridcomp"
-        dataSource={calendarSettings}
+        dataSource={toDoSettings}
         actionComplete={handleActionComplete}
         allowPaging
         allowSorting
@@ -90,7 +81,7 @@ const PlanCalendarListSettings = () => {
         width="auto"
       >
         <ColumnsDirective>
-          {calendarSettingsGrid.map((item, index) => (
+          {toDoSettingsGrid.map((item, index) => (
             <ColumnDirective key={item.id} {...item} />
           ))}
         </ColumnsDirective>
@@ -100,4 +91,4 @@ const PlanCalendarListSettings = () => {
   );
 };
 
-export default PlanCalendarListSettings;
+export default ToDoListSettings;

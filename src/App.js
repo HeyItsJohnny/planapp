@@ -21,7 +21,7 @@ import {
   Plans,
   PlanFood,
   PlanActivities,
-  PlanListSettings,
+  PlanSettings,
   PlanBudget
 } from "./pages";
 
@@ -83,7 +83,7 @@ function App() {
                 <Route path="/planbudget" element={<PlanBudget />} />
                 <Route path="/planfood" element={<PlanFood />} />
                 <Route path="/planactivities" element={<PlanActivities />} />
-                <Route path="/planlistsettings" element={<PlanListSettings />} />
+                <Route path="/plansettings" element={<PlanSettings />} />
 
 
                 {/* SAMPLE */}

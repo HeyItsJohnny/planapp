@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 
-import { db  } from "../firebase/firebase";
+import { db } from "../firebase/firebase";
 
 import {
   doc,
@@ -10,7 +10,7 @@ import {
   onSnapshot,
   deleteDoc,
   updateDoc,
-  addDoc
+  addDoc,
 } from "firebase/firestore";
 
 export async function getPlans() {
@@ -38,7 +38,7 @@ export async function deleteDocument(name, docid) {
   } catch (error) {
     alert("Error deleting data from Firestore:", error);
   }
-};
+}
 
 export async function updatePlanStartDate(planid, start) {
   try {
@@ -49,7 +49,7 @@ export async function updatePlanStartDate(planid, start) {
   } catch (error) {
     alert("Error editing data to Database: " + error);
   }
-};
+}
 
 export async function updatePlanEndDate(planid, end) {
   try {
@@ -60,7 +60,7 @@ export async function updatePlanEndDate(planid, end) {
   } catch (error) {
     alert("Error editing data to Database: " + error);
   }
-};
+}
 
 export async function updatePlanDestination(planid, destination) {
   try {
@@ -71,33 +71,31 @@ export async function updatePlanDestination(planid, destination) {
   } catch (error) {
     alert("Error editing data to Database: " + error);
   }
-};
+}
 
-export async function addToPlanCalendar(planid,data) {
+export async function addToPlanCalendar(planid, data) {
   try {
     console.log(data.StartTime);
-    await addDoc(collection(db, "plans", planid, "calendar"),
-      {
-        Subject: data.Subject,
-        Location: data.Location ?? "",
-        Description: data.Description ?? "",
-        StartTime: data.StartTime ?? "",
-        EndTime: data.EndTime ?? "",
-        IsAllDay: data.IsAllDay ?? "",
-        RecurrenceRule: data.RecurrenceRule ?? "",
-        RecurrenceException: data.RecurrenceException ?? "",
-        CategoryColor: data.CategoryColor ?? "",
-        EventColor: data.EventColor ?? "",
-      }
-    );
+    await addDoc(collection(db, "plans", planid, "calendar"), {
+      Subject: data.Subject,
+      Location: data.Location ?? "",
+      Description: data.Description ?? "",
+      StartTime: data.StartTime ?? "",
+      EndTime: data.EndTime ?? "",
+      IsAllDay: data.IsAllDay ?? "",
+      RecurrenceRule: data.RecurrenceRule ?? "",
+      RecurrenceException: data.RecurrenceException ?? "",
+      CategoryColor: data.CategoryColor ?? "",
+      EventColor: data.EventColor ?? "",
+    });
   } catch (error) {
     alert("Error adding data to Database: " + error);
   }
 }
 
-export async function updatePlanCalendar(planid,data) {
+export async function updatePlanCalendar(planid, data) {
   try {
-    const calendarEventsRef = doc(db,"plans",planid,"calendar",data.Id);
+    const calendarEventsRef = doc(db, "plans", planid, "calendar", data.Id);
     await updateDoc(calendarEventsRef, {
       Subject: data.Subject,
       Location: data.Location ?? "",
@@ -117,8 +115,7 @@ export async function updatePlanCalendar(planid,data) {
 
 export async function deletePlanCalendar(planid, docid) {
   try {
-    await deleteDoc(doc(db,"plans",planid,"calendar",docid)
-    );
+    await deleteDoc(doc(db, "plans", planid, "calendar", docid));
   } catch (error) {
     alert("Error deleting data from Database: " + error);
   }
@@ -133,7 +130,7 @@ export async function updatePlanEnableAirfare(planid, displayValue) {
   } catch (error) {
     alert("Error editing data to Database: " + error);
   }
-};
+}
 
 export async function updatePlanEnableLodging(planid, displayValue) {
   try {
@@ -144,7 +141,7 @@ export async function updatePlanEnableLodging(planid, displayValue) {
   } catch (error) {
     alert("Error editing data to Database: " + error);
   }
-};
+}
 
 export async function updatePlanEnableToDos(planid, displayValue) {
   try {
@@ -155,7 +152,7 @@ export async function updatePlanEnableToDos(planid, displayValue) {
   } catch (error) {
     alert("Error editing data to Database: " + error);
   }
-};
+}
 
 //Lodging Information -
 export async function updatePlanLodgingCheckinDate(planid, checkindate) {
@@ -167,7 +164,7 @@ export async function updatePlanLodgingCheckinDate(planid, checkindate) {
   } catch (error) {
     alert("Error editing data to Database: " + error);
   }
-};
+}
 
 export async function updatePlanLodgingCheckinTime(planid, checkintime) {
   try {
@@ -178,7 +175,7 @@ export async function updatePlanLodgingCheckinTime(planid, checkintime) {
   } catch (error) {
     alert("Error editing data to Database: " + error);
   }
-};
+}
 
 export async function updatePlanLodgingCheckoutDate(planid, checkoutdate) {
   try {
@@ -189,7 +186,7 @@ export async function updatePlanLodgingCheckoutDate(planid, checkoutdate) {
   } catch (error) {
     alert("Error editing data tso Database: " + error);
   }
-};
+}
 
 export async function updatePlanLodgingCheckoutTime(planid, checkouttime) {
   try {
@@ -200,7 +197,7 @@ export async function updatePlanLodgingCheckoutTime(planid, checkouttime) {
   } catch (error) {
     alert("Error editing data to Database: " + error);
   }
-};
+}
 
 export async function updatePlanLodgingAddress1(planid, address1) {
   try {
@@ -211,7 +208,7 @@ export async function updatePlanLodgingAddress1(planid, address1) {
   } catch (error) {
     alert("Error editing data to Database: " + error);
   }
-};
+}
 
 export async function updatePlanLodgingAddress2(planid, address2) {
   try {
@@ -222,7 +219,7 @@ export async function updatePlanLodgingAddress2(planid, address2) {
   } catch (error) {
     alert("Error editing data to Database: " + error);
   }
-};
+}
 
 export async function updatePlanLodgingAddressCity(planid, addresscity) {
   try {
@@ -233,7 +230,7 @@ export async function updatePlanLodgingAddressCity(planid, addresscity) {
   } catch (error) {
     alert("Error editing data to Database: " + error);
   }
-};
+}
 
 export async function updatePlanLodgingAddressState(planid, addressstate) {
   try {
@@ -244,7 +241,7 @@ export async function updatePlanLodgingAddressState(planid, addressstate) {
   } catch (error) {
     alert("Error editing data to Database: " + error);
   }
-};
+}
 
 export async function updatePlanLodgingAddressZip(planid, addresszip) {
   try {
@@ -255,7 +252,7 @@ export async function updatePlanLodgingAddressZip(planid, addresszip) {
   } catch (error) {
     alert("Error editing data to Database: " + error);
   }
-};
+}
 
 export async function updatePlanTotalBudget(planid, value) {
   try {
@@ -266,13 +263,13 @@ export async function updatePlanTotalBudget(planid, value) {
   } catch (error) {
     alert("Error editing data to Database: " + error);
   }
-};
+}
 
-export async function addCheckinCalendar(planid,startdate,enddate) {
+export async function addCheckinCalendar(planid, startdate, enddate) {
   try {
     //const firebaseTimestamp1 = firebase.firestore.Timestamp.fromDate(startdate);
 
-    await setDoc(doc(db, "plans", planid,  "calendar", 'LodgingCheckin'), {
+    await setDoc(doc(db, "plans", planid, "calendar", "LodgingCheckin"), {
       CategoryColor: "",
       Description: "",
       EndTime: enddate,
@@ -282,16 +279,16 @@ export async function addCheckinCalendar(planid,startdate,enddate) {
       RecurrenceException: "",
       RecurrenceRule: "",
       StartTime: startdate,
-      Subject: "Lodging Checkin"
+      Subject: "Lodging Checkin",
     });
   } catch (error) {
     alert("There was an error adding to the database: " + error);
   }
 }
 
-export async function addCheckoutCalendar(planid,startdate,enddate) {
+export async function addCheckoutCalendar(planid, startdate, enddate) {
   try {
-    await setDoc(doc(db, "plans", planid,  "calendar", 'LodgingCheckout'), {
+    await setDoc(doc(db, "plans", planid, "calendar", "LodgingCheckout"), {
       CategoryColor: "",
       Description: "",
       EndTime: enddate,
@@ -301,7 +298,7 @@ export async function addCheckoutCalendar(planid,startdate,enddate) {
       RecurrenceException: "",
       RecurrenceRule: "",
       StartTime: startdate,
-      Subject: "Lodging Checkout"
+      Subject: "Lodging Checkout",
     });
   } catch (error) {
     alert("There was an error adding to the database: " + error);
@@ -311,29 +308,25 @@ export async function addCheckoutCalendar(planid,startdate,enddate) {
 //Lodging Information +
 
 //Settings -
-export async function addToDoSettings(planid,data) {
+export async function addToDoSettings(data) {
   try {
     console.log(data.StartTime);
-    await addDoc(collection(db, "plans", planid, "todosettings"),
-      {
-        ToDo: data.target.ToDo.value,
-      }
-    );
+    await addDoc(collection(db, "todosettings"), {
+      ToDo: data.target.ToDo.value,
+    });
   } catch (error) {
     alert("Error adding data to Database: " + error);
   }
 }
 
-export async function addCalendarSettings(planid,data) {
+export async function addCalendarSettings(data) {
   try {
     console.log(data.StartTime);
-    await addDoc(collection(db, "plans", planid, "calendarsettings"),
-      {
-        CalendarEvent: data.target.CalendarEvent.value,
-        StartTime: data.target.StartTime.value,
-        EndTime: data.target.EndTime.value,
-      }
-    );
+    await addDoc(collection(db, "calendarsettings"), {
+      CalendarEvent: data.target.CalendarEvent.value,
+      StartTime: data.target.StartTime.value,
+      EndTime: data.target.EndTime.value,
+    });
   } catch (error) {
     alert("Error adding data to Database: " + error);
   }
@@ -341,16 +334,14 @@ export async function addCalendarSettings(planid,data) {
 //Settings +
 
 //Budget -
-export async function addBudgetCosts(planid,data,category) {
+export async function addBudgetCosts(planid, data, category) {
   try {
     console.log(data.StartTime);
-    await addDoc(collection(db, "plans", planid, "budgetcosts"),
-      {
-        BudgetCategory: category,
-        Cost: data.target.Cost.value,
-        Summary: data.target.Summary.value
-      }
-    );
+    await addDoc(collection(db, "plans", planid, "budgetcosts"), {
+      BudgetCategory: category,
+      Cost: data.target.Cost.value,
+      Summary: data.target.Summary.value,
+    });
   } catch (error) {
     alert("Error adding data to Database: " + error);
   }
