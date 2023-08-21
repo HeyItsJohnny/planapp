@@ -14,11 +14,11 @@ const NewToDoSettingsModal = () => {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
-  const { currentColor, currentSelectedPlan } = useStateContext();
+  const { currentColor } = useStateContext();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    addToDoSettings(currentSelectedPlan,e);
+    addToDoSettings(e);
     handleClose();
   };
 

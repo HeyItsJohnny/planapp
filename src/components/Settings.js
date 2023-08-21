@@ -72,11 +72,6 @@ export const planLinks = [
         icon: <MdFastfood />,
         linktoname: "planfood"
       },
-      {
-        name: "list settings",
-        icon: <AiFillSetting />,
-        linktoname: "planlistsettings"
-      },
     ],
   },
 ];

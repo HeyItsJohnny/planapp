@@ -14,11 +14,11 @@ const NewCalendarSettingsModal = () => {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
-  const { currentColor, currentSelectedPlan } = useStateContext();
+  const { currentColor } = useStateContext();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    addCalendarSettings(currentSelectedPlan, e);
+    addCalendarSettings(e);
     handleClose();
   };
 
