@@ -17,6 +17,8 @@ import {
 } from "@syncfusion/ej2-react-schedule";
 import { parseISO } from "date-fns";
 import { IoIosAddCircle } from "react-icons/io";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 //Data
 import { db } from "../../firebase/firebase";
@@ -29,7 +31,10 @@ import {
   updatePlanCalendar,
   deletePlanCalendar,
   updatePlanDestination,
+  addToCalendar
 } from "../../globalFunctions/firebaseGlobals";
+
+import { convertTo12HourFormat, getDatesBetween, convertDateTimeString } from "../../globalFunctions/globalFunctions";
 
 const PlanSummary = () => {
   const {
@@ -62,8 +67,8 @@ const PlanSummary = () => {
         var data = {
           id: doc.id,
           CalendarEvent: doc.data().CalendarEvent,
-          StartTime: doc.data().StartTime,
-          EndTime: doc.data().EndTime,
+          StartTime: convertTo12HourFormat(doc.data().StartTime),
+          EndTime: convertTo12HourFormat(doc.data().EndTime),
         };
         list.push(data);
       });
@@ -156,7 +161,18 @@ const PlanSummary = () => {
   };
 
   const addEverydayCalendarEvent = async (item) => {
-    alert(item.CalendarEvent);
+    console.log("Event: " + item.CalendarEvent + " Start Date: " + startDate + " End Date: " + endDate);
+
+    const arrayOfDates = getDatesBetween(startDate,endDate);
+
+    arrayOfDates.forEach((date) => {
+      console.log("DATE: " + date);
+      deletePlanCalendar(currentSelectedPlan,item.CalendarEvent+'_'+date);
+      const StartDateTime = convertDateTimeString(date,item.StartTime);
+      const EndDateTime = convertDateTimeString(date,item.EndTime);
+      addToCalendar(currentSelectedPlan,StartDateTime,EndDateTime,item.CalendarEvent+'_'+date,item.CalendarEvent);
+    })
+    toast(item.CalendarEvent + " has been added to the itinerary for all days.");
   };
 
   useEffect(() => {
@@ -174,6 +190,7 @@ const PlanSummary = () => {
     <>
       <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white dark:text-gray-200 dark:bg-secondary-dark-bg rounded-3xl">
         <Header category="Plan Summary" title={plan.Name} />
+        <ToastContainer />
         <Box
           display="grid"
           gap="30px"

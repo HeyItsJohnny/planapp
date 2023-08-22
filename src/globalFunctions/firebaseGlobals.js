@@ -265,10 +265,27 @@ export async function updatePlanTotalBudget(planid, value) {
   }
 }
 
+export async function addToCalendar(planid, startdate, enddate, docid, calsubject) {
+  try {
+    await setDoc(doc(db, "plans", planid, "calendar", docid), {
+      CategoryColor: "",
+      Description: "",
+      EndTime: enddate,
+      EventColor: "",
+      IsAllDay: false,
+      Location: "",
+      RecurrenceException: "",
+      RecurrenceRule: "",
+      StartTime: startdate,
+      Subject: calsubject,
+    });
+  } catch (error) {
+    alert("There was an error adding to the database: " + error);
+  }
+}
+
 export async function addCheckinCalendar(planid, startdate, enddate) {
   try {
-    //const firebaseTimestamp1 = firebase.firestore.Timestamp.fromDate(startdate);
-
     await setDoc(doc(db, "plans", planid, "calendar", "LodgingCheckin"), {
       CategoryColor: "",
       Description: "",

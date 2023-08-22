@@ -73,3 +73,45 @@ export function getBudgetPieChartData(budgetData, totalCost, totalBudget) {
 
   return list;
 }
+
+export function convertTo12HourFormat(time24) {
+  const parts = time24.split(':');
+  const hours24 = parseInt(parts[0]);
+  const minutes = parts[1];
+  
+  if (hours24 === 0) {
+    return `12:${minutes} AM`;
+  } else if (hours24 < 12) {
+    return `${hours24}:${minutes} AM`;
+  } else if (hours24 === 12) {
+    return `12:${minutes} PM`;
+  } else {
+    const hours12 = hours24 - 12;
+    return `${hours12}:${minutes} PM`;
+  }
+}
+
+function formatDateToYYYYMMDD(date) {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const day = String(date.getDate()).padStart(2, '0');
+  
+  return `${year}-${month}-${day}`;
+}
+
+export function getDatesBetween(startDate, endDate) {
+  const dates = [];
+  let currentDate = new Date(startDate);
+  let newEndDate = new Date(endDate);
+
+  while (currentDate <= newEndDate) {
+    const localFormattedDate = new Date(currentDate);
+    localFormattedDate.setDate(localFormattedDate.getDate() + 1);
+
+    dates.push(formatDateToYYYYMMDD(localFormattedDate));
+    currentDate.setDate(currentDate.getDate() + 1);
+  }
+  
+  return dates;
+}
+
