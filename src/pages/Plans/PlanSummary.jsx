@@ -17,8 +17,8 @@ import {
 } from "@syncfusion/ej2-react-schedule";
 import { parseISO } from "date-fns";
 import { IoIosAddCircle } from "react-icons/io";
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 //Data
 import { db } from "../../firebase/firebase";
@@ -31,10 +31,16 @@ import {
   updatePlanCalendar,
   deletePlanCalendar,
   updatePlanDestination,
-  addToCalendar
+  addToCalendar,
 } from "../../globalFunctions/firebaseGlobals";
 
-import { convertTo12HourFormat, getDatesBetween, convertDateTimeString } from "../../globalFunctions/globalFunctions";
+import {
+  convertTo12HourFormat,
+  getDatesBetween,
+  convertDateTimeString,
+} from "../../globalFunctions/globalFunctions";
+
+import { useNavigate } from "react-router-dom";
 
 const PlanSummary = () => {
   const {
@@ -44,6 +50,7 @@ const PlanSummary = () => {
     setEnableToDos,
     enableToDos,
   } = useStateContext();
+  const navigate = useNavigate();
   const isNonMobile = useMediaQuery("(min-width:600px)");
 
   //Itinerary
@@ -163,19 +170,27 @@ const PlanSummary = () => {
   };
 
   const addEverydayCalendarEvent = async (item) => {
-    console.log("Event: " + item.CalendarEvent + " Start Date: " + startDate + " End Date: " + endDate);
-
-    const arrayOfDates = getDatesBetween(startDate,endDate);
+    const arrayOfDates = getDatesBetween(startDate, endDate);
 
     arrayOfDates.forEach((date) => {
-      console.log("DATE: " + date);
-      deletePlanCalendar(currentSelectedPlan,item.CalendarEvent+'_'+date);
-      const StartDateTime = convertDateTimeString(date,item.StartTime);
-      const EndDateTime = convertDateTimeString(date,item.EndTime);
-      addToCalendar(currentSelectedPlan,StartDateTime,EndDateTime,item.CalendarEvent+'_'+date,item.CalendarEvent);
-    })
+      deletePlanCalendar(currentSelectedPlan, item.CalendarEvent + "_" + date);
+      const StartDateTime = convertDateTimeString(date, item.StartTime);
+      const EndDateTime = convertDateTimeString(date, item.EndTime);
+      addToCalendar(
+        currentSelectedPlan,
+        StartDateTime,
+        EndDateTime,
+        item.CalendarEvent + "_" + date,
+        item.CalendarEvent
+      );
+    });
     toast(item.CalendarEvent + " has been added to the itinerary for all days.");
   };
+
+  const goToCalendarPage = () => {
+    navigate("/plancalendar/");
+  };
+
 
   useEffect(() => {
     setPlanFromContext();
@@ -308,7 +323,15 @@ const PlanSummary = () => {
         </div>
         <div className="bg-white dark:text-gray-200 dark:bg-secondary-dark-bg p-6 rounded-2xl w-96 md:w-800">
           <div className="flex justify-between items-center gap-2 mb-10">
-            <p className="text-xl font-semibold">Calendar</p>
+            <button
+              type="button"
+
+              className="text-2xl rounded-lg p-4 hover:drop-shadow-xl"
+              onClick={goToCalendarPage}
+            >
+              <p className="text-xl font-semibold">Calendar</p>
+            </button>
+            
           </div>
           <ScheduleComponent
             currentView={calendarView}
