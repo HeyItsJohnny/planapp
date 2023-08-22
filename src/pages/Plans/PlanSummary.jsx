@@ -67,8 +67,10 @@ const PlanSummary = () => {
         var data = {
           id: doc.id,
           CalendarEvent: doc.data().CalendarEvent,
-          StartTime: convertTo12HourFormat(doc.data().StartTime),
-          EndTime: convertTo12HourFormat(doc.data().EndTime),
+          StartTimeFormatted: convertTo12HourFormat(doc.data().StartTime),
+          StartTime: doc.data().StartTime,
+          EndTimeFormatted: convertTo12HourFormat(doc.data().EndTime),
+          EndTime: doc.data().EndTime,
         };
         list.push(data);
       });
@@ -298,7 +300,7 @@ const PlanSummary = () => {
                   </div>
                 </div>
                 <p>
-                  {item.StartTime} - {item.EndTime}
+                  {item.StartTimeFormatted} - {item.EndTimeFormatted}
                 </p>
               </div>
             ))}
