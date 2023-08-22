@@ -16,6 +16,7 @@ import {
   DragAndDrop,
 } from "@syncfusion/ej2-react-schedule";
 import { parseISO } from "date-fns";
+import { IoIosAddCircle } from "react-icons/io";
 
 //Data
 import { db } from "../../firebase/firebase";
@@ -49,6 +50,26 @@ const PlanSummary = () => {
   const [destination, setDestination] = useState("");
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
+
+  //Calendar Settings
+  const [calendarSettings, setCalendarSettings] = useState([]);
+
+  const fetchCalendarSettingsData = async () => {
+    const docCollection = query(collection(db, "calendarsettings"));
+    onSnapshot(docCollection, (querySnapshot) => {
+      const list = [];
+      querySnapshot.forEach((doc) => {
+        var data = {
+          id: doc.id,
+          CalendarEvent: doc.data().CalendarEvent,
+          StartTime: doc.data().StartTime,
+          EndTime: doc.data().EndTime,
+        };
+        list.push(data);
+      });
+      setCalendarSettings(list);
+    });
+  };
 
   const setPlanFromContext = async () => {
     try {
@@ -134,12 +155,18 @@ const PlanSummary = () => {
     }
   };
 
+  const addEverydayCalendarEvent = async (item) => {
+    alert(item.CalendarEvent);
+  };
+
   useEffect(() => {
     setPlanFromContext();
     fetchCalendarData();
+    fetchCalendarSettingsData();
     return () => {
       setPlan([]);
       setPlanCalendar([]);
+      setCalendarSettings([]);
     };
   }, []);
 
@@ -221,6 +248,45 @@ const PlanSummary = () => {
         </Box>
       </div>
       <div className="flex gap-10 flex-wrap justify-center">
+        <div className="bg-white dark:text-gray-200 dark:bg-secondary-dark-bg p-6 rounded-2xl">
+          <div className="flex justify-between items-center gap-2">
+            <p className="text-xl font-semibold">Everyday Calendar Events</p>
+          </div>
+          <div className="mt-10 w-72 md:w-400">
+            <div className="flex justify-between items-center mt-5 border-t-1 border-color">
+              <p className="text-gray-400 text-md">
+                Add predetermined calendar events to all days of the trip.
+              </p>
+            </div>
+            {calendarSettings.map((item) => (
+              <div key={item.id} className="flex justify-between mt-4">
+                <div className="flex gap-4">
+                  <button
+                    type="button"
+                    style={{
+                      color: "#03C9D7",
+                      backgroundColor: "#E5FAFB",
+                    }}
+                    className="text-2xl rounded-lg p-4 hover:drop-shadow-xl"
+                    onClick={() => {
+                      addEverydayCalendarEvent(item);
+                    }}
+                  >
+                    <IoIosAddCircle />
+                  </button>
+                  <div>
+                    <p className="text-md font-semibold">
+                      {item.CalendarEvent}
+                    </p>
+                  </div>
+                </div>
+                <p>
+                  {item.StartTime} - {item.EndTime}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
         <div className="bg-white dark:text-gray-200 dark:bg-secondary-dark-bg p-6 rounded-2xl w-96 md:w-800">
           <div className="flex justify-between items-center gap-2 mb-10">
             <p className="text-xl font-semibold">Calendar</p>

@@ -18,7 +18,6 @@ import {
 } from "../../globalFunctions/globalFunctions";
 
 //SAMPLE
-import { ecomPieChartData, recentTransactions } from "../../data/dummy";
 import NewBudgetCostModal from "../../modals/NewBudgetCostModal";
 
 const PlanBudget = () => {
