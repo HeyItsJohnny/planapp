@@ -1,6 +1,7 @@
 import React from "react";
 import { AiOutlinePieChart, AiFillSetting } from "react-icons/ai";
 import { FaCarSide } from "react-icons/fa";
+import { FcTodoList } from "react-icons/fc";
 import { MdDirectionsRun, MdFastfood } from "react-icons/md";
 import { GoDashboard } from "react-icons/go";
 import { TbReportMoney } from "react-icons/tb";
@@ -56,6 +57,11 @@ export const planLinks = [
         name: "budget",
         icon: <TbReportMoney />,
         linktoname: "planbudget"
+      },
+      {
+        name: "to dos",
+        icon: <FcTodoList />,
+        linktoname: "pretriptodo"
       },
       {
         name: "itinerary",

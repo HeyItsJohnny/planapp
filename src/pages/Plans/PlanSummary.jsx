@@ -16,7 +16,6 @@ import {
   DragAndDrop,
 } from "@syncfusion/ej2-react-schedule";
 import { parseISO } from "date-fns";
-import PlanSummaryToDos from "./PlanSummaryToDos";
 
 //Data
 import { db } from "../../firebase/firebase";
@@ -37,7 +36,7 @@ const PlanSummary = () => {
     setEnableAirfare,
     setEnableLodging,
     setEnableToDos,
-    enableToDos
+    enableToDos,
   } = useStateContext();
   const isNonMobile = useMediaQuery("(min-width:600px)");
 
@@ -221,19 +220,31 @@ const PlanSummary = () => {
           />
         </Box>
       </div>
-      {enableToDos && <PlanSummaryToDos />}
-      <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white dark:text-gray-200 dark:bg-secondary-dark-bg rounded-3xl">
-        <ScheduleComponent
-          currentView={calendarView}
-          height="650px"
-          eventSettings={{ dataSource: planCalendar }}
-          actionComplete={addCalendarEvent}
-          selectedDate={selectedStartDate || new Date()}
-        >
-          <Inject
-            services={[Day, Week, WorkWeek, Month, Agenda, Resize, DragAndDrop]}
-          />
-        </ScheduleComponent>
+      <div className="flex gap-10 flex-wrap justify-center">
+        <div className="bg-white dark:text-gray-200 dark:bg-secondary-dark-bg p-6 rounded-2xl w-96 md:w-800">
+          <div className="flex justify-between items-center gap-2 mb-10">
+            <p className="text-xl font-semibold">Calendar</p>
+          </div>
+          <ScheduleComponent
+            currentView={calendarView}
+            height="650px"
+            eventSettings={{ dataSource: planCalendar }}
+            actionComplete={addCalendarEvent}
+            selectedDate={selectedStartDate || new Date()}
+          >
+            <Inject
+              services={[
+                Day,
+                Week,
+                WorkWeek,
+                Month,
+                Agenda,
+                Resize,
+                DragAndDrop,
+              ]}
+            />
+          </ScheduleComponent>
+        </div>
       </div>
     </>
   );
