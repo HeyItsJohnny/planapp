@@ -32,12 +32,15 @@ import {
   deletePlanCalendar,
   updatePlanDestination,
   addToCalendar,
+  addCheckinCalendar,
+  addCheckoutCalendar,
 } from "../../globalFunctions/firebaseGlobals";
 
 import {
   convertTo12HourFormat,
   getDatesBetween,
   convertDateTimeString,
+  convertDateFormat,
 } from "../../globalFunctions/globalFunctions";
 
 import { useNavigate } from "react-router-dom";
@@ -48,6 +51,7 @@ const PlanSummary = () => {
     setEnableAirfare,
     setEnableLodging,
     setEnableToDos,
+    enableLodging,
     enableToDos,
   } = useStateContext();
   const navigate = useNavigate();
@@ -65,6 +69,12 @@ const PlanSummary = () => {
 
   //Calendar Settings
   const [calendarSettings, setCalendarSettings] = useState([]);
+
+  //Checkin/Checkout Dates
+  const [checkinDate, setCheckinDate] = useState("");
+  const [checkoutDate, setCheckoutDate] = useState("");
+  const [checkinTime, setCheckinTime] = useState("");
+  const [checkoutTime, setCheckoutTime] = useState("");
 
   const fetchCalendarSettingsData = async () => {
     const docCollection = query(collection(db, "calendarsettings"));
@@ -100,6 +110,14 @@ const PlanSummary = () => {
         setCalendarViewComponents(
           docSnap.data().StartDate,
           docSnap.data().EndDate
+        );
+        setCheckinDate(convertDateFormat(docSnap.data().LodgingCheckinDate));
+        setCheckoutDate(convertDateFormat(docSnap.data().LodgingCheckoutDate));
+        setCheckinTime(
+          convertTo12HourFormat(docSnap.data().LodgingCheckinTime)
+        );
+        setCheckoutTime(
+          convertTo12HourFormat(docSnap.data().LodgingCheckoutTime)
         );
       }
     } catch (err) {
@@ -184,13 +202,58 @@ const PlanSummary = () => {
         item.CalendarEvent
       );
     });
-    toast(item.CalendarEvent + " has been added to the itinerary for all days.");
+    toast(
+      item.CalendarEvent + " has been added to the itinerary for all days."
+    );
   };
 
   const goToCalendarPage = () => {
     navigate("/plancalendar/");
   };
 
+  const handleAddCheckinToItinerary = () => {
+    //Delete Current Check In
+    deletePlanCalendar(currentSelectedPlan, "LodgingCheckin");
+
+    //Checkin Date/Time
+    const LocalDateCheckinStartTime = convertDateTimeString(
+      plan.LodgingCheckinDate,
+      plan.LodgingCheckinTime
+    );
+    const LocalDateCheckinEndTime = new Date(LocalDateCheckinStartTime);
+    LocalDateCheckinEndTime.setHours(LocalDateCheckinStartTime.getHours() + 1);
+
+    addCheckinCalendar(
+      currentSelectedPlan,
+      LocalDateCheckinStartTime,
+      LocalDateCheckinEndTime
+    );
+
+    toast("Added checkin to the itinerary.");
+  };
+
+  const handleAddCheckoutToItinerary = () => {
+    //Delete Current Check Out
+    deletePlanCalendar(currentSelectedPlan, "LodgingCheckout");
+
+    //Checkout Date/Time
+    const LocalDateCheckoutStartTime = convertDateTimeString(
+      plan.LodgingCheckoutDate,
+      plan.LodgingCheckoutTime
+    );
+    const LocalDateCheckoutEndTime = new Date(LocalDateCheckoutStartTime);
+    LocalDateCheckoutEndTime.setHours(
+      LocalDateCheckoutStartTime.getHours() + 1
+    );
+
+    addCheckoutCalendar(
+      currentSelectedPlan,
+      LocalDateCheckoutStartTime,
+      LocalDateCheckoutEndTime
+    );
+
+    toast("Added checkout to the itinerary.");
+  };
 
   useEffect(() => {
     setPlanFromContext();
@@ -286,10 +349,10 @@ const PlanSummary = () => {
           <div className="flex justify-between items-center gap-2">
             <p className="text-xl font-semibold">Everyday Calendar Events</p>
           </div>
-          <div className="mt-10 w-72 md:w-400">
+          <div className="mt-5 w-72 md:w-400">
             <div className="flex justify-between items-center mt-5 border-t-1 border-color">
               <p className="text-gray-400 text-md">
-                Add predetermined calendar events to all days of the trip.
+                Add events to the calendar.
               </p>
             </div>
             {calendarSettings.map((item) => (
@@ -320,18 +383,64 @@ const PlanSummary = () => {
               </div>
             ))}
           </div>
+          {enableLodging && (
+            <div>
+              <div className="flex justify-between items-center gap-2 mt-5">
+                <p className="text-xl font-semibold">Lodging</p>
+              </div>
+              <div className="flex justify-between mt-4">
+                <div className="flex gap-4">
+                  <button
+                    type="button"
+                    style={{
+                      color: "#03C9D7",
+                      backgroundColor: "#E5FAFB",
+                    }}
+                    className="text-2xl rounded-lg p-4 hover:drop-shadow-xl"
+                    onClick={handleAddCheckinToItinerary}
+                  >
+                    <IoIosAddCircle />
+                  </button>
+                  <div>
+                    <p className="text-md font-semibold">Checkin</p>
+                    <p className="text-md font-semibold">{checkinDate}</p>
+                  </div>
+                </div>
+                <p>{checkinTime}</p>
+              </div>
+              <div className="flex justify-between mt-4">
+                <div className="flex gap-4">
+                  <button
+                    type="button"
+                    style={{
+                      color: "#03C9D7",
+                      backgroundColor: "#E5FAFB",
+                    }}
+                    className="text-2xl rounded-lg p-4 hover:drop-shadow-xl"
+                    onClick={handleAddCheckoutToItinerary}
+                  >
+                    <IoIosAddCircle />
+                  </button>
+                  <div>
+                    <p className="text-md font-semibold">Checkout</p>
+                    <p className="text-md font-semibold">{checkoutDate}</p>
+                  </div>
+                </div>
+                <p>{checkoutTime}</p>
+              </div>
+            </div>
+          )}
         </div>
+
         <div className="bg-white dark:text-gray-200 dark:bg-secondary-dark-bg p-6 rounded-2xl w-96 md:w-800">
           <div className="flex justify-between items-center gap-2 mb-10">
             <button
               type="button"
-
               className="text-2xl rounded-lg p-4 hover:drop-shadow-xl"
               onClick={goToCalendarPage}
             >
               <p className="text-xl font-semibold">Calendar</p>
             </button>
-            
           </div>
           <ScheduleComponent
             currentView={calendarView}
