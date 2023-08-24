@@ -4,8 +4,8 @@ import React, { useState, useEffect } from "react";
 import { Header } from "../../components";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { Box, TextField } from "@mui/material";
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 //DATA
 import { useStateContext } from "../../contexts/ContextProvider";
@@ -21,15 +21,15 @@ import {
   updatePlanLodgingAddressZip,
   addCheckinCalendar,
   addCheckoutCalendar,
-  deletePlanCalendar
+  deletePlanCalendar,
 } from "../../globalFunctions/firebaseGlobals";
 
 import { convertDateTimeString } from "../../globalFunctions/globalFunctions";
 
 import { db } from "../../firebase/firebase";
-import { doc, getDoc, query, collection, onSnapshot } from "firebase/firestore";
+import { doc, getDoc } from "firebase/firestore";
 
-const ItineraryLodging = () => {
+const Lodging = () => {
   const { currentSelectedPlan, currentColor } = useStateContext();
 
   const [checkinDate, setCheckinDate] = useState("");
@@ -111,24 +111,40 @@ const ItineraryLodging = () => {
 
   const handleAddToItinerary = () => {
     //Delete Current Check In
-    deletePlanCalendar(currentSelectedPlan,'LodgingCheckin');
+    deletePlanCalendar(currentSelectedPlan, "LodgingCheckin");
 
     //Checkin Date/Time
-    const LocalDateCheckinStartTime = convertDateTimeString(checkinDate,checkinTime);
+    const LocalDateCheckinStartTime = convertDateTimeString(
+      checkinDate,
+      checkinTime
+    );
     const LocalDateCheckinEndTime = new Date(LocalDateCheckinStartTime);
     LocalDateCheckinEndTime.setHours(LocalDateCheckinStartTime.getHours() + 1);
 
-    addCheckinCalendar(currentSelectedPlan,LocalDateCheckinStartTime,LocalDateCheckinEndTime);
+    addCheckinCalendar(
+      currentSelectedPlan,
+      LocalDateCheckinStartTime,
+      LocalDateCheckinEndTime
+    );
 
     //Delete Current Check Out
-    deletePlanCalendar(currentSelectedPlan,'LodgingCheckout');
+    deletePlanCalendar(currentSelectedPlan, "LodgingCheckout");
 
     //Checkout Date/Time
-    const LocalDateCheckoutStartTime = convertDateTimeString(checkoutDate,checkoutTime);
+    const LocalDateCheckoutStartTime = convertDateTimeString(
+      checkoutDate,
+      checkoutTime
+    );
     const LocalDateCheckoutEndTime = new Date(LocalDateCheckoutStartTime);
-    LocalDateCheckoutEndTime.setHours(LocalDateCheckoutStartTime.getHours() + 1);
+    LocalDateCheckoutEndTime.setHours(
+      LocalDateCheckoutStartTime.getHours() + 1
+    );
 
-    addCheckoutCalendar(currentSelectedPlan,LocalDateCheckoutStartTime,LocalDateCheckoutEndTime);
+    addCheckoutCalendar(
+      currentSelectedPlan,
+      LocalDateCheckoutStartTime,
+      LocalDateCheckoutEndTime
+    );
 
     toast("Lodging dates updated in the itinerary!");
   };
@@ -154,7 +170,6 @@ const ItineraryLodging = () => {
         >
           Add Lodging to Itinerary
         </button>
-        
       </div>
 
       <Box
@@ -265,7 +280,7 @@ const ItineraryLodging = () => {
             shrink: true,
             className: "bg-white dark:text-gray-200 dark:bg-secondary-dark-bg",
           }}
-          margin="dense"          
+          margin="dense"
           id="HousingAddress2"
           label="Address 2"
           type="text"
@@ -340,4 +355,4 @@ const ItineraryLodging = () => {
   );
 };
 
-export default ItineraryLodging;
+export default Lodging;

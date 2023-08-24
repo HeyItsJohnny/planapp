@@ -5,7 +5,12 @@ import { Header } from "../../components";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { Box, TextField } from "@mui/material";
 
-const ItineraryAirfare = () => {
+const Airfare = () => {
+  const [departureAirport1, setDepartureAirport1] = useState("");
+  const [arrivalAirport1, setArrivalAirport1] = useState("");
+  const [departureAirport2, setDepartureAirport2] = useState("");
+  const [arrivalAirport2, setArrivalAirport2] = useState("");
+
   const [departureDate1, setDepartureDate1] = useState("");
   const [arrivalDate1, setArrivalDate1] = useState("");
   const [departureTime1, setDepartureTime1] = useState("");
@@ -17,6 +22,22 @@ const ItineraryAirfare = () => {
   const [arrivalTime2, setArrivalTime2] = useState("");
 
   const isNonMobile = useMediaQuery("(min-width:600px)");
+
+  const onChangeDepartureAirport1 = (args) => {
+    setDepartureAirport1(args.target.value);
+  };
+
+  const onChangeArrivalAirport1 = (args) => {
+    setArrivalAirport1(args.target.value);
+  };
+
+  const onChangeDepartureAirport2 = (args) => {
+    setDepartureAirport2(args.target.value);
+  };
+
+  const onChangeArrivalAirport2 = (args) => {
+    setArrivalAirport2(args.target.value);
+  };
 
   const onChangeDepartureDate1 = (args) => {
     setDepartureDate1(args.target.value);
@@ -61,6 +82,83 @@ const ItineraryAirfare = () => {
           "& > div": { gridColumn: isNonMobile ? undefined : "span 4" },
         }}
       >
+        <TextField
+          InputLabelProps={{
+            shrink: true,
+            className: "bg-white dark:text-gray-200 dark:bg-secondary-dark-bg",
+          }}
+          margin="dense"
+          required
+          id="DepartureAirport1"
+          label="Departure Airport 1"
+          type="text"
+          fullWidth
+          variant="filled"
+          value={departureAirport1}
+          onChange={onChangeDepartureAirport1}
+          sx={{ gridColumn: "span 1" }}
+          InputProps={{
+            className: "bg-white dark:text-gray-200 dark:bg-secondary-dark-bg",
+          }}
+        />
+        <TextField
+          InputLabelProps={{
+            shrink: true,
+            className: "bg-white dark:text-gray-200 dark:bg-secondary-dark-bg",
+          }}
+          margin="dense"
+          required
+          id="ArrivalAirport1"
+          label="Arrival Airport 1"
+          type="text"
+          fullWidth
+          variant="filled"
+          value={arrivalAirport1}
+          onChange={onChangeArrivalAirport1}
+          sx={{ gridColumn: "span 1" }}
+          InputProps={{
+            className: "bg-white dark:text-gray-200 dark:bg-secondary-dark-bg",
+          }}
+        />
+        <TextField
+          InputLabelProps={{
+            shrink: true,
+            className: "bg-white dark:text-gray-200 dark:bg-secondary-dark-bg",
+          }}
+          margin="dense"
+          required
+          id="DepartureAirport2"
+          label="Departure Airport 2"
+          type="text"
+          fullWidth
+          variant="filled"
+          value={departureAirport2}
+          onChange={onChangeDepartureAirport2}
+          sx={{ gridColumn: "span 1" }}
+          InputProps={{
+            className: "bg-white dark:text-gray-200 dark:bg-secondary-dark-bg",
+          }}
+        />
+        <TextField
+          InputLabelProps={{
+            shrink: true,
+            className: "bg-white dark:text-gray-200 dark:bg-secondary-dark-bg",
+          }}
+          margin="dense"
+          required
+          id="ArrivalAirport2"
+          label="Arrival Airport 2"
+          type="text"
+          fullWidth
+          variant="filled"
+          value={arrivalAirport2}
+          onChange={onChangeArrivalAirport2}
+          sx={{ gridColumn: "span 1" }}
+          InputProps={{
+            className: "bg-white dark:text-gray-200 dark:bg-secondary-dark-bg",
+          }}
+        />
+
         <TextField
           InputLabelProps={{
             shrink: true,
@@ -179,7 +277,6 @@ const ItineraryAirfare = () => {
           InputLabelProps={{
             shrink: true,
             className: "bg-white dark:text-gray-200 dark:bg-secondary-dark-bg",
-
           }}
           margin="dense"
           required
@@ -219,4 +316,4 @@ const ItineraryAirfare = () => {
   );
 };
 
-export default ItineraryAirfare;
+export default Airfare;

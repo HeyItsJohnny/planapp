@@ -52,6 +52,7 @@ const PlanSummary = () => {
     setEnableLodging,
     setEnableToDos,
     enableLodging,
+    EnableAirfare,
     enableToDos,
   } = useStateContext();
   const navigate = useNavigate();
@@ -211,6 +212,14 @@ const PlanSummary = () => {
     navigate("/plancalendar/");
   };
 
+  const goToCalendarSetupPage = () => {
+    navigate("/plansettings/");
+  };
+
+  const goToLodgingPage = () => {
+    navigate("/lodgingandairfare/");
+  };
+
   const handleAddCheckinToItinerary = () => {
     //Delete Current Check In
     deletePlanCalendar(currentSelectedPlan, "LodgingCheckin");
@@ -347,14 +356,15 @@ const PlanSummary = () => {
       <div className="flex gap-10 flex-wrap justify-center">
         <div className="bg-white dark:text-gray-200 dark:bg-secondary-dark-bg p-6 rounded-2xl">
           <div className="flex justify-between items-center gap-2">
-            <p className="text-xl font-semibold">Everyday Calendar Events</p>
+            <button
+              type="button"
+              className="text-2xl rounded-lg p-4 hover:drop-shadow-xl"
+              onClick={goToCalendarSetupPage}
+            >
+              <p className="text-xl font-semibold">Everyday Calendar Events</p>
+            </button>
           </div>
           <div className="mt-5 w-72 md:w-400">
-            <div className="flex justify-between items-center mt-5 border-t-1 border-color">
-              <p className="text-gray-400 text-md">
-                Add events to the calendar.
-              </p>
-            </div>
             {calendarSettings.map((item) => (
               <div key={item.id} className="flex justify-between mt-4">
                 <div className="flex gap-4">
@@ -386,7 +396,13 @@ const PlanSummary = () => {
           {enableLodging && (
             <div>
               <div className="flex justify-between items-center gap-2 mt-5">
-                <p className="text-xl font-semibold">Lodging</p>
+                <button
+                  type="button"
+                  className="text-2xl rounded-lg p-4 hover:drop-shadow-xl"
+                  onClick={goToLodgingPage}
+                >
+                  <p className="text-xl font-semibold">Lodging</p>
+                </button>
               </div>
               <div className="flex justify-between mt-4">
                 <div className="flex gap-4">

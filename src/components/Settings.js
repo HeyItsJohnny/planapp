@@ -59,6 +59,11 @@ export const planLinks = [
         linktoname: "pretriptodo"
       },
       {
+        name: "lodging & airfare",
+        icon: <TbReportMoney />,
+        linktoname: "lodgingandairfare"
+      },      
+      {
         name: "itinerary",
         icon: <FaCarSide />,
         linktoname: "planitinerary"
