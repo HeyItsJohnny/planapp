@@ -1,5 +1,9 @@
 export { default as Dashboard } from './Dashboard';
 export { default as Plans } from './Plans/Plans';
+
+//New Shit
+export { default as Summary } from './Summary/Summary';
+
 export { default as PlanSummary } from './Plans/PlanSummary';
 export { default as Itinerary } from './Itinerary/Itinerary';
 export { default as PlanFood } from './Food/PlanFood';

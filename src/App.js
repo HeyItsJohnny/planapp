@@ -25,7 +25,8 @@ import {
   PlanBudget,
   PreTripToDo,
   PlanCalendar,
-  LodgingAndAirfare
+  LodgingAndAirfare,
+  Summary
 } from "./pages";
 
 import "./App.css";
@@ -79,6 +80,9 @@ function App() {
                 <Route path="/" element={<Plans />} />
                 <Route path="/plans" element={<Plans />} />
                 <Route path="/dashboard" element={<Dashboard />} />
+
+                {/* New Shit */}
+                <Route path="/summary" element={<Summary />} />
 
                 {/* PLAN SPECIFIC PAGES */}
                 <Route path="/plansummary" element={<PlanSummary />} />
