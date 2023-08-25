@@ -4,22 +4,31 @@ import { SiShopware } from "react-icons/si";
 import { MdOutlineCancel } from "react-icons/md";
 import { AiOutlineHome } from "react-icons/ai";
 import { TooltipComponent } from "@syncfusion/ej2-react-popups";
+import { FaCalendarDay } from "react-icons/fa";
 
 import { constantLinks, planLinks } from "../components/Settings";
 import { useStateContext } from "../contexts/ContextProvider";
 
+//Data
+import { db } from "../firebase/firebase";
+import { query, collection, onSnapshot, orderBy } from "firebase/firestore";
+
+//EXTRA
+import { convertDateFormat } from "../globalFunctions/globalFunctions";
+
 const Sidebar = () => {
-  
   const {
     activeMenu,
     setActiveMenu,
     screenSize,
     currentColor,
-    currentMode,
     currentPlanIsSet,
     setCurrentPlanIsSet,
     setCurrentSelectedPlan,
+    currentSelectedPlan,
   } = useStateContext();
+
+  const [planDays, setPlanDays] = useState([]);
 
   const handleCloseSizeBar = () => {
     if (activeMenu && screenSize <= 900) {
@@ -27,9 +36,32 @@ const Sidebar = () => {
     }
   };
 
+  const fetchPlanDaysData = async () => {
+    try {
+      const docCollection = query(
+        collection(db, "plans", currentSelectedPlan, "datedocuments"),
+        orderBy("PlanDate")
+      );
+      onSnapshot(docCollection, (querySnapshot) => {
+        const list = [];
+        querySnapshot.forEach((doc) => {
+          var data = {
+            Id: doc.id,
+            PlanDate: convertDateFormat(doc.data().PlanDate),
+            PlanName: doc.data().PlanName,
+          };
+          list.push(data);
+        });
+        setPlanDays(list);
+      });
+    } catch (err) {
+      alert(err);
+    }
+  };
+
   const handleGoToHome = () => {
     setCurrentPlanIsSet(false);
-    setCurrentSelectedPlan('');
+    setCurrentSelectedPlan("");
   };
 
   const activeLink =
@@ -37,6 +69,14 @@ const Sidebar = () => {
   const normalLink =
     "flex items-center gap-5 pl-4 pt-3 pb-2.5 rounded-lg text-md text-gray-700 dark:text-gray-200 dark:hover:text-black hover:bg-light-gray m-2";
 
+  useEffect(() => {
+    if (currentSelectedPlan !== "") {
+      fetchPlanDaysData();
+    }
+    return () => {
+      setPlanDays([]);
+    };
+  }, []);
   return (
     <div className="ml-3 h-screen md:overflow-hidden overflow-auto md:hover:overflow-auto pb-10">
       {activeMenu && (
@@ -62,31 +102,30 @@ const Sidebar = () => {
             </TooltipComponent>
           </div>
           <div className="mt-10">
-            {
-            !currentPlanIsSet && (
-            constantLinks.map((item) => (
-              <div key={item.title}>
-                <p className="text-gray-400 m-3 mt-4 uppercase">{item.title}</p>
-                {item.links.map((link) => (
-                  <NavLink
-                    to={`${link.linktoname}`}
-                    key={link.name}
-                    onClick={handleCloseSizeBar}
-                    style={({ isActive }) => ({
-                      backgroundColor: isActive ? currentColor : "",
-                    })}
-                    className={({ isActive }) =>
-                      isActive ? activeLink : normalLink
-                    }
-                  >
-                    {link.icon}
-                    <span className="capitalize">{link.name}</span>
-                  </NavLink>
-                ))}
-              </div>
-            ))
-            )
-            }
+            {!currentPlanIsSet &&
+              constantLinks.map((item) => (
+                <div key={item.title}>
+                  <p className="text-gray-400 m-3 mt-4 uppercase">
+                    {item.title}
+                  </p>
+                  {item.links.map((link) => (
+                    <NavLink
+                      to={`${link.linktoname}`}
+                      key={link.name}
+                      onClick={handleCloseSizeBar}
+                      style={({ isActive }) => ({
+                        backgroundColor: isActive ? currentColor : "",
+                      })}
+                      className={({ isActive }) =>
+                        isActive ? activeLink : normalLink
+                      }
+                    >
+                      {link.icon}
+                      <span className="capitalize">{link.name}</span>
+                    </NavLink>
+                  ))}
+                </div>
+              ))}
             {currentPlanIsSet &&
               planLinks.map((item) => (
                 <div key={item.title}>
@@ -94,7 +133,7 @@ const Sidebar = () => {
                     {item.title}
                   </p>
                   <NavLink
-                    to='plans'
+                    to="plans"
                     onClick={handleGoToHome}
                     className={normalLink}
                   >
@@ -119,6 +158,28 @@ const Sidebar = () => {
                   ))}
                 </div>
               ))}
+            {currentPlanIsSet && (
+              <div>
+                <p className="text-gray-400 m-3 mt-4 uppercase">Days</p>
+                {planDays.map((day) => (
+                  <NavLink
+                    to={`day/${day.Id}`}
+                    key={day.PlanDate}
+                    onClick={handleCloseSizeBar}
+                    style={({ isActive }) => ({
+                      backgroundColor: isActive ? currentColor : "",
+                    })}
+                    className={({ isActive }) =>
+                      isActive ? activeLink : normalLink
+                    }
+                  >
+                    <FaCalendarDay />
+                    <span className="capitalize">{day.PlanDate}</span>
+                  </NavLink>
+                ))}
+              </div>
+              
+            )}
           </div>
         </>
       )}
