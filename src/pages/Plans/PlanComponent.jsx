@@ -14,7 +14,7 @@ const PlanComponent = ({ plan }) => {
   const handleDetails = () => {
     setPlan(plan.id);             //Set Plan ID context
     setCurrentPlanIsSet(true);    //Set Plan ID to TRUE
-    navigate("/plansummary");
+    navigate("/summary");
   };
 
   const handleDeletePlan = async () => {

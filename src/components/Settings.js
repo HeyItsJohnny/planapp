@@ -46,6 +46,16 @@ export const planLinks = [
       {
         name: "summary",
         icon: <AiOutlinePieChart />,
+        linktoname: "summary"
+      },
+    ],
+  },
+  {
+    title: "Old Shit",
+    links: [
+      {
+        name: "summary",
+        icon: <AiOutlinePieChart />,
         linktoname: "plansummary"
       },
       {
