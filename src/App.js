@@ -27,7 +27,8 @@ import {
   PlanCalendar,
   LodgingAndAirfare,
   Summary,
-  Day
+  Day,
+  DayDocument
 } from "./pages";
 
 import "./App.css";
@@ -84,7 +85,7 @@ function App() {
 
                 {/* New Shit */}
                 <Route path="/summary" element={<Summary />} />
-                <Route path="/day/:dayid" element={<Day />} />
+                <Route path="/daydocument/:dayid" element={<DayDocument />} />
 
                 {/* PLAN SPECIFIC PAGES */}
                 <Route path="/plansummary" element={<PlanSummary />} />

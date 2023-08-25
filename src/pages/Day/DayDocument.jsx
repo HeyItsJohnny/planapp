@@ -12,18 +12,20 @@ import { useStateContext } from "../../contexts/ContextProvider";
 //EXTRA
 import { convertDateFormat } from "../../globalFunctions/globalFunctions";
 
-const Day = () => {
+const DayDocument = () => {
   const { dayid } = useParams();
   const { currentSelectedPlan } = useStateContext();
 
   const [planDay, setPlanDay] = useState({});
+  const [planDateFormatted, setPlanDateFormatted] = useState("");
 
   const setDayFromURL = async () => {
     try {
-      const docRef = doc(db, "plans", currentSelectedPlan, "datedocuments", dayid);
+      const docRef = doc(db,"plans",currentSelectedPlan,"datedocuments",dayid);
       const docSnap = await getDoc(docRef);
       if (docSnap.exists()) {
         setPlanDay(docSnap.data());
+        setPlanDateFormatted(convertDateFormat(docSnap.data().PlanDate));
       }
     } catch (err) {
       alert(err);
@@ -31,7 +33,6 @@ const Day = () => {
   };
 
   useEffect(() => {
-    console.log("Get From URL: ");
     setDayFromURL();
     return () => {
       setPlanDay([]);
@@ -40,9 +41,9 @@ const Day = () => {
 
   return (
     <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white dark:text-gray-200 dark:bg-secondary-dark-bg rounded-3xl">
-      <Header category="Plan" title={planDay.PlanDate} />
+      <Header category="Plan" title={planDateFormatted} />
     </div>
   );
 };
 
-export default Day;
+export default DayDocument;

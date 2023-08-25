@@ -3,7 +3,8 @@ export { default as Plans } from './Plans/Plans';
 
 //New Shit
 export { default as Summary } from './Summary/Summary';
-export { default as Day } from './Day/Day';
+export { default as Day } from './Summary/Day';
+export { default as DayDocument } from './Day/DayDocument';
 
 
 export { default as PlanSummary } from './Plans/PlanSummary';

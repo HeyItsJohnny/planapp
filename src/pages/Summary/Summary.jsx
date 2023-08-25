@@ -6,6 +6,7 @@ import { SummaryHeader } from "../../components";
 import { Box, TextField } from "@mui/material";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Days from "./Days";
 
 //Data
 import { db } from "../../firebase/firebase";
@@ -88,6 +89,7 @@ const Summary = () => {
           />
         </Box>
       </div>
+      <Days />
     </>
   );
 };
