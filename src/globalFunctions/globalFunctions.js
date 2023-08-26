@@ -47,7 +47,7 @@ export function getBudgetByCategory(data) {
 
 export function getBudgetPieChartData(budgetData, totalCost, totalBudget) {
   if (totalBudget === 0) {
-    return
+    return;
   }
 
   const list = [];
@@ -67,7 +67,7 @@ export function getBudgetPieChartData(budgetData, totalCost, totalBudget) {
       x: "Remaining Budget",
       y: costDifference,
       text: Math.round((costDifference / totalBudget) * 100) + "%",
-    }
+    };
     list.push(remainingData);
   }
 
@@ -75,10 +75,10 @@ export function getBudgetPieChartData(budgetData, totalCost, totalBudget) {
 }
 
 export function convertTo12HourFormat(time24) {
-  const parts = time24.split(':');
+  const parts = time24.split(":");
   const hours24 = parseInt(parts[0]);
   const minutes = parts[1];
-  
+
   if (hours24 === 0) {
     return `12:${minutes} AM`;
   } else if (hours24 < 12) {
@@ -93,9 +93,9 @@ export function convertTo12HourFormat(time24) {
 
 function formatDateToYYYYMMDD(date) {
   const year = date.getFullYear();
-  const month = String(date.getMonth() + 1).padStart(2, '0');
-  const day = String(date.getDate()).padStart(2, '0');
-  
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+
   return `${year}-${month}-${day}`;
 }
 
@@ -111,7 +111,30 @@ export function getDatesBetween(startDate, endDate) {
     dates.push(formatDateToYYYYMMDD(localFormattedDate));
     currentDate.setDate(currentDate.getDate() + 1);
   }
-  
+
   return dates;
 }
 
+export function getDayOfTheWeek(Day) {
+  // Create a Date object
+  var date = new Date(Day); // Use your desired date
+
+  // Get the day of the week
+  var dayOfWeek = date.getDay();
+
+  // Define an array of day names
+  var days = [
+    "Sunday",
+    "Monday",
+    "Tuesday",
+    "Wednesday",
+    "Thursday",
+    "Friday",
+    "Saturday",
+  ];
+
+  // Get the day name using the dayOfWeek value
+  var dayName = days[dayOfWeek];
+
+  return dayName;
+}

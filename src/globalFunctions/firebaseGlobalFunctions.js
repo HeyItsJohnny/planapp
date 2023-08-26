@@ -61,3 +61,79 @@ export async function updatePlanDestination(planid, destination) {
     alert("Error editing data to Database: " + error);
   }
 }
+
+//Day Page
+export async function deleteDayDocument(planid, docid) {
+  try {
+    await deleteDoc(doc(db, "plans", planid, "datedocuments", docid));
+  } catch (error) {
+    alert("Error deleting data from Firestore:", error);
+  }
+}
+
+export async function addToPlanDayCalendar(planid, dayid, data) {
+  try {
+    console.log(data.StartTime);
+    await addDoc(collection(db, "plans", planid, "datedocuments", dayid, "calendar"), {
+      Subject: data.Subject,
+      Location: data.Location ?? "",
+      Description: data.Description ?? "",
+      StartTime: data.StartTime ?? "",
+      EndTime: data.EndTime ?? "",
+      IsAllDay: data.IsAllDay ?? "",
+      RecurrenceRule: data.RecurrenceRule ?? "",
+      RecurrenceException: data.RecurrenceException ?? "",
+      CategoryColor: data.CategoryColor ?? "",
+      EventColor: data.EventColor ?? "",
+    });
+  } catch (error) {
+    alert("Error adding data to Database: " + error);
+  }
+}
+
+export async function updatePlanDayCalendar(planid, dayid, data) {
+  try {
+    const calendarEventsRef = doc(db, "plans", planid, "datedocuments", dayid, "calendar", data.Id);
+    await updateDoc(calendarEventsRef, {
+      Subject: data.Subject,
+      Location: data.Location ?? "",
+      Description: data.Description ?? "",
+      StartTime: data.StartTime ?? "",
+      EndTime: data.EndTime ?? "",
+      IsAllDay: data.IsAllDay ?? "",
+      RecurrenceRule: data.RecurrenceRule ?? "",
+      RecurrenceException: data.RecurrenceException ?? "",
+      CategoryColor: data.CategoryColor ?? "",
+      EventColor: data.EventColor ?? "",
+    });
+  } catch (error) {
+    alert("Error editing data to Database: " + error);
+  }
+}
+
+export async function deletePlanDayCalendar(planid, dayid, docid) {
+  try {
+    await deleteDoc(doc(db, "plans", planid, "datedocuments", dayid, "calendar", docid));
+  } catch (error) {
+    alert("Error deleting data from Database: " + error);
+  }
+}
+
+export async function addEventToCalendar(planid, startdate, enddate, dayid, docid, calsubject) {
+  try {
+    await setDoc(doc(db, "plans", planid, "datedocuments", dayid, "calendar", docid), {
+      CategoryColor: "",
+      Description: "",
+      EndTime: enddate,
+      EventColor: "",
+      IsAllDay: false,
+      Location: "",
+      RecurrenceException: "",
+      RecurrenceRule: "",
+      StartTime: startdate,
+      Subject: calsubject,
+    });
+  } catch (error) {
+    alert("There was an error adding to the database: " + error);
+  }
+}

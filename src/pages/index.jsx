@@ -14,7 +14,6 @@ export { default as PlanActivities } from './Activities/PlanActivities';
 export { default as PlanSettings } from './Settings/PlanSettings';
 export { default as PlanCalendar } from './AppPages/PlanCalendar';
 export { default as PlanBudget } from './Budget/PlanBudget';
-export { default as PreTripToDo } from './ToDos/PreTripToDo';
 export { default as LodgingAndAirfare } from './LodgingAndAirfare/LodgingAndAirfare';
 
 //OLD SHIT

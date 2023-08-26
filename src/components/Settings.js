@@ -64,11 +64,6 @@ export const planLinks = [
         linktoname: "planbudget"
       },
       {
-        name: "to dos",
-        icon: <FcTodoList />,
-        linktoname: "pretriptodo"
-      },
-      {
         name: "lodging & airfare",
         icon: <TbReportMoney />,
         linktoname: "lodgingandairfare"

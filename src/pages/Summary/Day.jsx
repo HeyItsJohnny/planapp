@@ -3,19 +3,19 @@ import { useStateContext } from "../../contexts/ContextProvider";
 import { AiTwotoneDelete } from "react-icons/ai";
 import { TbListDetails } from "react-icons/tb";
 import { useNavigate } from "react-router-dom";
-import { deleteDocument } from "../../globalFunctions/firebaseGlobals";
+import { deleteDayDocument } from "../../globalFunctions/firebaseGlobalFunctions";
+import { getDayOfTheWeek } from "../../globalFunctions/globalFunctions";
 
 const Day = ({ day }) => {
   const navigate = useNavigate();
-  const { currentColor } = useStateContext();
+  const { currentColor, currentSelectedPlan } = useStateContext();
 
   const handleDetails = () => {
     navigate("/daydocument/" + day.id);
   };
 
   const handleDeleteDate = async () => {
-    //deleteDocument("plans", plan.id);
-    alert("Delete Document.");
+    deleteDayDocument(currentSelectedPlan, day.id);
   };
 
   return (
@@ -23,7 +23,8 @@ const Day = ({ day }) => {
       <div className="bg-white dark:text-gray-200 dark:bg-secondary-dark-bg h-44 rounded-xl w-full lg:w-80 p-8 pt-9 m-3 bg-no-repeat bg-cover bg-center">
         <div className="flex justify-between items-center ">
           <div>
-            <p className="font-bold text-gray-400">{day.PlanDate}</p>
+            <p className="font-bold text-gray-400">{getDayOfTheWeek(day.PlanDate)}</p>
+            <p className="text-l">{day.PlanDate}</p>
           </div>
         </div>
         <div className="mt-10">

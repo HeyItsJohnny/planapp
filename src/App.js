@@ -23,11 +23,9 @@ import {
   PlanActivities,
   PlanSettings,
   PlanBudget,
-  PreTripToDo,
   PlanCalendar,
   LodgingAndAirfare,
   Summary,
-  Day,
   DayDocument
 } from "./pages";
 
@@ -94,7 +92,6 @@ function App() {
                 <Route path="/planfood" element={<PlanFood />} />
                 <Route path="/planactivities" element={<PlanActivities />} />
                 <Route path="/plansettings" element={<PlanSettings />} />
-                <Route path="/pretriptodo" element={<PreTripToDo />} />
                 <Route path="/lodgingandairfare" element={<LodgingAndAirfare />} />
 
                 {/* APP PAGES */}
