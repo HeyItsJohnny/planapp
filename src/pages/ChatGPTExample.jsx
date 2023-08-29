@@ -11,7 +11,7 @@ const ChatGPTExample = () => {
   const [responseString, setResponseString] = useState("");
 
   const configuration = new Configuration({
-    apiKey: "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",
+    
   });
   const openai = new OpenAIApi(configuration);
 
@@ -45,7 +45,7 @@ const ChatGPTExample = () => {
         messages: [
           {
             "role": "system",
-            "content": "You will be provided with a question, and your task is to parse the answers it into JSON format with the key being restaurants, properties: cuisine, name, yelp rating and address and no line breaks. Please limit to 4 restaurants."
+            "content": "You will be provided with a question, and your task is to parse the answers it into JSON format with the key being restaurants, properties: cuisine, name, yelp rating and restaurant address and no line breaks. Please limit to 4 restaurants."
           },
           {
             "role": "user",

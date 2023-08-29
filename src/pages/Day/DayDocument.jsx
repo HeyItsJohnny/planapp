@@ -4,6 +4,8 @@ import React, { useState, useEffect } from "react";
 import { Header } from "../../components";
 import DayCalendar from "./DayCalendar";
 import DayEvents from "./DayEvents";
+import DayActivities from "./DayActivities";
+import DayFood from "./DayFood";
 
 //DATA
 import { useParams } from "react-router-dom";
@@ -48,6 +50,8 @@ const DayDocument = () => {
       </div>
       <div className="flex gap-10 flex-wrap justify-center">
         <DayEvents />
+        <DayFood />
+        <DayActivities />
         <DayCalendar />
       </div>
     </>

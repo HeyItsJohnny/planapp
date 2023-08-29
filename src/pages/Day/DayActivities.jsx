@@ -22,7 +22,7 @@ import {
 import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
 
-const DayEvents = () => {
+const DayActivities = () => {
   const navigate = useNavigate();
   const { currentSelectedPlan } = useStateContext();
   const { dayid } = useParams();
@@ -113,7 +113,7 @@ const DayEvents = () => {
               className="text-2xl rounded-lg p-4 hover:drop-shadow-xl"
               onClick={goToCalendarSetupPage}
             >
-              <p className="text-xl font-semibold">Everyday Calendar Events</p>
+              <p className="text-xl font-semibold">Activites</p>
             </button>
           </div>
           <div className="mt-5 w-72 md:w-400">
@@ -151,4 +151,4 @@ const DayEvents = () => {
   );
 };
 
-export default DayEvents;
+export default DayActivities;
