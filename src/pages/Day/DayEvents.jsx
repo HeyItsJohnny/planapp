@@ -6,7 +6,7 @@ import "react-toastify/dist/ReactToastify.css";
 
 //Data
 import { db } from "../../firebase/firebase";
-import { doc, getDoc, query, collection, onSnapshot } from "firebase/firestore";
+import { doc, getDoc, query, collection, onSnapshot, orderBy } from "firebase/firestore";
 import { useStateContext } from "../../contexts/ContextProvider";
 
 import {
@@ -49,7 +49,7 @@ const DayEvents = () => {
   };
 
   const fetchCalendarSettingsData = async () => {
-    const docCollection = query(collection(db, "calendarsettings"));
+    const docCollection = query(collection(db, "calendarsettings"),orderBy("StartTime"));
     onSnapshot(docCollection, (querySnapshot) => {
       const list = [];
       querySnapshot.forEach((doc) => {

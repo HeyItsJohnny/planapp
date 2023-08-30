@@ -48,6 +48,11 @@ export const planLinks = [
         icon: <AiOutlinePieChart />,
         linktoname: "summary"
       },
+      {
+        name: "details",
+        icon: <FcTodoList />,
+        linktoname: "details"
+      },
     ],
   },
   {
@@ -62,27 +67,7 @@ export const planLinks = [
         name: "budget",
         icon: <TbReportMoney />,
         linktoname: "planbudget"
-      },
-      {
-        name: "lodging & airfare",
-        icon: <TbReportMoney />,
-        linktoname: "lodgingandairfare"
-      },      
-      {
-        name: "itinerary",
-        icon: <FaCarSide />,
-        linktoname: "planitinerary"
-      },
-      {
-        name: "activities",
-        icon: <MdDirectionsRun />,
-        linktoname: "planactivities"
-      },
-      {
-        name: "food",
-        icon: <MdFastfood />,
-        linktoname: "planfood"
-      },
+      },   
     ],
   },
 ];

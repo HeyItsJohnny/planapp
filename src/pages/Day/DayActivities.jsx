@@ -31,11 +31,12 @@ const DayActivities = () => {
   const { currentSelectedPlan, currentColor } = useStateContext();
   const { dayid } = useParams();
   //Calendar Settings
-  const [restaurants, setRestaurants] = useState([]);
+  const [activities, setActivities] = useState([]);
   const [plan, setPlan] = useState({});
 
   //Chat GPT -
   const configuration = new Configuration({
+    
   });
   const openai = new OpenAIApi(configuration);
   //Chat GPT +
@@ -82,19 +83,18 @@ const DayActivities = () => {
   const handleRefresh = async () => {
     try {
       setLoading(true);
-      setRestaurants([]);
+      setActivities([]);
       const response = await openai.createChatCompletion({
         model: "gpt-3.5-turbo",
         messages: [
           {
             role: "system",
             content:
-              "You will be provided with a question, and your task is to parse the answers it into JSON format with the key being restaurants, properties: cuisine, name, yelp rating, yelp link and restaurant address and no line breaks. Please limit to 4 restaurants.",
+              "You will be provided with a question, and your task is to parse the answers it into JSON format with the key being activities, properties: name, address, average hours spent and no line breaks. Please limit to 5 activities.",
           },
           {
             role: "user",
-            content:
-              "Give me the top places to eat in " + plan.Destination + "?",
+            content: "Give me things to do in " + plan.Destination + "?",
           },
         ],
         temperature: 0,
@@ -109,20 +109,8 @@ const DayActivities = () => {
         ""
       );
       const jsonObject = JSON.parse(returnText);
-      console.log(jsonObject.restaurants);
-
-      const list = [];
-      jsonObject.restaurants.forEach((doc) => {
-        var data = {
-          id: doc.id,
-          Name: doc.name,
-          Cuisine: doc.cuisine,
-          Address: doc.address,
-          YelpRating: doc.yelprating,
-        };
-        list.push(data);
-      });
-      setRestaurants(jsonObject.restaurants);
+      console.log(jsonObject.activities);
+      setActivities(jsonObject.activities);
       setLoading(false);
     } catch (error) {
       alert("ERROR: " + error);
@@ -138,7 +126,7 @@ const DayActivities = () => {
     */
     getPlan();
     return () => {
-      setRestaurants([]);
+      setActivities([]);
       setPlan({});
     };
   }, []);
@@ -175,7 +163,7 @@ const DayActivities = () => {
                 />
               </div>
             ) : (
-              restaurants.map((item) => (
+              activities.map((item) => (
                 <div key={item.id} className="flex justify-between mt-4">
                   <div className="flex gap-4">
                     <button
@@ -192,13 +180,10 @@ const DayActivities = () => {
                       <IoIosAddCircle />
                     </button>
                     <div>
-                      <a href={item["yelp link"]} target="_blank">
-                        <p className="text-md font-semibold">{item.name}</p>
-                        <p className="text-md font-semibold">{item.cuisine}</p>
-                      </a>
+                      <p className="text-md font-semibold">{item.name}</p>
+                      <p className="text-md font-semibold">{item["average hours spent"]}</p>
                     </div>
                   </div>
-                  <p>Stars: {item["yelp rating"]}</p>
                 </div>
               ))
             )}

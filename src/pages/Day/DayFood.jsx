@@ -35,6 +35,7 @@ const DayFood = () => {
 
   //Chat GPT -
   const configuration = new Configuration({
+    
   });
   const openai = new OpenAIApi(configuration);
   //Chat GPT +
@@ -88,7 +89,7 @@ const DayFood = () => {
           {
             role: "system",
             content:
-              "You will be provided with a question, and your task is to parse the answers it into JSON format with the key being restaurants, properties: cuisine, name, yelp rating, yelp link and restaurant address and no line breaks. Please limit to 4 restaurants.",
+              "You will be provided with a question, and your task is to parse the answers it into JSON format with the key being restaurants, properties: cuisine, name, yelp rating, yelp link and restaurant address and no line breaks. Please limit to 5 restaurants.",
           },
           {
             role: "user",
@@ -109,18 +110,6 @@ const DayFood = () => {
       );
       const jsonObject = JSON.parse(returnText);
       console.log(jsonObject.restaurants);
-
-      const list = [];
-      jsonObject.restaurants.forEach((doc) => {
-        var data = {
-          id: doc.id,
-          Name: doc.name,
-          Cuisine: doc.cuisine,
-          Address: doc.address,
-          YelpRating: doc.yelprating,
-        };
-        list.push(data);
-      });
       setRestaurants(jsonObject.restaurants);
       setLoading(false);
 

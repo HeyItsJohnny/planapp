@@ -137,3 +137,155 @@ export async function addEventToCalendar(planid, startdate, enddate, dayid, doci
     alert("There was an error adding to the database: " + error);
   }
 }
+
+//Detail Functions -
+export async function updatePlanLodgingCheckinDate(planid, checkindate) {
+  try {
+    const familyPlansRef = doc(db, "plans", planid);
+    await updateDoc(familyPlansRef, {
+      LodgingCheckinDate: checkindate,
+    });
+  } catch (error) {
+    alert("Error editing data to Database: " + error);
+  }
+}
+
+export async function updatePlanLodgingCheckinTime(planid, checkintime) {
+  try {
+    const familyPlansRef = doc(db, "plans", planid);
+    await updateDoc(familyPlansRef, {
+      LodgingCheckinTime: checkintime,
+    });
+  } catch (error) {
+    alert("Error editing data to Database: " + error);
+  }
+}
+
+export async function updatePlanLodgingCheckoutDate(planid, checkoutdate) {
+  try {
+    const familyPlansRef = doc(db, "plans", planid);
+    await updateDoc(familyPlansRef, {
+      LodgingCheckoutDate: checkoutdate,
+    });
+  } catch (error) {
+    alert("Error editing data tso Database: " + error);
+  }
+}
+
+export async function updatePlanLodgingCheckoutTime(planid, checkouttime) {
+  try {
+    const familyPlansRef = doc(db, "plans", planid);
+    await updateDoc(familyPlansRef, {
+      LodgingCheckoutTime: checkouttime,
+    });
+  } catch (error) {
+    alert("Error editing data to Database: " + error);
+  }
+}
+
+export async function updatePlanLodgingAddress1(planid, address1) {
+  try {
+    const familyPlansRef = doc(db, "plans", planid);
+    await updateDoc(familyPlansRef, {
+      LodgingAddress1: address1,
+    });
+  } catch (error) {
+    alert("Error editing data to Database: " + error);
+  }
+}
+
+export async function updatePlanLodgingAddress2(planid, address2) {
+  try {
+    const familyPlansRef = doc(db, "plans", planid);
+    await updateDoc(familyPlansRef, {
+      LodgingAddress2: address2,
+    });
+  } catch (error) {
+    alert("Error editing data to Database: " + error);
+  }
+}
+
+export async function updatePlanLodgingAddressCity(planid, addresscity) {
+  try {
+    const familyPlansRef = doc(db, "plans", planid);
+    await updateDoc(familyPlansRef, {
+      LodgingAddressCity: addresscity,
+    });
+  } catch (error) {
+    alert("Error editing data to Database: " + error);
+  }
+}
+
+export async function updatePlanLodgingAddressState(planid, addressstate) {
+  try {
+    const familyPlansRef = doc(db, "plans", planid);
+    await updateDoc(familyPlansRef, {
+      LodgingAddressState: addressstate,
+    });
+  } catch (error) {
+    alert("Error editing data to Database: " + error);
+  }
+}
+
+export async function updatePlanLodgingAddressZip(planid, addresszip) {
+  try {
+    const familyPlansRef = doc(db, "plans", planid);
+    await updateDoc(familyPlansRef, {
+      LodgingAddressZip: addresszip,
+    });
+  } catch (error) {
+    alert("Error editing data to Database: " + error);
+  }
+}
+
+export async function addCheckinCalendar(planid, startdate, enddate) {
+  try {
+    /*
+    await setDoc(doc(db, "plans", planid, "calendar", "LodgingCheckin"), {
+      CategoryColor: "",
+      Description: "",
+      EndTime: enddate,
+      EventColor: "",
+      IsAllDay: false,
+      Location: "",
+      RecurrenceException: "",
+      RecurrenceRule: "",
+      StartTime: startdate,
+      Subject: "Lodging Checkin",
+    });
+    */
+  } catch (error) {
+    alert("There was an error adding to the database: " + error);
+  }
+}
+
+export async function addCheckoutCalendar(planid, startdate, enddate) {
+  try {
+    /*
+    await setDoc(doc(db, "plans", planid, "calendar", "LodgingCheckout"), {
+      CategoryColor: "",
+      Description: "",
+      EndTime: enddate,
+      EventColor: "",
+      IsAllDay: false,
+      Location: "",
+      RecurrenceException: "",
+      RecurrenceRule: "",
+      StartTime: startdate,
+      Subject: "Lodging Checkout",
+    });
+    */
+  } catch (error) {
+    alert("There was an error adding to the database: " + error);
+  }
+}
+
+export async function deletePlanCalendar(planid, docid) {
+  try {
+    await deleteDoc(doc(db, "plans", planid, "calendar", docid));
+  } catch (error) {
+    alert("Error deleting data from Database: " + error);
+  }
+}
+
+//Details Functions +

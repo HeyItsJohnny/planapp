@@ -10,23 +10,19 @@ import {
   Ecommerce,
   PeopleInvited,
   Places,
-  Food,
   Scheduler,
-  Itinerary,
   TripCostsBreakdown,
   TripCosts,
   ChatGPTExample,
   TripPayments,
   PlanSummary,
   Plans,
-  PlanFood,
-  PlanActivities,
   PlanSettings,
   PlanBudget,
   PlanCalendar,
-  LodgingAndAirfare,
   Summary,
-  DayDocument
+  DayDocument,
+  Details
 } from "./pages";
 
 import "./App.css";
@@ -84,15 +80,12 @@ function App() {
                 {/* New Shit */}
                 <Route path="/summary" element={<Summary />} />
                 <Route path="/daydocument/:dayid" element={<DayDocument />} />
+                <Route path="/details" element={<Details />} />
 
                 {/* PLAN SPECIFIC PAGES */}
                 <Route path="/plansummary" element={<PlanSummary />} />
-                <Route path="/planitinerary" element={<Itinerary />} />
                 <Route path="/planbudget" element={<PlanBudget />} />
-                <Route path="/planfood" element={<PlanFood />} />
-                <Route path="/planactivities" element={<PlanActivities />} />
                 <Route path="/plansettings" element={<PlanSettings />} />
-                <Route path="/lodgingandairfare" element={<LodgingAndAirfare />} />
 
                 {/* APP PAGES */}
                 <Route path="/plancalendar" element={<PlanCalendar />} />
@@ -102,7 +95,6 @@ function App() {
 
                 {/* PAGES & APPS */}
                 <Route path="/calendar" element={<Calendar />} />
-                <Route path="/food" element={<Food />} />
                 <Route path="/places" element={<Places />} />
                 <Route path="/trip-costs" element={<TripCosts />} />
                 <Route path="/trip-payments" element={<TripPayments />} />

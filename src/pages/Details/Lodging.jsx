@@ -22,7 +22,7 @@ import {
   addCheckinCalendar,
   addCheckoutCalendar,
   deletePlanCalendar,
-} from "../../globalFunctions/firebaseGlobals";
+} from "../../globalFunctions/firebaseGlobalFunctions";
 
 import { convertDateTimeString } from "../../globalFunctions/globalFunctions";
 
