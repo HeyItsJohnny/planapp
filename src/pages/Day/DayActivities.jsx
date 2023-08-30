@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from "react";
 
+//Visual
 import { IoIosAddCircle } from "react-icons/io";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import ClipLoader from "react-spinners/ClipLoader";
 
 //Data
 import { db } from "../../firebase/firebase";
-import { doc, getDoc, query, collection, onSnapshot } from "firebase/firestore";
+import { doc, getDoc } from "firebase/firestore";
 import { useStateContext } from "../../contexts/ContextProvider";
 
 import {
@@ -22,52 +24,39 @@ import {
 import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
 
+//Chat GPT
+import { Configuration, OpenAIApi } from "openai";
+
 const DayActivities = () => {
-  const navigate = useNavigate();
-  const { currentSelectedPlan } = useStateContext();
+  const { currentSelectedPlan, currentColor } = useStateContext();
   const { dayid } = useParams();
   //Calendar Settings
-  const [calendarSettings, setCalendarSettings] = useState([]);
-  const [planDay, setPlanDay] = useState({});
+  const [restaurants, setRestaurants] = useState([]);
+  const [plan, setPlan] = useState({});
 
-  const setDayFromURL = async () => {
+  //Chat GPT -
+  const configuration = new Configuration({
+  });
+  const openai = new OpenAIApi(configuration);
+  //Chat GPT +
+
+  //Loaders
+  let [loading, setLoading] = useState(false);
+
+  const getPlan = async () => {
     try {
-      const docRef = doc(
-        db,
-        "plans",
-        currentSelectedPlan,
-        "datedocuments",
-        dayid
-      );
+      const docRef = doc(db, "plans", currentSelectedPlan);
       const docSnap = await getDoc(docRef);
       if (docSnap.exists()) {
-        setPlanDay(docSnap.data());
+        setPlan(docSnap.data());
       }
     } catch (err) {
       alert(err);
     }
   };
 
-  const fetchCalendarSettingsData = async () => {
-    const docCollection = query(collection(db, "calendarsettings"));
-    onSnapshot(docCollection, (querySnapshot) => {
-      const list = [];
-      querySnapshot.forEach((doc) => {
-        var data = {
-          id: doc.id,
-          CalendarEvent: doc.data().CalendarEvent,
-          StartTimeFormatted: convertTo12HourFormat(doc.data().StartTime),
-          StartTime: doc.data().StartTime,
-          EndTimeFormatted: convertTo12HourFormat(doc.data().EndTime),
-          EndTime: doc.data().EndTime,
-        };
-        list.push(data);
-      });
-      setCalendarSettings(list);
-    });
-  };
-
   const addEverydayCalendarEvent = async (item) => {
+    /*
     deletePlanDayCalendar(
       currentSelectedPlan,
       dayid,
@@ -86,19 +75,71 @@ const DayActivities = () => {
       item.CalendarEvent + "_" + planDay.PlanDate,
       item.CalendarEvent
     );
-    toast("Added " + item.CalendarEvent + " to calendar.");
+    */
+    toast("Added to calendar.");
   };
 
-  const goToCalendarSetupPage = () => {
-    navigate("/plansettings/");
+  const handleRefresh = async () => {
+    try {
+      setLoading(true);
+      setRestaurants([]);
+      const response = await openai.createChatCompletion({
+        model: "gpt-3.5-turbo",
+        messages: [
+          {
+            role: "system",
+            content:
+              "You will be provided with a question, and your task is to parse the answers it into JSON format with the key being restaurants, properties: cuisine, name, yelp rating, yelp link and restaurant address and no line breaks. Please limit to 4 restaurants.",
+          },
+          {
+            role: "user",
+            content:
+              "Give me the top places to eat in " + plan.Destination + "?",
+          },
+        ],
+        temperature: 0,
+        max_tokens: 1024,
+        top_p: 1,
+        frequency_penalty: 0,
+        presence_penalty: 0,
+      });
+      console.log(response);
+      const returnText = response.data.choices[0].message.content.replace(
+        /(\r\n|\n|\r)/gm,
+        ""
+      );
+      const jsonObject = JSON.parse(returnText);
+      console.log(jsonObject.restaurants);
+
+      const list = [];
+      jsonObject.restaurants.forEach((doc) => {
+        var data = {
+          id: doc.id,
+          Name: doc.name,
+          Cuisine: doc.cuisine,
+          Address: doc.address,
+          YelpRating: doc.yelprating,
+        };
+        list.push(data);
+      });
+      setRestaurants(jsonObject.restaurants);
+      setLoading(false);
+    } catch (error) {
+      alert("ERROR: " + error);
+    }
   };
 
   useEffect(() => {
-    fetchCalendarSettingsData();
-    setDayFromURL();
+    /*
+    setLoading(true);
+    setTimeout(() => {
+      setLoading(false);
+    },5000)
+    */
+    getPlan();
     return () => {
-      setCalendarSettings([]);
-      setPlanDay({});
+      setRestaurants([]);
+      setPlan({});
     };
   }, []);
 
@@ -108,42 +149,59 @@ const DayActivities = () => {
       <div className="bg-white dark:text-gray-200 dark:bg-secondary-dark-bg p-6 rounded-2xl">
         <div>
           <div className="flex justify-between items-center gap-2">
+            <p className="text-xl font-semibold">Select Activities</p>
             <button
               type="button"
-              className="text-2xl rounded-lg p-4 hover:drop-shadow-xl"
-              onClick={goToCalendarSetupPage}
+              style={{
+                backgroundColor: currentColor,
+                color: "White",
+                borderRadius: "10px",
+              }}
+              className={`text-md p-3 hover:drop-shadow-xl`}
+              onClick={handleRefresh}
             >
-              <p className="text-xl font-semibold">Activites</p>
+              Refresh
             </button>
           </div>
           <div className="mt-5 w-72 md:w-400">
-            {calendarSettings.map((item) => (
-              <div key={item.id} className="flex justify-between mt-4">
-                <div className="flex gap-4">
-                  <button
-                    type="button"
-                    style={{
-                      color: "#03C9D7",
-                      backgroundColor: "#E5FAFB",
-                    }}
-                    className="text-2xl rounded-lg p-4 hover:drop-shadow-xl"
-                    onClick={() => {
-                      addEverydayCalendarEvent(item);
-                    }}
-                  >
-                    <IoIosAddCircle />
-                  </button>
-                  <div>
-                    <p className="text-md font-semibold">
-                      {item.CalendarEvent}
-                    </p>
-                  </div>
-                </div>
-                <p>
-                  {item.StartTimeFormatted} - {item.EndTimeFormatted}
-                </p>
+            {loading ? (
+              <div className="flex justify-between items-center gap-2">
+                <ClipLoader
+                  color="#ffffff"
+                  loading={loading}
+                  size={150}
+                  aria-label="Loading Spinner"
+                  data-testid="loader"
+                />
               </div>
-            ))}
+            ) : (
+              restaurants.map((item) => (
+                <div key={item.id} className="flex justify-between mt-4">
+                  <div className="flex gap-4">
+                    <button
+                      type="button"
+                      style={{
+                        color: "#03C9D7",
+                        backgroundColor: "#E5FAFB",
+                      }}
+                      className="text-2xl rounded-lg p-4 hover:drop-shadow-xl"
+                      onClick={() => {
+                        addEverydayCalendarEvent(item);
+                      }}
+                    >
+                      <IoIosAddCircle />
+                    </button>
+                    <div>
+                      <a href={item["yelp link"]} target="_blank">
+                        <p className="text-md font-semibold">{item.name}</p>
+                        <p className="text-md font-semibold">{item.cuisine}</p>
+                      </a>
+                    </div>
+                  </div>
+                  <p>Stars: {item["yelp rating"]}</p>
+                </div>
+              ))
+            )}
           </div>
         </div>
       </div>
