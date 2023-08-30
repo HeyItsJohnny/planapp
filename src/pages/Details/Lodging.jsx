@@ -24,7 +24,7 @@ import {
   deletePlanCalendar,
 } from "../../globalFunctions/firebaseGlobalFunctions";
 
-import { convertDateTimeString } from "../../globalFunctions/globalFunctions";
+import { convertDateTimeString, formatDateToYYYYMMDD, localFormattedDate } from "../../globalFunctions/globalFunctions";
 
 import { db } from "../../firebase/firebase";
 import { doc, getDoc } from "firebase/firestore";
@@ -110,8 +110,21 @@ const Lodging = () => {
   };
 
   const handleAddToItinerary = () => {
+
+    //Get Date ID -
+    const CheckinDateDocFormattedDate = new Date(checkinDate);
+    CheckinDateDocFormattedDate.setDate(CheckinDateDocFormattedDate.getDate() + 1);
+
+    const CheckinDateDoc = formatDateToYYYYMMDD(CheckinDateDocFormattedDate);
+
+    const CheckoutDateDocFormattedDate = new Date(checkoutDate);
+    CheckoutDateDocFormattedDate.setDate(CheckoutDateDocFormattedDate.getDate() + 1);
+
+    const CheckoutDateDoc = formatDateToYYYYMMDD(CheckoutDateDocFormattedDate);
+    //Get Date ID +
+
     //Delete Current Check In
-    deletePlanCalendar(currentSelectedPlan, "LodgingCheckin");
+    deletePlanCalendar(currentSelectedPlan, CheckinDateDoc, "LodgingCheckin");
 
     //Checkin Date/Time
     const LocalDateCheckinStartTime = convertDateTimeString(
@@ -119,16 +132,17 @@ const Lodging = () => {
       checkinTime
     );
     const LocalDateCheckinEndTime = new Date(LocalDateCheckinStartTime);
-    LocalDateCheckinEndTime.setHours(LocalDateCheckinStartTime.getHours() + 1);
+    LocalDateCheckinEndTime.setMinutes(LocalDateCheckinStartTime.getMinutes() + 20);
 
     addCheckinCalendar(
       currentSelectedPlan,
+      CheckinDateDoc,
       LocalDateCheckinStartTime,
       LocalDateCheckinEndTime
     );
 
     //Delete Current Check Out
-    deletePlanCalendar(currentSelectedPlan, "LodgingCheckout");
+    deletePlanCalendar(currentSelectedPlan, CheckoutDateDoc, "LodgingCheckout");
 
     //Checkout Date/Time
     const LocalDateCheckoutStartTime = convertDateTimeString(
@@ -136,12 +150,11 @@ const Lodging = () => {
       checkoutTime
     );
     const LocalDateCheckoutEndTime = new Date(LocalDateCheckoutStartTime);
-    LocalDateCheckoutEndTime.setHours(
-      LocalDateCheckoutStartTime.getHours() + 1
-    );
+    LocalDateCheckoutEndTime.setMinutes(LocalDateCheckoutStartTime.getMinutes() + 30);
 
     addCheckoutCalendar(
       currentSelectedPlan,
+      CheckoutDateDoc,
       LocalDateCheckoutStartTime,
       LocalDateCheckoutEndTime
     );

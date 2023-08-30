@@ -41,7 +41,7 @@ function startCreateDateDocuments(data, docID) {
 
 async function addNewPlanDateDocuments(data, docID, date) {
   try {
-    await addDoc(collection(db, "plans", docID, "datedocuments"), {
+    await setDoc(doc(db, "plans", docID, "datedocuments",date), {
       PlanName: data.target.Name.value,
       PlanDate: date
     });
@@ -238,10 +238,9 @@ export async function updatePlanLodgingAddressZip(planid, addresszip) {
   }
 }
 
-export async function addCheckinCalendar(planid, startdate, enddate) {
+export async function addCheckinCalendar(planid, dayid, startdate, enddate) {
   try {
-    /*
-    await setDoc(doc(db, "plans", planid, "calendar", "LodgingCheckin"), {
+    await setDoc(doc(db, "plans", planid, "datedocuments", dayid, "calendar", "LodgingCheckin"), {
       CategoryColor: "",
       Description: "",
       EndTime: enddate,
@@ -253,16 +252,14 @@ export async function addCheckinCalendar(planid, startdate, enddate) {
       StartTime: startdate,
       Subject: "Lodging Checkin",
     });
-    */
   } catch (error) {
     alert("There was an error adding to the database: " + error);
   }
 }
 
-export async function addCheckoutCalendar(planid, startdate, enddate) {
+export async function addCheckoutCalendar(planid, dayid, startdate, enddate) {
   try {
-    /*
-    await setDoc(doc(db, "plans", planid, "calendar", "LodgingCheckout"), {
+    await setDoc(doc(db, "plans", planid, "datedocuments", dayid, "calendar", "LodgingCheckout"), {
       CategoryColor: "",
       Description: "",
       EndTime: enddate,
@@ -274,15 +271,14 @@ export async function addCheckoutCalendar(planid, startdate, enddate) {
       StartTime: startdate,
       Subject: "Lodging Checkout",
     });
-    */
   } catch (error) {
     alert("There was an error adding to the database: " + error);
   }
 }
 
-export async function deletePlanCalendar(planid, docid) {
+export async function deletePlanCalendar(planid, dayid, docid) {
   try {
-    await deleteDoc(doc(db, "plans", planid, "calendar", docid));
+    await deleteDoc(doc(db, "plans", planid, "datedocuments", dayid, "calendar", docid));
   } catch (error) {
     alert("Error deleting data from Database: " + error);
   }
