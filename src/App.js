@@ -5,11 +5,8 @@ import { TooltipComponent } from "@syncfusion/ej2-react-popups";
 
 import { Navbar, Footer, Sidebar, ThemeSettings } from "./components";
 import {
-  Dashboard,
   Ecommerce,
   PeopleInvited,
-  Places,
-  Scheduler,
   TripCostsBreakdown,
   TripCosts,
   ChatGPTExample,
@@ -74,7 +71,6 @@ function App() {
                 {/* DASHBOARD AND STATIC HOMEPAGES*/}
                 <Route path="/" element={<Plans />} />
                 <Route path="/plans" element={<Plans />} />
-                <Route path="/dashboard" element={<Dashboard />} />
 
                 {/* New Shit */}
                 <Route path="/summary" element={<Summary />} />
@@ -93,12 +89,10 @@ function App() {
                 <Route path="/ecommerce" element={<Ecommerce />} />
 
                 {/* PAGES & APPS */}
-                <Route path="/places" element={<Places />} />
                 <Route path="/trip-costs" element={<TripCosts />} />
                 <Route path="/trip-payments" element={<TripPayments />} />
                 <Route path="/trip-costs-breakdown" element={<TripCostsBreakdown />} />
                 <Route path="/people-invited" element={<PeopleInvited />} />
-                <Route path="/scheduler" element={<Scheduler />} />
                 <Route path="/chatgpt" element={<ChatGPTExample />} />
 
               </Routes>

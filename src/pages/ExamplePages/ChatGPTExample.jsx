@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { Configuration, OpenAIApi } from "openai";
 
-import { useStateContext } from "../contexts/ContextProvider";
+import { useStateContext } from "../../contexts/ContextProvider";
 
 //DATA
-import { Header } from "../components";
+import { Header } from "../../components";
 
 const ChatGPTExample = () => {
 
