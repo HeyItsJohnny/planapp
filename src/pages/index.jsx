@@ -23,7 +23,6 @@ export { default as Places } from './Places';
 export { default as ChatGPTExample } from './ChatGPTExample';
 
 
-export { default as Calendar } from './Calendar';
 export { default as Scheduler } from './Scheduler';
 export { default as Ecommerce } from './Ecommerce';
 

@@ -283,5 +283,18 @@ export async function deletePlanCalendar(planid, dayid, docid) {
     alert("Error deleting data from Database: " + error);
   }
 }
-
 //Details Functions +
+
+//Food Calendar Functions -
+export async function updateFoodCalendarWithRestaurant(planid, dayid, docid, subject, address) {
+  try {
+    const familyPlansRef = doc(db, "plans", planid, "datedocuments", dayid, "calendar", docid);
+    await updateDoc(familyPlansRef, {
+      Subject: subject,
+      Description: address
+    });
+  } catch (error) {
+    alert("Error editing data to Database: " + error);
+  }
+}
+//Food Calendar Functions +

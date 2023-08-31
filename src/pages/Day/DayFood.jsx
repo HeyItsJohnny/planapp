@@ -5,6 +5,7 @@ import { IoIosAddCircle } from "react-icons/io";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import ClipLoader from "react-spinners/ClipLoader";
+import AddFoodToCalendarModal from "../../modals/AddFoodToCalendarModal";
 
 //Data
 import { db } from "../../firebase/firebase";
@@ -112,7 +113,6 @@ const DayFood = () => {
       console.log(jsonObject.restaurants);
       setRestaurants(jsonObject.restaurants);
       setLoading(false);
-
     } catch (error) {
       alert("ERROR: " + error);
     }
@@ -167,19 +167,7 @@ const DayFood = () => {
               restaurants.map((item) => (
                 <div key={item.id} className="flex justify-between mt-4">
                   <div className="flex gap-4">
-                    <button
-                      type="button"
-                      style={{
-                        color: "#03C9D7",
-                        backgroundColor: "#E5FAFB",
-                      }}
-                      className="text-2xl rounded-lg p-4 hover:drop-shadow-xl"
-                      onClick={() => {
-                        addEverydayCalendarEvent(item);
-                      }}
-                    >
-                      <IoIosAddCircle />
-                    </button>
+                    <AddFoodToCalendarModal item={item} dayid={dayid} />
                     <div>
                       <a href={item["yelp link"]} target="_blank">
                         <p className="text-md font-semibold">{item.name}</p>

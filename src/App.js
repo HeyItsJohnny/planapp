@@ -6,7 +6,6 @@ import { TooltipComponent } from "@syncfusion/ej2-react-popups";
 import { Navbar, Footer, Sidebar, ThemeSettings } from "./components";
 import {
   Dashboard,
-  Calendar,
   Ecommerce,
   PeopleInvited,
   Places,
@@ -94,7 +93,6 @@ function App() {
                 <Route path="/ecommerce" element={<Ecommerce />} />
 
                 {/* PAGES & APPS */}
-                <Route path="/calendar" element={<Calendar />} />
                 <Route path="/places" element={<Places />} />
                 <Route path="/trip-costs" element={<TripCosts />} />
                 <Route path="/trip-payments" element={<TripPayments />} />

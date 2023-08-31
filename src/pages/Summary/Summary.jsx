@@ -22,7 +22,7 @@ import {
 const Summary = () => {
   const isNonMobile = useMediaQuery("(min-width:600px)");
 
-  const { currentSelectedPlan } = useStateContext();
+  const { currentSelectedPlan, setEnableAirfare, setEnableLodging, setEnableToDos } = useStateContext();
   const [plan, setPlan] = useState({});
   const [destination, setDestination] = useState("");
   const [planDates, setPlanDates] = useState("");
@@ -34,6 +34,9 @@ const Summary = () => {
       if (docSnap.exists()) {
         setPlan(docSnap.data());
         setDestination(docSnap.data().Destination);
+        setEnableLodging(docSnap.data().EnableLodging);
+        setEnableAirfare(docSnap.data().EnableAirfare);
+        setEnableToDos(docSnap.data().EnableToDos);
         setPlanDates(convertDateFormat(docSnap.data().StartDate) + ' - ' + convertDateFormat(docSnap.data().EndDate))
       }
     } catch (err) {
