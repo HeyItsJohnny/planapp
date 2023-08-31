@@ -31,11 +31,9 @@ const AddFoodToCalendarModal = ({ item, dayid }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    //addPeopleInvitedDoc(e);
-    //Get Document name E.G. Breakfast_2024_01_16
-    //Update Document Subject (Breakfast + Name) & Location (Address)
-    alert("NAME: " + item.name + " Day ID: " + dayid);
+    const docID = meal+'_'+dayid;
+    const calendarSubject = meal + ' - ' + item.name;
+    updateFoodCalendarWithRestaurant(currentSelectedPlan,dayid,docID,calendarSubject,item["restaurant address"]);
     handleReset();
   };
 

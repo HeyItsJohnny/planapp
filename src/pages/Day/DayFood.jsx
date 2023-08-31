@@ -167,7 +167,7 @@ const DayFood = () => {
               restaurants.map((item) => (
                 <div key={item.id} className="flex justify-between mt-4">
                   <div className="flex gap-4">
-                    <AddFoodToCalendarModal item={item} dayid={dayid} />
+                    <AddFoodToCalendarModal item={item} dayid={dayid}/>
                     <div>
                       <a href={item["yelp link"]} target="_blank">
                         <p className="text-md font-semibold">{item.name}</p>

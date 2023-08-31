@@ -291,7 +291,7 @@ export async function updateFoodCalendarWithRestaurant(planid, dayid, docid, sub
     const familyPlansRef = doc(db, "plans", planid, "datedocuments", dayid, "calendar", docid);
     await updateDoc(familyPlansRef, {
       Subject: subject,
-      Description: address
+      Location: address
     });
   } catch (error) {
     alert("Error editing data to Database: " + error);
