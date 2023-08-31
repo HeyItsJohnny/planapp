@@ -8,9 +8,7 @@ import {
   Ecommerce,
   PeopleInvited,
   TripCostsBreakdown,
-  TripCosts,
   ChatGPTExample,
-  TripPayments,
   PlanSummary,
   Plans,
   PlanSettings,
@@ -89,8 +87,6 @@ function App() {
                 <Route path="/ecommerce" element={<Ecommerce />} />
 
                 {/* PAGES & APPS */}
-                <Route path="/trip-costs" element={<TripCosts />} />
-                <Route path="/trip-payments" element={<TripPayments />} />
                 <Route path="/trip-costs-breakdown" element={<TripCostsBreakdown />} />
                 <Route path="/people-invited" element={<PeopleInvited />} />
                 <Route path="/chatgpt" element={<ChatGPTExample />} />

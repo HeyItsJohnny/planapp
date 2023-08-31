@@ -13,8 +13,6 @@ export { default as PlanBudget } from './Budget/PlanBudget';
 
 //OLD SHIT
 export { default as PeopleInvited } from './PeopleInvited';
-export { default as TripCosts } from './TripCosts';
-export { default as TripPayments } from './TripPayments';
 export { default as TripCostsBreakdown } from './TripCostsBreakdown';
 
 //Examples
