@@ -11,7 +11,7 @@ const ChatGPTExample = () => {
   const [responseString, setResponseString] = useState("");
 
   const configuration = new Configuration({
-    
+    apiKey: "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",
   });
   const openai = new OpenAIApi(configuration);
 

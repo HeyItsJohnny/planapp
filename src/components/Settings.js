@@ -53,6 +53,11 @@ export const planLinks = [
         icon: <FcTodoList />,
         linktoname: "details"
       },
+      {
+        name: "set up",
+        icon: <AiFillSetting />,
+        linktoname: "plansettings"
+      }
     ],
   },
   {
