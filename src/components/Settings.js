@@ -15,89 +15,10 @@ export const constantLinks = [
         icon: <GoDashboard />,
         linktoname: "plans"
       },
-      {
-        name: "set up",
-        icon: <AiFillSetting />,
-        linktoname: "plansettings"
-      }
+
     ],
   }
 ];
-
-/*
-export const links = [
-  {
-    title: "Home",
-    links: [
-      {
-        name: "ecommerce",
-        icon: <GoDashboard />,
-        linktoname: "ecommerce",
-      },
-      {
-        name: "dashboard",
-        icon: <GoDashboard />,
-        linktoname: "dashboard",
-      },
-      {
-        name: "chatGPT Example",
-        icon: <GoDashboard />,
-        linktoname: "chatgpt",
-      },
-    ],
-  },
-  {
-    title: "Trip",
-    links: [
-      {
-        name: "itinerary",
-        icon: <FaCarSide />,
-        linktoname: "itinerary",
-      },
-      {
-        name: "places to visit",
-        icon: <MdTravelExplore />,
-        linktoname: "places",
-      },
-      {
-        name: "food",
-        icon: <BiFoodMenu />,
-        linktoname: "food",
-      },
-    ],
-  },
-  {
-    title: "Costs",
-    links: [
-      {
-        name: "Summary",
-        icon: <AiOutlinePieChart />,
-        linktoname: "trip-costs-breakdown",
-      },
-      {
-        name: "Details",
-        icon: <TbReportMoney />,
-        linktoname: "trip-costs",
-      },
-      {
-        name: "Payments",
-        icon: <MdPayment />,
-        linktoname: "trip-payments",
-      },
-    ],
-  },
-  {
-    title: "Settings",
-    links: [
-      {
-        name: "people invited",
-        icon: <IoMdContacts />,
-        linktoname: "people-invited",
-      },
-    ],
-  },
-];
-*/
 
 export const themeColors = [
   {
