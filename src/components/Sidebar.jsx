@@ -35,7 +35,6 @@ const Sidebar = () => {
     }
   };
 
-
   const handleGoToHome = () => {
     setCurrentPlanIsSet(false);
     setCurrentSelectedPlan("");
@@ -71,62 +70,28 @@ const Sidebar = () => {
             </TooltipComponent>
           </div>
           <div className="mt-10">
-            {!currentPlanIsSet &&
-              constantLinks.map((item) => (
-                <div key={item.title}>
-                  <p className="text-gray-400 m-3 mt-4 uppercase">
-                    {item.title}
-                  </p>
-                  {item.links.map((link) => (
-                    <NavLink
-                      to={`${link.linktoname}`}
-                      key={link.name}
-                      onClick={handleCloseSizeBar}
-                      style={({ isActive }) => ({
-                        backgroundColor: isActive ? currentColor : "",
-                      })}
-                      className={({ isActive }) =>
-                        isActive ? activeLink : normalLink
-                      }
-                    >
-                      {link.icon}
-                      <span className="capitalize">{link.name}</span>
-                    </NavLink>
-                  ))}
-                </div>
+            {
+            constantLinks.map((item) => (
+            <div key={item.title}>
+              <p className="text-gray-400 m-3 mt-4 uppercase">{item.title}</p>
+              {item.links.map((link) => (
+                <NavLink
+                  to={`${link.linktoname}`}
+                  key={link.name}
+                  onClick={handleCloseSizeBar}
+                  style={({ isActive }) => ({
+                    backgroundColor: isActive ? currentColor : "",
+                  })}
+                  className={({ isActive }) =>
+                    isActive ? activeLink : normalLink
+                  }
+                >
+                  {link.icon}
+                  <span className="capitalize">{link.name}</span>
+                </NavLink>
               ))}
-            {currentPlanIsSet &&
-              planLinks.map((item) => (
-                <div key={item.title}>
-                  <p className="text-gray-400 m-3 mt-4 uppercase">
-                    {item.title}
-                  </p>
-                  <NavLink
-                    to="plans"
-                    onClick={handleGoToHome}
-                    className={normalLink}
-                  >
-                    <AiOutlineHome />
-                    <span className="capitalize">Home</span>
-                  </NavLink>
-                  {item.links.map((link) => (
-                    <NavLink
-                      to={`${link.linktoname}`}
-                      key={link.name}
-                      onClick={handleCloseSizeBar}
-                      style={({ isActive }) => ({
-                        backgroundColor: isActive ? currentColor : "",
-                      })}
-                      className={({ isActive }) =>
-                        isActive ? activeLink : normalLink
-                      }
-                    >
-                      {link.icon}
-                      <span className="capitalize">{link.name}</span>
-                    </NavLink>
-                  ))}
-                </div>
-              ))}
+            </div>
+            ))}
           </div>
         </>
       )}

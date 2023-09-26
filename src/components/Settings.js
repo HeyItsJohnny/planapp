@@ -21,60 +21,7 @@ export const constantLinks = [
         linktoname: "plansettings"
       }
     ],
-  },
-  {
-    title: "Examples",
-    links: [
-      {
-        name: "ecommerce",
-        icon: <GoDashboard />,
-        linktoname: "ecommerce",
-      },
-      {
-        name: "chatGPT Example",
-        icon: <GoDashboard />,
-        linktoname: "chatgpt",
-      }
-    ],
-  },
-];
-
-export const planLinks = [
-  {
-    title: "Plan",
-    links: [
-      {
-        name: "summary",
-        icon: <AiOutlinePieChart />,
-        linktoname: "summary"
-      },
-      {
-        name: "details",
-        icon: <FcTodoList />,
-        linktoname: "details"
-      },
-      {
-        name: "set up",
-        icon: <AiFillSetting />,
-        linktoname: "plansettings"
-      }
-    ],
-  },
-  {
-    title: "Old Shit",
-    links: [
-      {
-        name: "summary",
-        icon: <AiOutlinePieChart />,
-        linktoname: "plansummary"
-      },
-      {
-        name: "budget",
-        icon: <TbReportMoney />,
-        linktoname: "planbudget"
-      },   
-    ],
-  },
+  }
 ];
 
 /*
