@@ -28,6 +28,14 @@ function App() {
               </PrivateRoute>
             }
           />
+          <Route
+            path="/newplan"
+            element={
+              <PrivateRoute>
+                <HomeTemplate page="NEWPLAN" />
+              </PrivateRoute>
+            }
+          />
 
           <Route
             path="/plans"
