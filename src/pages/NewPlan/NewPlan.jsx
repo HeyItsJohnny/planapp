@@ -23,11 +23,18 @@ const steps = ["Details", "Sites", "Meals", "Lodging/Starting"];
 
 const NewPlan = () => {
   const [activeStep, setActiveStep] = useState(0);
+  const [detailsData, setDetailsData] = useState({});
 
   const nextStep = () => setActiveStep((prevActiveStep) => prevActiveStep + 1);
   const backStep = () => setActiveStep((prevActiveStep) => prevActiveStep - 1);
 
-  const next = (data) => {
+  const detailsNext = (data) => {
+    const detailValues = {
+      Destination: data.target.Destination.value,
+      StartDate: data.target.StartDate.value,
+      EndDate: data.target.EndDate.value
+    }
+    setDetailsData(detailValues);
     nextStep();
   };
 
@@ -46,7 +53,7 @@ const NewPlan = () => {
   function getStepContent() {
     switch (activeStep) {
       case 0:
-        return <Details nextStep={nextStep} />;
+        return <Details detailsNext={detailsNext} />;
       case 1:
         return <Sites nextStep={nextStep} backStep={backStep} />;
       case 2:
