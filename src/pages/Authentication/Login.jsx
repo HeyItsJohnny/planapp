@@ -46,7 +46,7 @@ const Login = () => {
       <Typography variant="body2" color="text.secondary" align="center" {...props}>
         {'Copyright © '}
         <Link color="inherit" href="https://mui.com/">
-          Your Website
+          Clap City 69 LLC
         </Link>{' '}
         {new Date().getFullYear()}
         {'.'}

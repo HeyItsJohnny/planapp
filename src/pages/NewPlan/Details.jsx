@@ -46,15 +46,6 @@ const Details = ({ detailsNext }) => {
           fullWidth
           variant="standard"
         />
-        <TextField
-          required
-          margin="none"
-          id="Checkbox"
-          label="TEST"
-          type="Checkbox"
-          fullWidth
-          variant="standard"
-        />
         <button
           type="submit"
           style={{
