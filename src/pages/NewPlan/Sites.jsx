@@ -9,30 +9,32 @@ const Sites = ({ nextStep, backStep }) => {
   return (
     <>
       <Header category="" title="Sites" />
-      <button
-        type="button"
-        style={{
-          backgroundColor: currentColor,
-          color: "White",
-          borderRadius: "10px",
-        }}
-        className={`text-md p-3 hover:drop-shadow-xl mb-5 mr-5`}
-        onClick={backStep}
-      >
-        Back
-      </button>
-      <button
-        type="button"
-        style={{
-          backgroundColor: currentColor,
-          color: "White",
-          borderRadius: "10px",
-        }}
-        className={`text-md p-3 hover:drop-shadow-xl mb-5 mr-5`}
-        onClick={nextStep}
-      >
-        Next
-      </button>
+      <div className="mt-10">
+        <button
+          type="button"
+          style={{
+            backgroundColor: currentColor,
+            color: "White",
+            borderRadius: "10px",
+          }}
+          className={`text-md p-3 hover:drop-shadow-xl mb-5 mr-5`}
+          onClick={backStep}
+        >
+          Back
+        </button>
+        <button
+          type="button"
+          style={{
+            backgroundColor: currentColor,
+            color: "White",
+            borderRadius: "10px",
+          }}
+          className={`text-md p-3 hover:drop-shadow-xl mb-5 mr-5`}
+          onClick={nextStep}
+        >
+          Next
+        </button>
+      </div>
     </>
   );
 };

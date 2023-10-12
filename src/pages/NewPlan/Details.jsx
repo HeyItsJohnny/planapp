@@ -46,17 +46,19 @@ const Details = ({ detailsNext }) => {
           fullWidth
           variant="standard"
         />
-        <button
-          type="submit"
-          style={{
-            backgroundColor: currentColor,
-            color: "White",
-            borderRadius: "10px",
-          }}
-          className={`text-md p-3 hover:drop-shadow-xl`}
-        >
-          Next
-        </button>
+        <div className="mt-10">
+          <button
+            type="submit"
+            style={{
+              backgroundColor: currentColor,
+              color: "White",
+              borderRadius: "10px",
+            }}
+            className={`text-md p-3 hover:drop-shadow-xl`}
+          >
+            Next
+          </button>
+        </div>
       </form>
     </>
   );
