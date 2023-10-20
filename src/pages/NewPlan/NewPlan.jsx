@@ -55,7 +55,7 @@ const NewPlan = () => {
       case 0:
         return <Details detailsNext={detailsNext} />;
       case 1:
-        return <Sites nextStep={nextStep} backStep={backStep} />;
+        return <Sites nextStep={nextStep} backStep={backStep} detailsData={detailsData}/>;
       case 2:
         return <Meals nextStep={nextStep} backStep={backStep} />;
       case 3:
