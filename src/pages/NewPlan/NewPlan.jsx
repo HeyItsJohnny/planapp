@@ -15,7 +15,7 @@ import {
 import { Link, useHistory } from "react-router-dom";
 
 import Details from "./Details";
-import Sites from "./Sites";
+import Sites from "./Sites/Sites";
 import Meals from "./Meals";
 import Lodging from "./Lodging";
 
@@ -32,8 +32,8 @@ const NewPlan = () => {
     const detailValues = {
       Destination: data.target.Destination.value,
       StartDate: data.target.StartDate.value,
-      EndDate: data.target.EndDate.value
-    }
+      EndDate: data.target.EndDate.value,
+    };
     setDetailsData(detailValues);
     nextStep();
   };
@@ -55,7 +55,13 @@ const NewPlan = () => {
       case 0:
         return <Details detailsNext={detailsNext} />;
       case 1:
-        return <Sites nextStep={nextStep} backStep={backStep} detailsData={detailsData}/>;
+        return (
+          <Sites
+            nextStep={nextStep}
+            backStep={backStep}
+            detailsData={detailsData}
+          />
+        );
       case 2:
         return <Meals nextStep={nextStep} backStep={backStep} />;
       case 3:
@@ -69,7 +75,10 @@ const NewPlan = () => {
     <>
       <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white dark:text-gray-200 dark:bg-secondary-dark-bg rounded-3xl">
         <Header category="" title="New Plan" />
-        <Stepper activeStep={activeStep} className="bg-white dark:text-gray-200 dark:bg-secondary-dark-bg">
+        <Stepper
+          activeStep={activeStep}
+          className="bg-white dark:text-gray-200 dark:bg-secondary-dark-bg"
+        >
           {steps.map((step) => (
             <Step key={step}>
               <StepLabel>
@@ -79,9 +88,7 @@ const NewPlan = () => {
           ))}
         </Stepper>
       </div>
-      <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white dark:text-gray-200 dark:bg-secondary-dark-bg rounded-3xl">
-        {activeStep === steps.length ? <Confirmation /> : getStepContent()}
-      </div>
+      {activeStep === steps.length ? <Confirmation /> : getStepContent()}
     </>
   );
 };

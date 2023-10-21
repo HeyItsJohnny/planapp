@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { Header } from "../../components";
+import { Header } from "../../../components";
 
 //Visual
-import { useStateContext } from "../../contexts/ContextProvider";
+import { useStateContext } from "../../../contexts/ContextProvider";
 import ClipLoader from "react-spinners/ClipLoader";
+import SiteComponent from "./SiteComponent";
 
 //Chat GPT
 import { Configuration, OpenAIApi } from "openai";
@@ -31,7 +32,7 @@ const Sites = ({ nextStep, backStep, detailsData }) => {
           {
             role: "system",
             content:
-              "You will be provided with a question, and your task is to parse the answers it into JSON format with the key being sites, properties: name, description, review stars. Please limit to 10 sites.",
+              "You will be provided with a question, and your task is to parse the answers it into JSON format with the key being sites, properties: name, description, review stars, website. Please limit to 12 sites.",
           },
           {
             role: "user",
@@ -71,9 +72,39 @@ const Sites = ({ nextStep, backStep, detailsData }) => {
 
   return (
     <>
-      <Header category="" title={"Sites for " + detailsData.Destination} />
-
-      <div className="mt-10">
+      <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white dark:text-gray-200 dark:bg-secondary-dark-bg rounded-3xl">
+        <Header
+          category=""
+          title={"Top Sites for " + detailsData.Destination}
+        />
+        <div className="mt-10">
+          <button
+            type="button"
+            style={{
+              backgroundColor: currentColor,
+              color: "White",
+              borderRadius: "10px",
+            }}
+            className={`text-md p-3 hover:drop-shadow-xl mb-5 mr-5`}
+            onClick={backStep}
+          >
+            Back
+          </button>
+          <button
+            type="button"
+            style={{
+              backgroundColor: currentColor,
+              color: "White",
+              borderRadius: "10px",
+            }}
+            className={`text-md p-3 hover:drop-shadow-xl mb-5 mr-5`}
+            onClick={nextStep}
+          >
+            Next
+          </button>
+        </div>
+      </div>
+      <div className="flex gap-10 flex-wrap justify-center">
         {loading ? (
           <div className="flex justify-between items-center gap-2">
             <ClipLoader
@@ -86,50 +117,9 @@ const Sites = ({ nextStep, backStep, detailsData }) => {
           </div>
         ) : (
           sites.map((item) => (
-            <div key={item.id} className="flex justify-between mt-4">
-              <p>{item.name}</p>
-            </div>
+            <SiteComponent item={item} />
           ))
         )}
-      </div>
-
-      <div className="mt-10">
-        <button
-          type="button"
-          style={{
-            backgroundColor: currentColor,
-            color: "White",
-            borderRadius: "10px",
-          }}
-          className={`text-md p-3 hover:drop-shadow-xl mb-5 mr-5`}
-          onClick={getAIGeneratedSites}
-        >
-          Get Sites
-        </button>
-        <button
-          type="button"
-          style={{
-            backgroundColor: currentColor,
-            color: "White",
-            borderRadius: "10px",
-          }}
-          className={`text-md p-3 hover:drop-shadow-xl mb-5 mr-5`}
-          onClick={backStep}
-        >
-          Back
-        </button>
-        <button
-          type="button"
-          style={{
-            backgroundColor: currentColor,
-            color: "White",
-            borderRadius: "10px",
-          }}
-          className={`text-md p-3 hover:drop-shadow-xl mb-5 mr-5`}
-          onClick={nextStep}
-        >
-          Next
-        </button>
       </div>
     </>
   );
