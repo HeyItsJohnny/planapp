@@ -13,6 +13,7 @@ const Sites = ({ nextStep, backStep, detailsData }) => {
   const { currentColor } = useStateContext();
   let [loading, setLoading] = useState(false);
   const [sites, setSites] = useState([]);
+  const [selectedSites, setSelectedSites] = useState([]);
 
   //Chat GPT -
   const configuration = new Configuration({
@@ -75,7 +76,7 @@ const Sites = ({ nextStep, backStep, detailsData }) => {
       <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white dark:text-gray-200 dark:bg-secondary-dark-bg rounded-3xl">
         <Header
           category=""
-          title={"Top Sites for " + detailsData.Destination}
+          title={"My Sites for " + detailsData.Destination}
         />
         <div className="mt-10">
           <button
