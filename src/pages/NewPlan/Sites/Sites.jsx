@@ -25,8 +25,8 @@ const Sites = ({ nextStep, backStep, detailsData }) => {
   const getAIGeneratedSites = async () => {
     try {
       setLoading(true);
-
       setSites([]);
+
       const response = await openai.createChatCompletion({
         model: "gpt-3.5-turbo",
         messages: [
