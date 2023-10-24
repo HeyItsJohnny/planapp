@@ -4,22 +4,17 @@ import { Header } from "../../../components";
 //Visual
 import { useStateContext } from "../../../contexts/ContextProvider";
 import ClipLoader from "react-spinners/ClipLoader";
-import SiteComponent from "./SiteComponent";
-import {
-  Typography,
-  List,
-  ListItem,
-  ListItemText
-} from "@material-ui/core";
+import MealComponent from "./MealComponent";
+import { Typography, List, ListItem, ListItemText } from "@material-ui/core";
 
 //Chat GPT
 import { Configuration, OpenAIApi } from "openai";
 
-const Sites = ({ sitesNext, backStep, detailsData }) => {
+const Meals = ({ mealsNext, backStep, detailsData }) => {
   const { currentColor } = useStateContext();
   let [loading, setLoading] = useState(false);
-  const [sites, setSites] = useState([]);
-  const [selectedSites, setSelectedSites] = useState([]);
+  const [meals, setMeals] = useState([]);
+  const [selectedMeals, setSelectedMeals] = useState([]);
 
   //Chat GPT -
   const configuration = new Configuration({
@@ -28,10 +23,10 @@ const Sites = ({ sitesNext, backStep, detailsData }) => {
   const openai = new OpenAIApi(configuration);
   //Chat GPT +
 
-  const getAIGeneratedSites = async () => {
+  const getAIGeneratedMeals = async () => {
     try {
       setLoading(true);
-      setSites([]);
+      setMeals([]);
 
       const response = await openai.createChatCompletion({
         model: "gpt-3.5-turbo",
@@ -39,12 +34,12 @@ const Sites = ({ sitesNext, backStep, detailsData }) => {
           {
             role: "system",
             content:
-              "You will be provided with a question, and your task is to parse the answers it into JSON format with the key being sites, properties: name, description, review_stars, website, hours_spent. Please limit to 12 sites.",
+              "You will be provided with a question, and your task is to parse the answers it into JSON format with the key being restaurants, properties: name, description, review_stars, website, category. Please limit to 12 restaurants.",
           },
           {
             role: "user",
             content:
-              "Please give me a list of things to do, sites and attractions in " +
+              "Please give me a list of popular resturants in " +
               detailsData.Destination +
               "?",
           },
@@ -60,8 +55,8 @@ const Sites = ({ sitesNext, backStep, detailsData }) => {
         ""
       );
       const jsonObject = JSON.parse(returnText);
-      console.log(jsonObject.sites);
-      setSites(jsonObject.sites);
+      console.log(jsonObject.restaurants);
+      setMeals(jsonObject.restaurants);
 
       setLoading(false);
     } catch (error) {
@@ -71,7 +66,7 @@ const Sites = ({ sitesNext, backStep, detailsData }) => {
   };
 
   const addSelectedData = (data) => {
-    setSelectedSites([...selectedSites, data]);
+    setSelectedMeals([...selectedMeals, data]);
   };
 
   const removefromSelectedData = (data) => {
@@ -79,35 +74,35 @@ const Sites = ({ sitesNext, backStep, detailsData }) => {
   };
 
   const goToNext = () => {
-    sitesNext(selectedSites);
-  }
+    mealsNext(selectedMeals);
+  };
 
   useEffect(() => {
-    getAIGeneratedSites();
+    getAIGeneratedMeals();
     return () => {
-      setSites([]);
-      setSelectedSites([]);
+      setMeals([]);
+      setSelectedMeals([]);
     };
   }, []);
 
   return (
     <>
       <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white dark:text-gray-200 dark:bg-secondary-dark-bg rounded-3xl">
-        <Header category="" title={"My Sites for " + detailsData.Destination} />
+        <Header category="" title="Meals" />
         <div className="mt-5">
           <List disablePadding>
-            {selectedSites.map((site, index) => (
+            {selectedMeals.map((meal, index) => (
               <ListItem style={{ padding: "10px 0" }} key={index}>
                 <ListItemText
                   primary={
-                    <a href={site.website} target="_blank">
-                      {site.name}
+                    <a href={meal.website} target="_blank">
+                      {meal.name}
                     </a>
                   }
                   secondary={
                     <div className="bg-white dark:text-gray-200 dark:bg-secondary-dark-bg">
-                      <p>Stars: {site.review_stars}</p>
-                      <p>Hours: {site.hours_spent}</p>
+                      <p>Stars: {meal.review_stars}</p>
+                      <p>{meal.category}</p>
                     </div>
                   }
                 />
@@ -116,32 +111,30 @@ const Sites = ({ sitesNext, backStep, detailsData }) => {
             ))}
           </List>
         </div>
-        <div className="mt-10">
-          <button
-            type="button"
-            style={{
-              backgroundColor: currentColor,
-              color: "White",
-              borderRadius: "10px",
-            }}
-            className={`text-md p-3 hover:drop-shadow-xl mb-5 mr-5`}
-            onClick={backStep}
-          >
-            Back
-          </button>
-          <button
-            type="button"
-            style={{
-              backgroundColor: currentColor,
-              color: "White",
-              borderRadius: "10px",
-            }}
-            className={`text-md p-3 hover:drop-shadow-xl mb-5 mr-5`}
-            onClick={goToNext}
-          >
-            Next
-          </button>
-        </div>
+        <button
+          type="button"
+          style={{
+            backgroundColor: currentColor,
+            color: "White",
+            borderRadius: "10px",
+          }}
+          className={`text-md p-3 hover:drop-shadow-xl mb-5 mr-5`}
+          onClick={backStep}
+        >
+          Back
+        </button>
+        <button
+          type="button"
+          style={{
+            backgroundColor: currentColor,
+            color: "White",
+            borderRadius: "10px",
+          }}
+          className={`text-md p-3 hover:drop-shadow-xl mb-5 mr-5`}
+          onClick={goToNext}
+        >
+          Next
+        </button>
       </div>
       <div className="flex gap-10 flex-wrap justify-center">
         {loading ? (
@@ -155,8 +148,8 @@ const Sites = ({ sitesNext, backStep, detailsData }) => {
             />
           </div>
         ) : (
-          sites.map((item) => (
-            <SiteComponent item={item} addSelectedData={addSelectedData} />
+          meals.map((item) => (
+            <MealComponent item={item} addSelectedData={addSelectedData} />
           ))
         )}
       </div>
@@ -164,4 +157,4 @@ const Sites = ({ sitesNext, backStep, detailsData }) => {
   );
 };
 
-export default Sites;
+export default Meals;

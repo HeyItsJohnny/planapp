@@ -7,11 +7,11 @@ import { useStateContext } from "../../../contexts/ContextProvider";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-const SiteComponent = ({ item, addSelectedData }) => {
+const MealComponent = ({ item, addSelectedData }) => {
   const { currentColor } = useStateContext();
 
-  const addSite = () => {
-    toast("Site added: " + item.name);
+  const addRestaurant = () => {
+    toast("Restaurant added: " + item.name);
     addSelectedData(item);
   };
 
@@ -22,11 +22,9 @@ const SiteComponent = ({ item, addSelectedData }) => {
         <div className="flex justify-between items-center ">
           <div>
             <a href={item.website} target="_blank">
-              <p className="font-bold text-gray-400">{item.name}</p>
+              <p className="font-bold text-gray-400">{item.name} ({item.category})</p>
             </a>
-            {/*<p className="text-l">{item.description}</p> */}
             <p className="text-l">Stars: {item.review_stars}</p>
-            <p className="text-l">Hours: {item.hours_spent}</p>
           </div>
         </div>
         <div className="mt-2">
@@ -38,7 +36,7 @@ const SiteComponent = ({ item, addSelectedData }) => {
               borderRadius: "10px",
             }}
             className={`text-md p-3 hover:drop-shadow-xl float-right`}
-            onClick={addSite}
+            onClick={addRestaurant}
           >
             Add
           </button>
@@ -48,4 +46,4 @@ const SiteComponent = ({ item, addSelectedData }) => {
   );
 };
 
-export default SiteComponent;
+export default MealComponent;
