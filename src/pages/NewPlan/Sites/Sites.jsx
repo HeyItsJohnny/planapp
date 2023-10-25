@@ -23,7 +23,7 @@ const Sites = ({ sitesNext, backStep, detailsData }) => {
 
   //Chat GPT -
   const configuration = new Configuration({
-    apiKey: "",
+    apiKey: "TEST",
   });
   const openai = new OpenAIApi(configuration);
   //Chat GPT +

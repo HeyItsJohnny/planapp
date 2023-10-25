@@ -1,9 +1,12 @@
 import React from "react";
-import { Header } from "../../components";
+import { Header } from "../../../components";
 
-import { useStateContext } from "../../contexts/ContextProvider";
+import { useStateContext } from "../../../contexts/ContextProvider";
+import MealListComponent from "./MealListComponent";
+import SiteListComponent from "./SiteListComponent";
+import LodgingComponent from "./LodgingComponent";
 
-const Lodging = ({ nextStep, backStep }) => {
+const Lodging = ({ lodgingNext, backStep, sitesData, mealsData }) => {
   const { currentColor } = useStateContext();
 
   return (
@@ -30,10 +33,17 @@ const Lodging = ({ nextStep, backStep }) => {
             borderRadius: "10px",
           }}
           className={`text-md p-3 hover:drop-shadow-xl mb-5 mr-5`}
-          onClick={nextStep}
+          onClick={lodgingNext}
         >
           Next
         </button>
+      </div>
+      <div className="flex gap-10 flex-wrap justify-center">
+        <div className="flex gap-10 flex-wrap justify-center">
+          <LodgingComponent lodgingNext={lodgingNext} backStep={backStep}/>
+          <MealListComponent mealsData={mealsData}/>
+          <SiteListComponent sitesData={sitesData}/>
+        </div>
       </div>
     </>
   );

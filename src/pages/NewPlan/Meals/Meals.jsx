@@ -18,7 +18,7 @@ const Meals = ({ mealsNext, backStep, detailsData }) => {
 
   //Chat GPT -
   const configuration = new Configuration({
-    apiKey: "",
+    apiKey: "TEST",
   });
   const openai = new OpenAIApi(configuration);
   //Chat GPT +

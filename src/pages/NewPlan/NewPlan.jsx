@@ -17,15 +17,16 @@ import { Link, useHistory } from "react-router-dom";
 import Details from "./Details";
 import Sites from "./Sites/Sites";
 import Meals from "./Meals/Meals";
-import Lodging from "./Lodging";
+import Lodging from "./Lodging/Lodging";
 
-const steps = ["Details", "Sites", "Meals", "Lodging/Starting"];
+const steps = ["Details", "Sites", "Meals", "Lodging"];
 
 const NewPlan = () => {
   const [activeStep, setActiveStep] = useState(0);
   const [detailsData, setDetailsData] = useState({});
   const [sitesData, setSitesData] = useState([]);
   const [mealsData, setMealsData] = useState([]);
+  const [lodgingData, setLodgingData] = useState({});
 
   const nextStep = () => setActiveStep((prevActiveStep) => prevActiveStep + 1);
   const backStep = () => setActiveStep((prevActiveStep) => prevActiveStep - 1);
@@ -47,6 +48,19 @@ const NewPlan = () => {
 
   const mealsNext = (data) => {
     setMealsData(data);
+    nextStep();
+  };
+
+  const lodgingNext = (data) => {
+    const lodgingValues = {
+      Name: data.target.Name.value,
+      Address1: data.target.Address1.value,
+      Address2: data.target.Address2.value,
+      City: data.target.City.value,
+      State: data.target.State.value,
+      ZipCode: data.target.ZipCode.value
+    };
+    setLodgingData(lodgingValues);
     nextStep();
   };
 
@@ -83,7 +97,7 @@ const NewPlan = () => {
           />
         );
       case 3:
-        return <Lodging nextStep={nextStep} backStep={backStep} />;
+        return <Lodging lodgingNext={lodgingNext} backStep={backStep} sitesData={sitesData} mealsData={mealsData} />;
       default:
         return <h1>Something went wrong.</h1>;
     }
