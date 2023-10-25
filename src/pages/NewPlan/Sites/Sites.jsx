@@ -23,7 +23,7 @@ const Sites = ({ sitesNext, backStep, detailsData }) => {
 
   //Chat GPT -
   const configuration = new Configuration({
-    apiKey: "TEST",
+    apiKey: "",
   });
   const openai = new OpenAIApi(configuration);
   //Chat GPT +
@@ -93,7 +93,7 @@ const Sites = ({ sitesNext, backStep, detailsData }) => {
   return (
     <>
       <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white dark:text-gray-200 dark:bg-secondary-dark-bg rounded-3xl">
-        <Header category="" title={"My Sites for " + detailsData.Destination} />
+        <Header category="" title={"Visit Sites in " + detailsData.Destination} />
         <div className="mt-5">
           <List disablePadding>
             {selectedSites.map((site, index) => (

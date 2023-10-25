@@ -31,7 +31,6 @@ const LodgingComponent = ({ lodgingNext, backStep }) => {
               variant="standard"
             />
             <TextField
-              autoFocus
               margin="dense"
               id="Address1"
               label="Address 1"
@@ -40,7 +39,6 @@ const LodgingComponent = ({ lodgingNext, backStep }) => {
               variant="standard"
             />
             <TextField
-              autoFocus
               margin="dense"
               id="Address2"
               label="Address 2"
@@ -49,7 +47,6 @@ const LodgingComponent = ({ lodgingNext, backStep }) => {
               variant="standard"
             />
             <TextField
-              autoFocus
               margin="dense"
               id="City"
               label="City"
@@ -58,7 +55,6 @@ const LodgingComponent = ({ lodgingNext, backStep }) => {
               variant="standard"
             />
             <TextField
-              autoFocus
               margin="dense"
               id="State"
               label="State"
@@ -67,7 +63,6 @@ const LodgingComponent = ({ lodgingNext, backStep }) => {
               variant="standard"
             />
             <TextField
-              autoFocus
               margin="dense"
               id="ZipCode"
               label="Zip Code"

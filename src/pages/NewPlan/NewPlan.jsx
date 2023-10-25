@@ -1,23 +1,12 @@
 import React, { useState } from "react";
 import { Header } from "../../components";
-import { useStateContext } from "../../contexts/ContextProvider";
-import {
-  Paper,
-  Stepper,
-  Step,
-  StepLabel,
-  Typography,
-  CircularProgress,
-  Divider,
-  Button,
-} from "@material-ui/core";
-
-import { Link, useHistory } from "react-router-dom";
+import { Stepper, Step, StepLabel } from "@material-ui/core";
 
 import Details from "./Details";
 import Sites from "./Sites/Sites";
 import Meals from "./Meals/Meals";
 import Lodging from "./Lodging/Lodging";
+import ReviewPlan from "./ReviewPlan/ReviewPlan";
 
 const steps = ["Details", "Sites", "Meals", "Lodging"];
 
@@ -58,21 +47,21 @@ const NewPlan = () => {
       Address2: data.target.Address2.value,
       City: data.target.City.value,
       State: data.target.State.value,
-      ZipCode: data.target.ZipCode.value
+      ZipCode: data.target.ZipCode.value,
     };
+    console.log(lodgingValues);
     setLodgingData(lodgingValues);
     nextStep();
   };
 
   const Confirmation = () => (
     <>
-      <div>
-        <Typography variant="h5">Review Plan</Typography>
-      </div>
-      <br />
-      <Button component={Link} variant="outlined" type="button" to="/">
-        Back to home
-      </Button>
+      <ReviewPlan
+        detailsData={detailsData}
+        sitesData={sitesData}
+        mealsData={mealsData}
+        lodgingData={lodgingData}
+      />
     </>
   );
 
@@ -97,7 +86,15 @@ const NewPlan = () => {
           />
         );
       case 3:
-        return <Lodging lodgingNext={lodgingNext} backStep={backStep} sitesData={sitesData} mealsData={mealsData} />;
+        return (
+          <Lodging
+            lodgingNext={lodgingNext}
+            backStep={backStep}
+            sitesData={sitesData}
+            mealsData={mealsData}
+            lodgingData={lodgingData}
+          />
+        );
       default:
         return <h1>Something went wrong.</h1>;
     }
