@@ -10,9 +10,10 @@ import ReviewMealComponent from "./ReviewMealComponent";
 import ReviewItineraryComponent from "./ReviewItineraryComponent";
 
 const ReviewPlan = ({ detailsData, sitesData, mealsData, lodgingData }) => {
+
   useEffect(() => {
-    console.log("DATA 1:");
-    console.log(lodgingData);
+    //console.log(sitesData);
+    //console.log(mealsData);
     return () => {};
   }, []);
 

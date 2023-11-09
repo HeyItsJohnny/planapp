@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 //Visual
 import ClipLoader from "react-spinners/ClipLoader";
 import ReviewCalendar from "./ReviewCalendar";
+import { formatDataIntoString } from "../../../globalFunctions/globalFunctions";
 
 //Chat GPT
 import { Configuration, OpenAIApi } from "openai";
@@ -15,6 +16,8 @@ const ReviewItineraryComponent = ({
 }) => {
   let [loading, setLoading] = useState(false);
   const [itinerary, setItinerary] = useState([]);
+  const [activityString, setActivityString] = useState("");
+  const [mealString, setMealString] = useState("");
 
   //Chat GPT -
   const configuration = new Configuration({
@@ -25,11 +28,29 @@ const ReviewItineraryComponent = ({
 
   const getAIGeneratedItinerary = async () => {
     try {
+      var lodgingAddress = "";
+      if (lodgingData.Address1 === "") {
+        lodgingAddress = ".";
+      } else {
+        lodgingAddress =
+          "at " +
+          lodgingData.Name +
+          " " +
+          lodgingData.Address1 +
+          " " +
+          lodgingData.City +
+          ", " +
+          lodgingData.State +
+          " " +
+          lodgingData.ZipCode +
+          ".";
+      }
+
       setLoading(true);
       setItinerary([]);
 
       const response = await openai.createChatCompletion({
-        model: "gpt-3.5-turbo",
+        model: "gpt-4",
         messages: [
           {
             role: "system",
@@ -39,9 +60,15 @@ const ReviewItineraryComponent = ({
           {
             role: "user",
             content:
-              "Please create an itinerary for me that is structured with a breakfast, an activity, lunch, another activity and dinner. I will be staying in Seattle, WA from 11/7/2023 to 11/9/2023 at Hilton Garden Inn 1821 Boren Ave Seattle, WA 98101." +
-              "Please fill in my itinerary with opportunities to relax. Please do not duplicate my visits. Also please have the start_time and end_time in a 24 hour format." +
-              "I want to visit the space needle, the seattle great wheel and the seattle aquarium. I want to eat at Pike Place Chowder, Beecher's Handmade Cheese and the crab pot.",
+              "Please create an itinerary for me that is structured with a breakfast, an activity, lunch, another activity and dinner. I will be staying in " +
+              detailsData.Destination +
+              " from " +
+              detailsData.StartDate +
+              " to " +
+              detailsData.EndDate +
+              lodgingAddress +
+              "Please fill in my itinerary with opportunities to relax. Please do not duplicate my visits and have the day format in YYYY-MM-DD. Also please have the start_time and end_time in a 24 hour format." +
+              "I want to visit " + activityString + ". I want to eat at " + mealString + ".",
           },
         ],
         temperature: 0,
@@ -51,13 +78,13 @@ const ReviewItineraryComponent = ({
         frequency_penalty: 0,
         presence_penalty: 0,
       });
+      console.log(response.data.choices[0].message.content);
       const returnText = response.data.choices[0].message.content.replace(
         /(\r\n|\n|\r)/gm,
         ""
       );
       const jsonObject = JSON.parse(returnText);
       setItinerary(jsonObject.itinerary);
-
       setLoading(false);
     } catch (error) {
       alert("ERROR: " + error);
@@ -66,6 +93,8 @@ const ReviewItineraryComponent = ({
   };
 
   useEffect(() => {
+    setActivityString(formatDataIntoString(sitesData));
+    setMealString(formatDataIntoString(mealsData));
     getAIGeneratedItinerary();
     return () => {
       setItinerary([]);
@@ -85,7 +114,7 @@ const ReviewItineraryComponent = ({
           />
         </div>
       ) : (
-        <ReviewCalendar detailsData={detailsData} itinerary={itinerary}/>
+        <ReviewCalendar detailsData={detailsData} itinerary={itinerary} />
       )}
     </>
   );

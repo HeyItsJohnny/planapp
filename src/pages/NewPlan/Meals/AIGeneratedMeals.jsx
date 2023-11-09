@@ -35,7 +35,7 @@ const AIGeneratedMeals = ({ detailsData, addSelectedData }) => {
       setMeals([]);
 
       const response = await openai.createChatCompletion({
-        model: "gpt-3.5-turbo",
+        model: "gpt-4",
         messages: [
           {
             role: "system",
@@ -61,7 +61,7 @@ const AIGeneratedMeals = ({ detailsData, addSelectedData }) => {
         ""
       );
       const jsonObject = JSON.parse(returnText);
-      console.log(jsonObject.restaurants);
+      //console.log(jsonObject.restaurants);
       setMeals(jsonObject.restaurants);
 
       setLoading(false);

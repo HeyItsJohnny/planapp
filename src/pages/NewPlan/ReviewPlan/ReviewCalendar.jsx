@@ -40,14 +40,26 @@ const ReviewCalendar = ({ detailsData, itinerary }) => {
       };
       tmpArray.push(newObj);
     });
-    console.log(tmpArray);
     setCalendarEvents(tmpArray);
+  };
+
+  const addEvent = async (args) => {
+    //console.log(args);
+    if (args.requestType === "eventCreated") {
+      //setCalendarEvents(prevArray => [...prevArray, args.addedRecords[0]]);
+      //addToFamilyCalendar(currentUser.uid,args.addedRecords[0],"FamilyCalendar");
+    } else if (args.requestType === "eventChanged") {
+      //updateFamilyCalendar(currentUser.uid, args.changedRecords[0]);
+    } else if (args.requestType === "eventRemoved") {
+      //deleteFamilyCalendar(currentUser.uid, args.deletedRecords[0].Id);
+    }
+    //console.log(calendarEvents);
   };
 
   useEffect(() => {
     generateItinerary();
     return () => {
-      //setCalendarEvents([]);
+      setCalendarEvents([]);
     };
   }, []);
 
@@ -58,7 +70,8 @@ const ReviewCalendar = ({ detailsData, itinerary }) => {
       eventSettings={{
         dataSource: calendarEvents,
       }}
-      selectedDate={new Date()}
+      actionComplete={addEvent}
+      selectedDate={new Date(detailsData.StartDate)}
     >
       <ViewsDirective>
         <ViewDirective option="Day"></ViewDirective>

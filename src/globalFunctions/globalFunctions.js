@@ -14,16 +14,36 @@ export function convertDateFormat(inputDate) {
 
 export function convertDateFormat2(inputDate) {
   // Split the date string into components
-  var dateComponents = inputDate.split("/");
+  if (isValidDateFormat(inputDate)) {
+    return inputDate;
+  } else {
+    var dateComponents = inputDate.split("/");
 
-  // Rearrange the components in the desired format
-  var formattedDate =
-    dateComponents[2] +
-    "-" +
-    dateComponents[0].padStart(2, "0") +
-    "-" +
-    dateComponents[1].padStart(2, "0");
-  return formattedDate;
+    // Rearrange the components in the desired format
+    var formattedDate =
+      dateComponents[2] +
+      "-" +
+      dateComponents[0].padStart(2, "0") +
+      "-" +
+      dateComponents[1].padStart(2, "0");
+    return formattedDate;
+  }
+}
+
+function isValidDateFormat(dateString) {
+  //Check YYYY-MM-DD format
+  var regex = /^\d{4}-\d{2}-\d{2}$/;
+
+  return regex.test(dateString);
+}
+
+export function formatDataIntoString(arrayOfObjects) {
+  // Extracting the "Name" properties and concatenating them into a string
+  var concatenatedNames = arrayOfObjects.map(function (obj) {
+      return obj.name;
+    }).join(", ")//.replace(/, (?!.*, )/, " and ");
+
+  return concatenatedNames;
 }
 
 export function convertDateTimeString(dateString, timeString) {

@@ -35,7 +35,7 @@ const AIGeneratedSites = ({ detailsData, addSelectedData }) => {
       setSites([]);
 
       const response = await openai.createChatCompletion({
-        model: "gpt-3.5-turbo",
+        model: "gpt-4",
         messages: [
           {
             role: "system",
@@ -61,7 +61,7 @@ const AIGeneratedSites = ({ detailsData, addSelectedData }) => {
         ""
       );
       const jsonObject = JSON.parse(returnText);
-      console.log(jsonObject.sites);
+      //console.log(jsonObject.sites);
       setSites(jsonObject.sites);
 
       setLoading(false);
