@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, { useEffect } from "react";
 import { Header } from "../../../components";
 
 import { Typography, Button } from "@material-ui/core";
@@ -7,14 +7,13 @@ import { Link, useHistory } from "react-router-dom";
 import ReviewLodgingComponent from "./ReviewLodgingComponent";
 import ReviewSiteComponent from "./ReviewSiteComponent";
 import ReviewMealComponent from "./ReviewMealComponent";
+import ReviewItineraryComponent from "./ReviewItineraryComponent";
 
 const ReviewPlan = ({ detailsData, sitesData, mealsData, lodgingData }) => {
-
   useEffect(() => {
     console.log("DATA 1:");
-    console.log(lodgingData)
-    return () => {
-    };
+    console.log(lodgingData);
+    return () => {};
   }, []);
 
   return (
@@ -22,6 +21,12 @@ const ReviewPlan = ({ detailsData, sitesData, mealsData, lodgingData }) => {
       <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white dark:text-gray-200 dark:bg-secondary-dark-bg rounded-3xl">
         <Header category={detailsData.Destination} title="Itinerary" />
         <p className="mb-5">We'll generate an itinerary here..</p>
+        <ReviewItineraryComponent
+          detailsData={detailsData}
+          sitesData={sitesData}
+          mealsData={mealsData}
+          lodgingData={lodgingData}
+        />
         <Button
           className={`m-2 md:m-10 mt-24 p-2 md:p-10 bg-white dark:text-gray-200 dark:bg-secondary-dark-bg rounded-3xl`}
           component={Link}

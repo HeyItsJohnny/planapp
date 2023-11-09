@@ -12,6 +12,20 @@ export function convertDateFormat(inputDate) {
   return formattedDate;
 }
 
+export function convertDateFormat2(inputDate) {
+  // Split the date string into components
+  var dateComponents = inputDate.split("/");
+
+  // Rearrange the components in the desired format
+  var formattedDate =
+    dateComponents[2] +
+    "-" +
+    dateComponents[0].padStart(2, "0") +
+    "-" +
+    dateComponents[1].padStart(2, "0");
+  return formattedDate;
+}
+
 export function convertDateTimeString(dateString, timeString) {
   if (dateString === "") {
     return;
