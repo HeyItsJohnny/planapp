@@ -49,7 +49,7 @@ const NewPlan = () => {
       State: data.target.State.value,
       ZipCode: data.target.ZipCode.value,
     };
-    console.log(lodgingValues);
+    //console.log(lodgingValues);
     setLodgingData(lodgingValues);
     nextStep();
   };

@@ -114,7 +114,7 @@ const ReviewItineraryComponent = ({
           />
         </div>
       ) : (
-        <ReviewCalendar detailsData={detailsData} itinerary={itinerary} />
+        <ReviewCalendar detailsData={detailsData} itinerary={itinerary} sitesData={sitesData} mealsData={mealsData} lodgingData={lodgingData}/>
       )}
     </>
   );

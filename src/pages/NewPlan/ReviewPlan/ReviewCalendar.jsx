@@ -13,15 +13,20 @@ import {
   TimelineMonth,
   DragAndDrop,
 } from "@syncfusion/ej2-react-schedule";
+import { useStateContext } from "../../../contexts/ContextProvider";
 
+import { addNewTripPlan } from "../../../globalFunctions/firebaseFunctions";
+import { useAuth } from "../../../contexts/AuthContext";
 import {
   convertDateFormat2,
   convertDateTimeString,
 } from "../../../globalFunctions/globalFunctions";
 
-const ReviewCalendar = ({ detailsData, itinerary }) => {
+const ReviewCalendar = ({ detailsData, itinerary, sitesData, mealsData, lodgingData }) => {
   const [calendarEvents, setCalendarEvents] = useState([]);
+  const { currentColor } = useStateContext();
   const scheduleRef = useRef(null);
+  const { currentUser } = useAuth();
 
   const generateItinerary = async () => {
     var tmpArray = [];
@@ -90,18 +95,34 @@ const ReviewCalendar = ({ detailsData, itinerary }) => {
     };
   }, []);
 
-  const getEventsAsJSON = () => {
+  const savePlan = () => {
     if (scheduleRef.current) {
+      //Add new trip plan
+      const docID = addNewTripPlan(currentUser.uid,detailsData,sitesData,mealsData,lodgingData);
+      console.log(docID);
+      /*
       const events = scheduleRef.current.getEvents();
       console.log(events);
       const eventsJSON = JSON.stringify(events);
       console.log(eventsJSON);
+      */
     }
   };
 
   return (
     <>
-      <button onClick={getEventsAsJSON}>SAVE</button>
+      <button
+        type="button"
+        style={{
+          backgroundColor: currentColor,
+          color: "White",
+          borderRadius: "10px",
+        }}
+        className={`text-md p-3 hover:drop-shadow-xl mb-5 mr-5`}
+        onClick={savePlan}
+      >
+        Save Plan
+      </button>
       <ScheduleComponent
         ref={scheduleRef}
         currentView="Week"
