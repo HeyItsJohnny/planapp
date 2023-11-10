@@ -21,7 +21,6 @@ const ReviewPlan = ({ detailsData, sitesData, mealsData, lodgingData }) => {
     <>
       <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white dark:text-gray-200 dark:bg-secondary-dark-bg rounded-3xl">
         <Header category={detailsData.Destination} title="Itinerary" />
-        <p className="mb-5">We'll generate an itinerary here..</p>
         <ReviewItineraryComponent
           detailsData={detailsData}
           sitesData={sitesData}

@@ -2,8 +2,8 @@ import React, { useEffect } from "react";
 
 const ReviewLodgingComponent = ({ lodgingData }) => {
   useEffect(() => {
-    console.log("DATA 2:");
-    console.log(lodgingData)
+    //console.log("DATA 2:");
+    //console.log(lodgingData)
     return () => {
     };
   }, []);
