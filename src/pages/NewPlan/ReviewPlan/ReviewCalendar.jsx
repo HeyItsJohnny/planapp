@@ -21,12 +21,14 @@ import {
   convertDateFormat2,
   convertDateTimeString,
 } from "../../../globalFunctions/globalFunctions";
+import { useNavigate } from "react-router-dom";
 
 const ReviewCalendar = ({ detailsData, itinerary, sitesData, mealsData, lodgingData }) => {
   const [calendarEvents, setCalendarEvents] = useState([]);
   const { currentColor } = useStateContext();
   const scheduleRef = useRef(null);
   const { currentUser } = useAuth();
+  const navigate = useNavigate();
 
   const generateItinerary = async () => {
     var tmpArray = [];
@@ -98,14 +100,8 @@ const ReviewCalendar = ({ detailsData, itinerary, sitesData, mealsData, lodgingD
   const savePlan = () => {
     if (scheduleRef.current) {
       //Add new trip plan
-      const docID = addNewTripPlan(currentUser.uid,detailsData,sitesData,mealsData,lodgingData);
-      console.log(docID);
-      /*
-      const events = scheduleRef.current.getEvents();
-      console.log(events);
-      const eventsJSON = JSON.stringify(events);
-      console.log(eventsJSON);
-      */
+      addNewTripPlan(currentUser.uid,detailsData,sitesData,mealsData,lodgingData);
+      navigate("/");
     }
   };
 
