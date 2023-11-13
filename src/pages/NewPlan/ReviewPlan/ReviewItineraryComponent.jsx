@@ -21,7 +21,7 @@ const ReviewItineraryComponent = ({
 
   //Chat GPT -
   const configuration = new Configuration({
-    apiKey: "",
+    apiKey: "TEST",
   });
   const openai = new OpenAIApi(configuration);
   //Chat GPT +
@@ -78,7 +78,7 @@ const ReviewItineraryComponent = ({
         frequency_penalty: 0,
         presence_penalty: 0,
       });
-      console.log(response.data.choices[0].message.content);
+      //console.log(response.data.choices[0].message.content);
       const returnText = response.data.choices[0].message.content.replace(
         /(\r\n|\n|\r)/gm,
         ""

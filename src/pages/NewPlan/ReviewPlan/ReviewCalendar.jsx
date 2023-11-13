@@ -100,7 +100,8 @@ const ReviewCalendar = ({ detailsData, itinerary, sitesData, mealsData, lodgingD
   const savePlan = () => {
     if (scheduleRef.current) {
       //Add new trip plan
-      addNewTripPlan(currentUser.uid,detailsData,sitesData,mealsData,lodgingData);
+      const itineraryData = scheduleRef.current.getCurrentViewEvents();
+      addNewTripPlan(currentUser.uid,detailsData,sitesData,mealsData,lodgingData,itineraryData);
       navigate("/");
     }
   };

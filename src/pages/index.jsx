@@ -1,5 +1,4 @@
-export { default as Plans } from './Plans/Plans';
-export { default as PlanSummary } from './Plans/PlanSummary';
+export { default as Trip } from './Trip/Trip';
 export { default as Home } from './Home/Home';
 export { default as HomeTemplate } from './Templates/HomeTemplate';
 export { default as NewPlan } from './NewPlan/NewPlan';

@@ -2,14 +2,15 @@ import React from "react";
 import { useStateContext } from "../../contexts/ContextProvider";
 import { AiTwotoneDelete } from "react-icons/ai";
 import { TbListDetails } from "react-icons/tb";
-
+import { useNavigate } from "react-router-dom";
 import { convertDateFormat } from "../../globalFunctions/globalFunctions";
 
 const TripComponent = ({ trip }) => {
   const { currentColor } = useStateContext();
+  const navigate = useNavigate();
 
   const handleDetails = () => {
-    alert("Open Details");
+    navigate("/trip/" + trip.id);
   };
 
   const handleDeletePlan = async () => {

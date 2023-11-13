@@ -38,10 +38,10 @@ function App() {
           />
 
           <Route
-            path="/plans"
+            path="/trip/:tripid"
             element={
               <PrivateRoute>
-                <HomeTemplate page="PLANS" />
+                <HomeTemplate page="TRIP" />
               </PrivateRoute>
             }
           />

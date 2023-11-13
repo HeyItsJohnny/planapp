@@ -29,7 +29,8 @@ export async function addNewTripPlan(
   detailsData,
   activityData,
   mealData,
-  lodgingData
+  lodgingData,
+  itineraryData
 ) {
   try {
     const docRef = await addDoc(collection(db, "userprofile", uid, "trips"), {
@@ -39,6 +40,7 @@ export async function addNewTripPlan(
     });
     startCreateActivityDocuments(uid, docRef.id, activityData);
     startCreateMealDocuments(uid, docRef.id, mealData);
+    startCreateItineraryDocuments(uid, docRef.id, itineraryData);
     createLodgingDataForTrip(uid, docRef.id, lodgingData);
   } catch (error) {
     alert("Error adding data to Database: " + error);
@@ -54,6 +56,12 @@ function startCreateActivityDocuments(uid, tripid, activityData) {
 function startCreateMealDocuments(uid, tripid, mealData) {
   mealData.forEach((meal) => {
     addSavedMealsToTrip(uid, tripid, meal);
+  });
+}
+
+function startCreateItineraryDocuments(uid, tripid, itineraryData) {
+  itineraryData.forEach((data) => {
+    addSavedItineraryEventsToTrip(uid, tripid, data);
   });
 }
 
@@ -90,16 +98,42 @@ export async function addSavedMealsToTrip(uid, tripid, activityData) {
   }
 }
 
+export async function addSavedItineraryEventsToTrip(uid, tripid, itineraryData) {
+  try {
+    await addDoc(
+      collection(db, "userprofile", uid, "trips", tripid, "itinerary"),
+      {
+        Subject: itineraryData.Subject,
+        Location: itineraryData.Location ?? "",
+        Description: itineraryData.Description ?? "",
+        StartTime: itineraryData.StartTime ?? "",
+        EndTime: itineraryData.EndTime ?? "",
+        IsAllDay: itineraryData.IsAllDay ?? "",
+        RecurrenceRule: itineraryData.RecurrenceRule ?? "",
+        RecurrenceException: itineraryData.RecurrenceException ?? "",
+        CategoryColor: itineraryData.CategoryColor ?? "",
+        EventColor: itineraryData.EventColor ?? "",
+      }
+    );
+    //return docRef.id;
+  } catch (error) {
+    alert("Error adding data to Database: " + error);
+  }
+}
+
 export async function createLodgingDataForTrip(uid, tripid, lodgingData) {
   try {
-    await setDoc(doc(db, "userprofile", uid, "trips", tripid, "settings", "lodgingdata"), {
-      Name: lodgingData.Name ?? "",
-      Address1: lodgingData.Address1 ?? "",
-      Address2: lodgingData.Address2 ?? "",
-      City: lodgingData.City ?? "",
-      State: lodgingData.State ?? "",
-      ZipCode: lodgingData.ZipCode ?? "",
-    });
+    await setDoc(
+      doc(db, "userprofile", uid, "trips", tripid, "settings", "lodgingdata"),
+      {
+        Name: lodgingData.Name ?? "",
+        Address1: lodgingData.Address1 ?? "",
+        Address2: lodgingData.Address2 ?? "",
+        City: lodgingData.City ?? "",
+        State: lodgingData.State ?? "",
+        ZipCode: lodgingData.ZipCode ?? "",
+      }
+    );
   } catch (error) {
     console.error("There was an error adding to the database: " + error);
   }

@@ -24,7 +24,7 @@ const AIGeneratedSites = ({ detailsData, addSelectedData }) => {
 
   //Chat GPT -
   const configuration = new Configuration({
-    apiKey: "",
+    apiKey: "TEST",
   });
   const openai = new OpenAIApi(configuration);
   //Chat GPT +

@@ -9,7 +9,7 @@ import {
   Sidebar,
   ThemeSettings,
 } from "../../components";
-import { Plans, Home, NewPlan } from "../../pages";
+import { Trip, Home, NewPlan } from "../../pages";
 import { AuthProvider } from "../../contexts/AuthContext";
 import "../../App.css";
 
@@ -28,8 +28,8 @@ const HomeTemplate = ({ page }) => {
     switch (page) {
       case "HOME":
         return <Home />;
-      case "PLANS":
-        return <Plans />;
+      case "TRIP":
+        return <Trip />;
       case "NEWPLAN":
         return <NewPlan />;
       default:
