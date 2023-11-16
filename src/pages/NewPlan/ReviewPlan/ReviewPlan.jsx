@@ -14,21 +14,6 @@ const ReviewPlan = ({ detailsData, sitesData, mealsData, lodgingData }) => {
     <>
       <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white dark:text-gray-200 dark:bg-secondary-dark-bg rounded-3xl">
         <Header category={detailsData.Destination} title="Itinerary" />
-        <ReviewItineraryComponent
-          detailsData={detailsData}
-          sitesData={sitesData}
-          mealsData={mealsData}
-          lodgingData={lodgingData}
-        />
-        <Button
-          className={`m-2 md:m-10 mt-24 p-2 md:p-10 bg-white dark:text-gray-200 dark:bg-secondary-dark-bg rounded-3xl`}
-          component={Link}
-          variant="outlined"
-          type="button"
-          to="/"
-        >
-          Back to home
-        </Button>
       </div>
       <div className="flex gap-10 flex-wrap justify-center">
         <div className="flex gap-10 flex-wrap justify-center">
@@ -36,6 +21,15 @@ const ReviewPlan = ({ detailsData, sitesData, mealsData, lodgingData }) => {
           <ReviewSiteComponent sitesData={sitesData} />
           <ReviewMealComponent mealsData={mealsData} />
         </div>
+      </div>
+      <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white dark:text-gray-200 dark:bg-secondary-dark-bg rounded-3xl">
+        <Header category="" title="Itinerary" />
+        <ReviewItineraryComponent
+          detailsData={detailsData}
+          sitesData={sitesData}
+          mealsData={mealsData}
+          lodgingData={lodgingData}
+        />
       </div>
     </>
   );

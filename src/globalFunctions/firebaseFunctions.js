@@ -138,3 +138,52 @@ export async function createLodgingDataForTrip(uid, tripid, lodgingData) {
     console.error("There was an error adding to the database: " + error);
   }
 }
+//Trip Schedule Component -
+export async function createNewTripCalendarDoc(userid, tripid, data) {
+  try {
+    console.log(data.StartTime);
+    await addDoc(collection(db, "userprofile", userid, "trips",tripid,"itinerary"), {
+      Subject: data.Subject,
+      Location: data.Location ?? "",
+      Description: data.Description ?? "",
+      StartTime: data.StartTime ?? "",
+      EndTime: data.EndTime ?? "",
+      IsAllDay: data.IsAllDay ?? "",
+      RecurrenceRule: data.RecurrenceRule ?? "",
+      RecurrenceException: data.RecurrenceException ?? "",
+      CategoryColor: data.CategoryColor ?? "",
+      EventColor: data.EventColor ?? "",
+    });
+  } catch (error) {
+    alert("Error adding data to Database: " + error);
+  }
+}
+
+export async function updateTripCalendarDoc(userid, tripid, data) {
+  try {
+    const calendarEventsRef = doc(db, "userprofile", userid, "trips",tripid,"itinerary", data.Id);
+    await updateDoc(calendarEventsRef, {
+      Subject: data.Subject,
+      Location: data.Location ?? "",
+      Description: data.Description ?? "",
+      StartTime: data.StartTime ?? "",
+      EndTime: data.EndTime ?? "",
+      IsAllDay: data.IsAllDay ?? "",
+      RecurrenceRule: data.RecurrenceRule ?? "",
+      RecurrenceException: data.RecurrenceException ?? "",
+      CategoryColor: data.CategoryColor ?? "",
+      EventColor: data.EventColor ?? "",
+    });
+  } catch (error) {
+    alert("Error editing data to Database: " + error);
+  }
+}
+
+export async function deleteTripCalendarDoc(userid, tripid, docid) {
+  try {
+    await deleteDoc(doc(db, "userprofile", userid,"trips",tripid,"itinerary",docid));
+  } catch (error) {
+    alert("Error deleting data from Database: " + error);
+  }
+}
+//Trip Schedule Component +

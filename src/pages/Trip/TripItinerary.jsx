@@ -16,6 +16,10 @@ import {
   DragAndDrop,
 } from "@syncfusion/ej2-react-schedule";
 
+//Toast
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 //Functions
 import { useParams } from "react-router-dom";
 import { convertDateFormat } from "../../globalFunctions/globalFunctions";
@@ -23,6 +27,7 @@ import { useAuth } from "../../contexts/AuthContext";
 import { db } from "../../firebase/firebase";
 import { doc, getDoc, query, onSnapshot, collection } from "firebase/firestore";
 import { parseISO } from "date-fns";
+import { createNewTripCalendarDoc, updateTripCalendarDoc, deleteTripCalendarDoc } from "../../globalFunctions/firebaseFunctions";
 
 const TripItinerary = ({ trip }) => {
   const { currentUser } = useAuth();
@@ -75,6 +80,19 @@ const TripItinerary = ({ trip }) => {
     }
   };
 
+  const addEvent = async (args) => {
+    if (args.requestType === "eventCreated") {
+      createNewTripCalendarDoc(currentUser.uid, tripid, args.addedRecords[0]);
+      toast("Event Added");
+    } else if (args.requestType === "eventChanged") {
+      updateTripCalendarDoc(currentUser.uid, tripid, args.changedRecords[0]);
+      toast("Event Updated");
+    } else if (args.requestType === "eventRemoved") {
+      deleteTripCalendarDoc(currentUser.uid, tripid, args.deletedRecords[0].Id);
+      toast("Event Deleted");
+    }
+  };
+
   useEffect(() => {
     fetchCalendarData();
     setTripFromURL();
@@ -83,13 +101,14 @@ const TripItinerary = ({ trip }) => {
 
   return (
     <>
+      <ToastContainer />
       <ScheduleComponent
         currentView="Week"
         height="650px"
         eventSettings={{
           dataSource: calendarData,
         }}
-        //actionComplete={addEvent}
+        actionComplete={addEvent}
         selectedDate={selectedStartDate || new Date()}
       >
         <ViewsDirective>
