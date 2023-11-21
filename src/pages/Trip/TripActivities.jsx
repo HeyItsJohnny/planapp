@@ -3,6 +3,8 @@ import React, { useState, useEffect } from "react";
 //Visual
 import { AiTwotoneDelete } from "react-icons/ai";
 import { useStateContext } from "../../contexts/ContextProvider";
+import NewTripActivityModal from "./Modals/NewTripActivityModal";
+import AITripActivityModal from "./Modals/AITripActivityModal";
 
 //Toast
 import { ToastContainer, toast } from "react-toastify";
@@ -13,10 +15,10 @@ import { useParams } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
 import { collection, query, onSnapshot } from "firebase/firestore";
 import { db } from "../../firebase/firebase";
+import { deleteActivityMealDoc } from "../../globalFunctions/firebaseFunctions";
 
-const TripActivities = () => {
+const TripActivities = ({ destination }) => {
   const { currentUser } = useAuth();
-  const { currentColor } = useStateContext();
   const { tripid } = useParams();
   const [tripActivities, setTripActivities] = useState([]);
 
@@ -50,8 +52,8 @@ const TripActivities = () => {
     });
   };
 
-  const removeSite = (activity) => {
-    //removefromSelectedData(site);
+  const removeActivity = (activity) => {
+    deleteActivityMealDoc(currentUser.uid, tripid, activity.id, "activities");
     toast(activity.name + " removed from my list.");
   };
 
@@ -73,17 +75,6 @@ const TripActivities = () => {
           {tripActivities.map((activity) => (
             <div className="flex justify-between mt-4">
               <div className="flex gap-4">
-                <button
-                  type="button"
-                  style={{
-                    backgroundColor: "#FF0000",
-                    color: "White",
-                  }}
-                  className="text-2xl rounded-lg p-2 hover:drop-shadow-xl"
-                  onClick={() => removeSite(activity)}
-                >
-                  <AiTwotoneDelete />
-                </button>
                 <div>
                   <a href={activity.website} target="_blank">
                     <p className="text-md font-semibold">{activity.name}</p>
@@ -93,34 +84,25 @@ const TripActivities = () => {
                   </p>
                 </div>
               </div>
-              <p className={`text-green-600`}>{activity.review_stars}</p>
+              <button
+                type="button"
+                style={{
+                  backgroundColor: "#FF0000",
+                  color: "White",
+                }}
+                className="text-2xl rounded-lg p-2 hover:drop-shadow-xl"
+                onClick={() => removeActivity(activity)}
+              >
+                <AiTwotoneDelete />
+              </button>
             </div>
           ))}
         </div>
         <div className="flex justify-between items-center gap-2">
-          <button
-            type="button"
-            style={{
-              backgroundColor: currentColor,
-              color: "White",
-              borderRadius: "10px",
-            }}
-            className={`text-md p-3 hover:drop-shadow-xl mb-2 mr-5`}
-          >
-            Suggest
-          </button>
+          <AITripActivityModal />
+
           <div className="w-28 px-14 py-1 rounded-md">
-            <button
-              type="button"
-              style={{
-                backgroundColor: currentColor,
-                color: "White",
-                borderRadius: "10px",
-              }}
-              className={`text-md p-3 hover:drop-shadow-xl mb-2 mr-5`}
-            >
-              Add 
-            </button>
+            <NewTripActivityModal />
           </div>
         </div>
       </div>

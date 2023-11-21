@@ -141,7 +141,6 @@ export async function createLodgingDataForTrip(uid, tripid, lodgingData) {
 //Trip Schedule Component -
 export async function createNewTripCalendarDoc(userid, tripid, data) {
   try {
-    console.log(data.StartTime);
     await addDoc(collection(db, "userprofile", userid, "trips",tripid,"itinerary"), {
       Subject: data.Subject,
       Location: data.Location ?? "",
@@ -187,3 +186,77 @@ export async function deleteTripCalendarDoc(userid, tripid, docid) {
   }
 }
 //Trip Schedule Component +
+
+//Trip Additions -
+export async function addActivityDoc(userid, tripid, data) {
+  try {
+    await addDoc(collection(db, "userprofile", userid, "trips",tripid,"activities"), {
+      name: data.target.name.value ?? "",
+      website: data.target.website.value ?? "www.google.com",
+      hours_spent: data.target.hours_spent.value ?? "",
+      review_stars: "",
+    });
+  } catch (error) {
+    alert("Error editing data to Database: " + error);
+  }
+}
+
+export async function addMealDoc(userid, tripid, data) {
+  try {
+    await addDoc(collection(db, "userprofile", userid, "trips",tripid,"meals"), {
+      name: data.target.name.value,
+      website: data.target.website.value ?? "www.google.com",
+      category: data.target.category.value ?? "",
+      review_stars: "",
+    });
+  } catch (error) {
+    alert("Error editing data to Database: " + error);
+  }
+}
+
+export async function deleteActivityMealDoc(userid, tripid, docid, type) {
+  try {
+    await deleteDoc(doc(db, "userprofile", userid,"trips",tripid,type,docid));
+  } catch (error) {
+    alert("Error deleting data from Database: " + error);
+  }
+}
+
+export function startCreateAIActivityDocuments(uid, tripid, activityData) {
+  activityData.forEach((activity) => {
+    addAITripActivity(uid, tripid, activity);
+  });
+}
+
+export async function addAITripActivity(uid, tripid, data) {
+  try {
+    await addDoc(collection(db, "userprofile", uid, "trips", tripid, "activities"), {
+      name: data.activity_name ?? "",
+      website: data.website ?? "www.google.com",
+      hours_spent: data.hours_spent ?? "",
+      review_stars: data.review_stars ?? "",
+    });
+  } catch (error) {
+    alert("Error adding data to Database: " + error);
+  }
+}
+
+export function startCreateAIMealDocuments(uid, tripid, mealData) {
+  mealData.forEach((meal) => {
+    addAITripMeal(uid, tripid, meal);
+  });
+}
+
+export async function addAITripMeal(uid, tripid, data) {
+  try {
+    await addDoc(collection(db, "userprofile", uid, "trips", tripid, "meals"), {
+      name: data.restaurant_name,
+      website: data.website ?? "www.google.com",
+      category: data.category ?? "",
+      review_stars: data.review_stars ?? "",
+    });
+  } catch (error) {
+    alert("Error adding data to Database: " + error);
+  }
+}
+//Trip Additions +

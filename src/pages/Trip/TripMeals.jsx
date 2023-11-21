@@ -2,7 +2,8 @@ import React, { useState, useEffect } from "react";
 
 //Visual
 import { AiTwotoneDelete } from "react-icons/ai";
-import { useStateContext } from "../../contexts/ContextProvider";
+import NewTripMealModal from "./Modals/NewTripMealModal";
+import AITripMealModal from "./Modals/AITripMealModal";
 
 //Toast
 import { ToastContainer, toast } from "react-toastify";
@@ -11,25 +12,20 @@ import "react-toastify/dist/ReactToastify.css";
 //Functions
 import { useParams } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
-import { collection, query, onSnapshot } from "firebase/firestore";
-import { db } from "../../firebase/firebase";
 
-const TripMeals = () => {
+//Firebase
+import { collection, query, onSnapshot, doc, getDoc } from "firebase/firestore";
+import { db } from "../../firebase/firebase";
+import { deleteActivityMealDoc } from "../../globalFunctions/firebaseFunctions";
+
+const TripMeals = ({ destination }) => {
   const { currentUser } = useAuth();
-  const { currentColor } = useStateContext();
   const { tripid } = useParams();
   const [tripMeals, setTripMeals] = useState([]);
 
   const fetchTripMealsData = async () => {
     const docCollection = query(
-      collection(
-        db,
-        "userprofile",
-        currentUser.uid,
-        "trips",
-        tripid,
-        "meals"
-      )
+      collection(db, "userprofile", currentUser.uid, "trips", tripid, "meals")
     );
     onSnapshot(docCollection, (querySnapshot) => {
       const list = [];
@@ -50,8 +46,9 @@ const TripMeals = () => {
     });
   };
 
+
   const removeMeal = (meal) => {
-    //removefromSelectedData(site);
+    deleteActivityMealDoc(currentUser.uid, tripid, meal.id, "meals");
     toast(meal.name + " removed from my list.");
   };
 
@@ -73,17 +70,6 @@ const TripMeals = () => {
           {tripMeals.map((meal) => (
             <div className="flex justify-between mt-4">
               <div className="flex gap-4">
-                <button
-                  type="button"
-                  style={{
-                    backgroundColor: "#FF0000",
-                    color: "White",
-                  }}
-                  className="text-2xl rounded-lg p-2 hover:drop-shadow-xl"
-                  onClick={() => removeMeal(meal)}
-                >
-                  <AiTwotoneDelete />
-                </button>
                 <div>
                   <a href={meal.website} target="_blank">
                     <p className="text-md font-semibold">{meal.name}</p>
@@ -91,34 +77,24 @@ const TripMeals = () => {
                   <p className="text-sm text-gray-400">{meal.category}</p>
                 </div>
               </div>
-              <p className={`text-green-600`}>{meal.review_stars}</p>
+              <button
+                type="button"
+                style={{
+                  backgroundColor: "#FF0000",
+                  color: "White",
+                }}
+                className="text-2xl rounded-lg p-2 hover:drop-shadow-xl"
+                onClick={() => removeMeal(meal)}
+              >
+                <AiTwotoneDelete />
+              </button>
             </div>
           ))}
         </div>
         <div className="flex justify-between items-center gap-2">
-          <button
-            type="button"
-            style={{
-              backgroundColor: currentColor,
-              color: "White",
-              borderRadius: "10px",
-            }}
-            className={`text-md p-3 hover:drop-shadow-xl mb-2 mr-5`}
-          >
-            Suggest
-          </button>
+          <AITripMealModal />
           <div className="w-28 px-14 py-1 rounded-md">
-            <button
-              type="button"
-              style={{
-                backgroundColor: currentColor,
-                color: "White",
-                borderRadius: "10px",
-              }}
-              className={`text-md p-3 hover:drop-shadow-xl mb-2 mr-5`}
-            >
-              Add 
-            </button>
+            <NewTripMealModal />
           </div>
         </div>
       </div>

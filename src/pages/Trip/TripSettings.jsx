@@ -8,7 +8,7 @@ import { useAuth } from "../../contexts/AuthContext";
 import { db } from "../../firebase/firebase";
 import { doc, getDoc } from "firebase/firestore";
 
-const TripLodgingDetails = () => {
+const TripSettings = () => {
   const { currentUser } = useAuth();
   const { tripid } = useParams();
   const [tripLodging, setTripLodging] = useState({});
@@ -39,12 +39,11 @@ const TripLodgingDetails = () => {
       setTripLodging({});
     };
   }, []);
-
   return (
     <>
       <div className="bg-white dark:text-gray-200 dark:bg-secondary-dark-bg p-6 rounded-2xl">
         <div className="flex justify-between items-center gap-2">
-          <p className="text-xl font-semibold">Lodging</p>
+          <p className="text-xl font-semibold">Settings</p>
         </div>
         <div className="mt-5 w-72 md:w-400">
           <p className="text-md font-semibold">{tripLodging.Name}</p>
@@ -61,4 +60,4 @@ const TripLodgingDetails = () => {
   );
 };
 
-export default TripLodgingDetails;
+export default TripSettings;
