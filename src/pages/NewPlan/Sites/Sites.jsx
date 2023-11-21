@@ -80,6 +80,7 @@ const Sites = ({ sitesNext, backStep, detailsData }) => {
           <MySelectedSites
             selectedSites={selectedSites}
             removefromSelectedData={removefromSelectedData}
+            addSelectedData={addSelectedData}
           />
         </div>
       </div>

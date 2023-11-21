@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 
 //Visual
 import { AiTwotoneDelete } from "react-icons/ai";
+import { useStateContext } from "../../contexts/ContextProvider";
 
 //Toast
 import { ToastContainer, toast } from "react-toastify";
@@ -15,12 +16,20 @@ import { db } from "../../firebase/firebase";
 
 const TripActivities = () => {
   const { currentUser } = useAuth();
+  const { currentColor } = useStateContext();
   const { tripid } = useParams();
   const [tripActivities, setTripActivities] = useState([]);
 
   const fetchTripActivityData = async () => {
     const docCollection = query(
-      collection(db, "userprofile", currentUser.uid, "trips", tripid, "activities")
+      collection(
+        db,
+        "userprofile",
+        currentUser.uid,
+        "trips",
+        tripid,
+        "activities"
+      )
     );
     onSnapshot(docCollection, (querySnapshot) => {
       const list = [];
@@ -32,7 +41,7 @@ const TripActivities = () => {
           hours_spent: doc.data().hours_spent,
           name: doc.data().name,
           review_stars: doc.data().review_stars,
-          website: doc.data().website
+          website: doc.data().website,
         };
         list.push(data);
         itemCount += 1;
@@ -60,7 +69,7 @@ const TripActivities = () => {
         <div className="flex justify-between items-center gap-2">
           <p className="text-xl font-semibold">Activitites</p>
         </div>
-        <div className="mt-5 w-72 md:w-400">
+        <div className="mt-5 mb-5 w-72 md:w-400">
           {tripActivities.map((activity) => (
             <div className="flex justify-between mt-4">
               <div className="flex gap-4">
@@ -87,6 +96,32 @@ const TripActivities = () => {
               <p className={`text-green-600`}>{activity.review_stars}</p>
             </div>
           ))}
+        </div>
+        <div className="flex justify-between items-center gap-2">
+          <button
+            type="button"
+            style={{
+              backgroundColor: currentColor,
+              color: "White",
+              borderRadius: "10px",
+            }}
+            className={`text-md p-3 hover:drop-shadow-xl mb-2 mr-5`}
+          >
+            Suggest
+          </button>
+          <div className="w-28 px-14 py-1 rounded-md">
+            <button
+              type="button"
+              style={{
+                backgroundColor: currentColor,
+                color: "White",
+                borderRadius: "10px",
+              }}
+              className={`text-md p-3 hover:drop-shadow-xl mb-2 mr-5`}
+            >
+              Add 
+            </button>
+          </div>
         </div>
       </div>
     </>

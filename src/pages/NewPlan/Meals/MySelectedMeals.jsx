@@ -2,11 +2,12 @@ import React from "react";
 
 //Visual
 import { AiTwotoneDelete } from "react-icons/ai";
+import NewMealModal from "./NewMealModal";
 
 //Toast
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-const MySelectedMeals = ({ selectedMeals, removefromSelectedData }) => {
+const MySelectedMeals = ({ selectedMeals, removefromSelectedData, addSelectedData }) => {
   const removeMeal = (meal) => {
     removefromSelectedData(meal);
     toast(meal.name + " removed from my list.");
@@ -18,6 +19,9 @@ const MySelectedMeals = ({ selectedMeals, removefromSelectedData }) => {
       <div className="bg-white dark:text-gray-200 dark:bg-secondary-dark-bg p-6 rounded-2xl">
         <div className="flex justify-between items-center gap-2">
           <p className="text-xl font-semibold">My List</p>
+          <div className="w-28 px-14 py-1 rounded-md">
+            <NewMealModal addSelectedData={addSelectedData}/>
+          </div>
         </div>
         <div className="mt-5 w-72 md:w-400">
           {selectedMeals.map((meal) => (

@@ -80,6 +80,7 @@ const Meals = ({ mealsNext, backStep, detailsData }) => {
           <MySelectedMeals
             selectedMeals={selectedMeals}
             removefromSelectedData={removefromSelectedData}
+            addSelectedData={addSelectedData}
           />
         </div>
       </div>

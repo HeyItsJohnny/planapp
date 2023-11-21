@@ -21,7 +21,7 @@ const ReviewItineraryComponent = ({
 
   //Chat GPT -
   const configuration = new Configuration({
-    apiKey: "TEST",
+    apiKey: "",
   });
   const openai = new OpenAIApi(configuration);
   //Chat GPT +

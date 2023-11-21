@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 
 //Visual
 import { AiTwotoneDelete } from "react-icons/ai";
+import { useStateContext } from "../../contexts/ContextProvider";
 
 //Toast
 import { ToastContainer, toast } from "react-toastify";
@@ -15,6 +16,7 @@ import { db } from "../../firebase/firebase";
 
 const TripMeals = () => {
   const { currentUser } = useAuth();
+  const { currentColor } = useStateContext();
   const { tripid } = useParams();
   const [tripMeals, setTripMeals] = useState([]);
 
@@ -67,7 +69,7 @@ const TripMeals = () => {
         <div className="flex justify-between items-center gap-2">
           <p className="text-xl font-semibold">Meals</p>
         </div>
-        <div className="mt-5 w-72 md:w-400">
+        <div className="mt-5 mb-5 w-72 md:w-400">
           {tripMeals.map((meal) => (
             <div className="flex justify-between mt-4">
               <div className="flex gap-4">
@@ -92,6 +94,32 @@ const TripMeals = () => {
               <p className={`text-green-600`}>{meal.review_stars}</p>
             </div>
           ))}
+        </div>
+        <div className="flex justify-between items-center gap-2">
+          <button
+            type="button"
+            style={{
+              backgroundColor: currentColor,
+              color: "White",
+              borderRadius: "10px",
+            }}
+            className={`text-md p-3 hover:drop-shadow-xl mb-2 mr-5`}
+          >
+            Suggest
+          </button>
+          <div className="w-28 px-14 py-1 rounded-md">
+            <button
+              type="button"
+              style={{
+                backgroundColor: currentColor,
+                color: "White",
+                borderRadius: "10px",
+              }}
+              className={`text-md p-3 hover:drop-shadow-xl mb-2 mr-5`}
+            >
+              Add 
+            </button>
+          </div>
         </div>
       </div>
     </>
