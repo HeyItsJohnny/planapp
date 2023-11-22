@@ -10,11 +10,6 @@ import Checkbox from "@mui/material/Checkbox";
 //Data
 import { db } from "../firebase/firebase";
 import { doc, getDoc } from "firebase/firestore";
-import {
-  updatePlanEnableAirfare,
-  updatePlanEnableLodging,
-  updatePlanEnableToDos,
-} from "../globalFunctions/firebaseGlobals";
 
 const ThemeSettings = () => {
   const {
@@ -34,17 +29,17 @@ const ThemeSettings = () => {
   } = useStateContext();
 
   const handleAirfareCheckboxChange = (event) => {
-    updatePlanEnableAirfare(currentSelectedPlan, event.target.checked);
+    //updatePlanEnableAirfare(currentSelectedPlan, event.target.checked);
     setEnableAirfare(event.target.checked);
   };
 
   const handleLodgingCheckboxChange = (event) => {
-    updatePlanEnableLodging(currentSelectedPlan, event.target.checked);
+    //updatePlanEnableLodging(currentSelectedPlan, event.target.checked);
     setEnableLodging(event.target.checked);
   };
 
   const handleToDosCheckboxChange = (event) => {
-    updatePlanEnableToDos(currentSelectedPlan, event.target.checked);
+    //updatePlanEnableToDos(currentSelectedPlan, event.target.checked);
     setEnableToDos(event.target.checked);
   };
 

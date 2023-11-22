@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from "react";
-
 import { db } from "../firebase/firebase";
-
 import {
   doc,
   setDoc,
@@ -12,6 +10,8 @@ import {
   updateDoc,
   addDoc,
 } from "firebase/firestore";
+
+import { getDatesBetween, convertDateTimeString } from "./globalFunctions";
 
 export async function createUserProfile(email, fullname, uid) {
   try {
@@ -260,3 +260,64 @@ export async function addAITripMeal(uid, tripid, data) {
   }
 }
 //Trip Additions +
+
+//Settings -
+export async function addNewSettings(uid, data) {
+  try {
+    await addDoc(collection(db, "userprofile", uid, "settings"), {
+      CalendarEvent: data.target.CalendarEvent.value,
+      StartTime: data.target.StartTime.value,
+      EndTime: data.target.EndTime.value,
+    });
+  } catch (error) {
+    alert("Error adding data to Database: " + error);
+  }
+}
+
+export function startAddingSettings(StartDate, EndDate, uid, tripid, data) {
+  const arrayOfDates = getDatesBetween(StartDate,EndDate);
+  arrayOfDates.forEach((date) => {
+    //console.log("Date: " + date);
+    //console.log(data);
+
+    //Delete Calendar Event
+    const eventSubject = data.CalendarEvent+"_"+date;
+    deleteTripCalendarDoc(uid,tripid,eventSubject);
+
+    //add to calendar
+    const StartDateTime = convertDateTimeString(date,data.StartTimeNonFormatted);
+    const EndDateTime = convertDateTimeString(date,data.EndTimeNonFormatted);
+
+    //Set new Setting Document ID
+    addSettingToCalendar(uid, tripid, eventSubject, StartDateTime, EndDateTime, data.CalendarEvent);
+  });
+}
+
+export async function addSettingToCalendar(uid, tripid, docid, startdate, enddate, calsubject) {
+  try {
+    await setDoc(doc(db, "userprofile", uid, "trips",tripid,"itinerary",docid), {
+      CategoryColor: "",
+      Description: "",
+      EndTime: enddate,
+      EventColor: "",
+      IsAllDay: false,
+      Location: "",
+      RecurrenceException: "",
+      RecurrenceRule: "",
+      StartTime: startdate,
+      Subject: calsubject,
+    });
+  } catch (error) {
+    alert("Error adding data to Database: " + error);
+  }
+}
+
+export async function deleteSettingDoc(uid, docid) {
+  try {
+    await deleteDoc(doc(db,"userprofile", uid, "settings",docid));
+  } catch (error) {
+    alert("Error deleting data from Database: " + error);
+  }
+}
+
+//Settings +

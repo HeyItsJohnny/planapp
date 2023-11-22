@@ -83,9 +83,9 @@ const Trip = () => {
       </div>
       <div className="flex gap-10 flex-wrap justify-center">
         <div className="flex gap-10 flex-wrap justify-center">
-          <TripSettings />
           <TripActivities destination={trip.Destination}/>
           <TripMeals destination={trip.Destination}/>
+          <TripSettings />
         </div>
       </div>
       <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white dark:text-gray-200 dark:bg-secondary-dark-bg rounded-3xl">
