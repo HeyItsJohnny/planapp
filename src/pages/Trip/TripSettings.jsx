@@ -139,20 +139,7 @@ const TripSettings = () => {
             </div>
           ))}
         </div>
-        <div className="flex justify-between items-center gap-2">
-          {/*
-          <button
-            type="button"
-            style={{
-              backgroundColor: currentColor,
-              color: "White",
-              borderRadius: "10px",
-            }}
-            className={`text-md p-3 hover:drop-shadow-xl mb-5 mr-5`}
-          >
-            Add
-          </button>
-          */}
+        <div className="flex justify-end items-center gap-2">
           <NewSettingModal />
         </div>
       </div>
