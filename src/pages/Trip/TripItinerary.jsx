@@ -34,6 +34,7 @@ const TripItinerary = ({ trip }) => {
   const { tripid } = useParams();
   const [selectedStartDate, setSelectedStartDate] = useState(new Date());
   const [calendarData, setCalendarData] = useState([]);
+  const [calendarView, setCalendarView] = useState("Week");
 
   const fetchCalendarData = async () => {
     const docCollection = query(
@@ -74,6 +75,11 @@ const TripItinerary = ({ trip }) => {
       const docSnap = await getDoc(docRef);
       if (docSnap.exists()) {
         setSelectedStartDate(parseISO(docSnap.data().StartDate));
+        if (docSnap.data().StartDate === docSnap.data().EndDate) {
+          setCalendarView("Day")
+        } else {
+          setCalendarView("Week")
+        }
       }
     } catch (err) {
       alert(err);
@@ -103,7 +109,7 @@ const TripItinerary = ({ trip }) => {
     <>
       <ToastContainer />
       <ScheduleComponent
-        currentView="Week"
+        currentView={calendarView}
         height="650px"
         eventSettings={{
           dataSource: calendarData,

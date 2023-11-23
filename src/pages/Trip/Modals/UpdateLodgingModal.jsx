@@ -41,14 +41,6 @@ const UpdateLodgingModal = () => {
   const handleShow = () => setShow(true);
 
   const handleReset = () => {
-    /*
-    setLodgingName("");
-    setLodgingAddress1("");
-    setLodgingAddress2("");
-    setLodgingCity("");
-    setLodgingState("");
-    setLodgingZipCode("");
-    */
     handleClose();
   };
 
