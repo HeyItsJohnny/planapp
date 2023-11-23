@@ -33,6 +33,7 @@ const NewSettingModal = () => {
 
   return (
     <>
+    
       <button
         type="button"
         style={{

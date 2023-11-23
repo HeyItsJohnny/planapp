@@ -98,7 +98,11 @@ export async function addSavedMealsToTrip(uid, tripid, activityData) {
   }
 }
 
-export async function addSavedItineraryEventsToTrip(uid, tripid, itineraryData) {
+export async function addSavedItineraryEventsToTrip(
+  uid,
+  tripid,
+  itineraryData
+) {
   try {
     await addDoc(
       collection(db, "userprofile", uid, "trips", tripid, "itinerary"),
@@ -141,18 +145,21 @@ export async function createLodgingDataForTrip(uid, tripid, lodgingData) {
 //Trip Schedule Component -
 export async function createNewTripCalendarDoc(userid, tripid, data) {
   try {
-    await addDoc(collection(db, "userprofile", userid, "trips",tripid,"itinerary"), {
-      Subject: data.Subject,
-      Location: data.Location ?? "",
-      Description: data.Description ?? "",
-      StartTime: data.StartTime ?? "",
-      EndTime: data.EndTime ?? "",
-      IsAllDay: data.IsAllDay ?? "",
-      RecurrenceRule: data.RecurrenceRule ?? "",
-      RecurrenceException: data.RecurrenceException ?? "",
-      CategoryColor: data.CategoryColor ?? "",
-      EventColor: data.EventColor ?? "",
-    });
+    await addDoc(
+      collection(db, "userprofile", userid, "trips", tripid, "itinerary"),
+      {
+        Subject: data.Subject,
+        Location: data.Location ?? "",
+        Description: data.Description ?? "",
+        StartTime: data.StartTime ?? "",
+        EndTime: data.EndTime ?? "",
+        IsAllDay: data.IsAllDay ?? "",
+        RecurrenceRule: data.RecurrenceRule ?? "",
+        RecurrenceException: data.RecurrenceException ?? "",
+        CategoryColor: data.CategoryColor ?? "",
+        EventColor: data.EventColor ?? "",
+      }
+    );
   } catch (error) {
     alert("Error adding data to Database: " + error);
   }
@@ -160,7 +167,15 @@ export async function createNewTripCalendarDoc(userid, tripid, data) {
 
 export async function updateTripCalendarDoc(userid, tripid, data) {
   try {
-    const calendarEventsRef = doc(db, "userprofile", userid, "trips",tripid,"itinerary", data.Id);
+    const calendarEventsRef = doc(
+      db,
+      "userprofile",
+      userid,
+      "trips",
+      tripid,
+      "itinerary",
+      data.Id
+    );
     await updateDoc(calendarEventsRef, {
       Subject: data.Subject,
       Location: data.Location ?? "",
@@ -180,7 +195,9 @@ export async function updateTripCalendarDoc(userid, tripid, data) {
 
 export async function deleteTripCalendarDoc(userid, tripid, docid) {
   try {
-    await deleteDoc(doc(db, "userprofile", userid,"trips",tripid,"itinerary",docid));
+    await deleteDoc(
+      doc(db, "userprofile", userid, "trips", tripid, "itinerary", docid)
+    );
   } catch (error) {
     alert("Error deleting data from Database: " + error);
   }
@@ -190,12 +207,15 @@ export async function deleteTripCalendarDoc(userid, tripid, docid) {
 //Trip Additions -
 export async function addActivityDoc(userid, tripid, data) {
   try {
-    await addDoc(collection(db, "userprofile", userid, "trips",tripid,"activities"), {
-      name: data.target.name.value ?? "",
-      website: data.target.website.value ?? "www.google.com",
-      hours_spent: data.target.hours_spent.value ?? "",
-      review_stars: "",
-    });
+    await addDoc(
+      collection(db, "userprofile", userid, "trips", tripid, "activities"),
+      {
+        name: data.target.name.value ?? "",
+        website: data.target.website.value ?? "www.google.com",
+        hours_spent: data.target.hours_spent.value ?? "",
+        review_stars: "",
+      }
+    );
   } catch (error) {
     alert("Error editing data to Database: " + error);
   }
@@ -203,12 +223,15 @@ export async function addActivityDoc(userid, tripid, data) {
 
 export async function addMealDoc(userid, tripid, data) {
   try {
-    await addDoc(collection(db, "userprofile", userid, "trips",tripid,"meals"), {
-      name: data.target.name.value,
-      website: data.target.website.value ?? "www.google.com",
-      category: data.target.category.value ?? "",
-      review_stars: "",
-    });
+    await addDoc(
+      collection(db, "userprofile", userid, "trips", tripid, "meals"),
+      {
+        name: data.target.name.value,
+        website: data.target.website.value ?? "www.google.com",
+        category: data.target.category.value ?? "",
+        review_stars: "",
+      }
+    );
   } catch (error) {
     alert("Error editing data to Database: " + error);
   }
@@ -216,7 +239,9 @@ export async function addMealDoc(userid, tripid, data) {
 
 export async function deleteActivityMealDoc(userid, tripid, docid, type) {
   try {
-    await deleteDoc(doc(db, "userprofile", userid,"trips",tripid,type,docid));
+    await deleteDoc(
+      doc(db, "userprofile", userid, "trips", tripid, type, docid)
+    );
   } catch (error) {
     alert("Error deleting data from Database: " + error);
   }
@@ -230,12 +255,15 @@ export function startCreateAIActivityDocuments(uid, tripid, activityData) {
 
 export async function addAITripActivity(uid, tripid, data) {
   try {
-    await addDoc(collection(db, "userprofile", uid, "trips", tripid, "activities"), {
-      name: data.activity_name ?? "",
-      website: data.website ?? "www.google.com",
-      hours_spent: data.hours_spent ?? "",
-      review_stars: data.review_stars ?? "",
-    });
+    await addDoc(
+      collection(db, "userprofile", uid, "trips", tripid, "activities"),
+      {
+        name: data.activity_name ?? "",
+        website: data.website ?? "www.google.com",
+        hours_spent: data.hours_spent ?? "",
+        review_stars: data.review_stars ?? "",
+      }
+    );
   } catch (error) {
     alert("Error adding data to Database: " + error);
   }
@@ -275,38 +303,58 @@ export async function addNewSettings(uid, data) {
 }
 
 export function startAddingSettings(StartDate, EndDate, uid, tripid, data) {
-  const arrayOfDates = getDatesBetween(StartDate,EndDate);
+  const arrayOfDates = getDatesBetween(StartDate, EndDate);
   arrayOfDates.forEach((date) => {
     //console.log("Date: " + date);
     //console.log(data);
 
     //Delete Calendar Event
-    const eventSubject = data.CalendarEvent+"_"+date;
-    deleteTripCalendarDoc(uid,tripid,eventSubject);
+    const eventSubject = data.CalendarEvent + "_" + date;
+    deleteTripCalendarDoc(uid, tripid, eventSubject);
 
     //add to calendar
-    const StartDateTime = convertDateTimeString(date,data.StartTimeNonFormatted);
-    const EndDateTime = convertDateTimeString(date,data.EndTimeNonFormatted);
+    const StartDateTime = convertDateTimeString(
+      date,
+      data.StartTimeNonFormatted
+    );
+    const EndDateTime = convertDateTimeString(date, data.EndTimeNonFormatted);
 
     //Set new Setting Document ID
-    addSettingToCalendar(uid, tripid, eventSubject, StartDateTime, EndDateTime, data.CalendarEvent);
+    addSettingToCalendar(
+      uid,
+      tripid,
+      eventSubject,
+      StartDateTime,
+      EndDateTime,
+      data.CalendarEvent
+    );
   });
 }
 
-export async function addSettingToCalendar(uid, tripid, docid, startdate, enddate, calsubject) {
+export async function addSettingToCalendar(
+  uid,
+  tripid,
+  docid,
+  startdate,
+  enddate,
+  calsubject
+) {
   try {
-    await setDoc(doc(db, "userprofile", uid, "trips",tripid,"itinerary",docid), {
-      CategoryColor: "",
-      Description: "",
-      EndTime: enddate,
-      EventColor: "",
-      IsAllDay: false,
-      Location: "",
-      RecurrenceException: "",
-      RecurrenceRule: "",
-      StartTime: startdate,
-      Subject: calsubject,
-    });
+    await setDoc(
+      doc(db, "userprofile", uid, "trips", tripid, "itinerary", docid),
+      {
+        CategoryColor: "",
+        Description: "",
+        EndTime: enddate,
+        EventColor: "",
+        IsAllDay: false,
+        Location: "",
+        RecurrenceException: "",
+        RecurrenceRule: "",
+        StartTime: startdate,
+        Subject: calsubject,
+      }
+    );
   } catch (error) {
     alert("Error adding data to Database: " + error);
   }
@@ -314,10 +362,28 @@ export async function addSettingToCalendar(uid, tripid, docid, startdate, enddat
 
 export async function deleteSettingDoc(uid, docid) {
   try {
-    await deleteDoc(doc(db,"userprofile", uid, "settings",docid));
+    await deleteDoc(doc(db, "userprofile", uid, "settings", docid));
   } catch (error) {
     alert("Error deleting data from Database: " + error);
   }
 }
-
 //Settings +
+
+//Lodging -
+export async function updateLodgingDoc(uid, tripid, lodgingData) {
+  try {
+    const calendarEventsRef = doc(db,"userprofile",uid,"trips",tripid,"settings","lodgingdata");
+    await updateDoc(calendarEventsRef, {
+      Name: lodgingData.Name ?? "",
+      Address1: lodgingData.Address1 ?? "",
+      Address2: lodgingData.Address2 ?? "",
+      City: lodgingData.City ?? "",
+      State: lodgingData.State ?? "",
+      ZipCode: lodgingData.ZipCode ?? "",
+    });
+  } catch (error) {
+    alert("Error editing data to Database: " + error);
+  }
+}
+
+//Lodging +
