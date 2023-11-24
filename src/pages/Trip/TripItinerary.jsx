@@ -29,6 +29,9 @@ import { doc, getDoc, query, onSnapshot, collection } from "firebase/firestore";
 import { parseISO } from "date-fns";
 import { createNewTripCalendarDoc, updateTripCalendarDoc, deleteTripCalendarDoc } from "../../globalFunctions/firebaseFunctions";
 
+//Chat GPT
+import { Configuration, OpenAIApi } from "openai";
+
 const TripItinerary = ({ trip }) => {
   const { currentUser } = useAuth();
   const { tripid } = useParams();

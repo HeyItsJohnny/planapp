@@ -1,19 +1,19 @@
 import React from "react";
-import { AiOutlinePieChart, AiFillSetting } from "react-icons/ai";
+import { AiOutlineHome, AiOutlinePieChart, AiFillSetting } from "react-icons/ai";
 import { FaCarSide } from "react-icons/fa";
 import { FcTodoList } from "react-icons/fc";
 import { MdDirectionsRun, MdFastfood } from "react-icons/md";
 import { GoDashboard } from "react-icons/go";
 import { TbReportMoney } from "react-icons/tb";
 
-export const constantLinks = [
+export const links = [
   {
-    title: "Home",
+    title: "My Trips",
     links: [
       {
-        name: "my plans",
-        icon: <GoDashboard />,
-        linktoname: "plans"
+        name: "home",
+        icon: <AiOutlineHome />,
+        linktoname: "home"
       },
 
     ],

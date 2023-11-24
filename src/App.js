@@ -29,6 +29,14 @@ function App() {
             }
           />
           <Route
+            path="/settings"
+            element={
+              <PrivateRoute>
+                <HomeTemplate page="SETTINGS" />
+              </PrivateRoute>
+            }
+          />
+          <Route
             path="/newplan"
             element={
               <PrivateRoute>
@@ -36,7 +44,6 @@ function App() {
               </PrivateRoute>
             }
           />
-
           <Route
             path="/trip/:tripid"
             element={
