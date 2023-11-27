@@ -385,5 +385,19 @@ export async function updateLodgingDoc(uid, tripid, lodgingData) {
     alert("Error editing data to Database: " + error);
   }
 }
-
 //Lodging +
+
+//Create new Trip
+export async function createNewTrip(uid,data) {
+  try {
+    const docRef = await addDoc(collection(db, "userprofile", uid, "trips"), {
+      Destination: data.target.Destination.value,
+      StartDate: data.target.StartDate.value,
+      EndDate: data.target.EndDate.value,
+    });
+    return docRef.id;
+  } catch (error) {
+    console.error("Error adding data to Database: ", error);
+    throw error;
+  }
+}

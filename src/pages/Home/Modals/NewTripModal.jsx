@@ -10,11 +10,13 @@ import TextField from "@mui/material/TextField";
 import DialogTitle from "@mui/material/DialogTitle";
 
 //Functions
-import { addNewSettings } from "../../../globalFunctions/firebaseFunctions";
+import { createNewTrip } from "../../../globalFunctions/firebaseFunctions";
+import { useNavigate } from "react-router-dom";
 
-const NewSettingModal = () => {
+const NewTripModal = () => {
   const { currentColor } = useStateContext();
   const { currentUser } = useAuth();
+  const navigate = useNavigate();
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
@@ -24,37 +26,41 @@ const NewSettingModal = () => {
     handleClose();
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    addNewSettings(currentUser.uid, e);
-    handleReset();
+    try {
+      const tripId = await createNewTrip(currentUser.uid, e);
+      navigate("/trip/" + tripId);
+      handleReset();
+    } catch (error) {
+      alert("Error creating new trip: ", error);
+    }
   };
 
   return (
     <>
-    
       <button
-        type="button"
-        style={{
-          backgroundColor: currentColor,
-          color: "White",
-          borderRadius: "10px",
-        }}
-        className={`text-md p-3 hover:drop-shadow-xl mb-5 mr-5`}
-        onClick={handleShow}
-      >
-        New Setting
-      </button>
+          type="button"
+          style={{
+            backgroundColor: currentColor,
+            color: "White",
+            borderRadius: "10px",
+          }}
+          className={`text-md p-3 hover:drop-shadow-xl mb-5 mr-5`}
+          onClick={handleShow}
+        >
+          New Trip
+        </button>
       <Dialog open={show} onClose={handleReset}>
         <form onSubmit={handleSubmit}>
-          <DialogTitle>New Setting</DialogTitle>
+          <DialogTitle>New Trip</DialogTitle>
           <DialogContent>
             <TextField
               autoFocus
               required
               margin="dense"
-              id="CalendarEvent"
-              label="Calendar Event"
+              id="Destination"
+              label="Destination"
               type="text"
               fullWidth
               variant="standard"
@@ -62,18 +68,18 @@ const NewSettingModal = () => {
             <TextField
               required
               margin="dense"
-              id="StartTime"
-              label="Start Time"
-              type="time"
+              id="StartDate"
+              label="Start Date"
+              type="date"
               fullWidth
               variant="standard"
             />
             <TextField
               required
               margin="dense"
-              id="EndTime"
-              label="End Time"
-              type="time"
+              id="EndDate"
+              label="End Date"
+              type="date"
               fullWidth
               variant="standard"
             />
@@ -88,7 +94,7 @@ const NewSettingModal = () => {
               }}
               className={`text-md p-3 hover:drop-shadow-xl`}
             >
-              Add
+              Create New Trip
             </button>
           </DialogActions>
         </form>
@@ -97,4 +103,4 @@ const NewSettingModal = () => {
   );
 };
 
-export default NewSettingModal;
+export default NewTripModal;
