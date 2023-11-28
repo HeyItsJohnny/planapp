@@ -18,7 +18,7 @@ import { collection, query, onSnapshot, doc, getDoc } from "firebase/firestore";
 import { db } from "../../firebase/firebase";
 import { deleteActivityMealDoc } from "../../globalFunctions/firebaseFunctions";
 
-const TripMeals = ({ destination }) => {
+const TripMeals = () => {
   const { currentUser } = useAuth();
   const { tripid } = useParams();
   const [tripMeals, setTripMeals] = useState([]);

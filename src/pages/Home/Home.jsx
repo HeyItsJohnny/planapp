@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { Header } from "../../components";
-import { useStateContext } from "../../contexts/ContextProvider";
-import { useNavigate } from "react-router-dom";
 import TripComponent from "./TripComponent";
 
 //Firebase
@@ -12,15 +10,8 @@ import NewTripModal from "./Modals/NewTripModal";
 
 
 const Home = () => {
-  const { currentColor } = useStateContext();
   const { currentUser } = useAuth();
-  const navigate = useNavigate();
-
   const [trips, setTrips] = useState([]);
-
-  const newTrip = async () => {
-    navigate("/newplan");
-  };
 
   const fetchTripsData = async () => {
     const docCollection = query(

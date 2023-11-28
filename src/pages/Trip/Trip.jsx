@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Header } from "../../components";
-import TripItinerary from "./TripItinerary";
+import TripItinerary from "./Itinerary/TripItinerary";
 import TripActivities from "./TripActivities";
 import TripMeals from "./TripMeals";
 import TripSettings from "./TripSettings";
@@ -90,8 +90,8 @@ const Trip = () => {
       </div>
       <div className="flex gap-10 flex-wrap justify-center">
         <div className="flex gap-10 flex-wrap justify-center">
-          <TripActivities destination={trip.Destination} />
-          <TripMeals destination={trip.Destination} />
+          <TripActivities />
+          <TripMeals />
           <TripSettings />
         </div>
       </div>

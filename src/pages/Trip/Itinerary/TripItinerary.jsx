@@ -22,17 +22,19 @@ import "react-toastify/dist/ReactToastify.css";
 
 //Functions
 import { useParams } from "react-router-dom";
-import { convertDateFormat } from "../../globalFunctions/globalFunctions";
-import { useAuth } from "../../contexts/AuthContext";
-import { db } from "../../firebase/firebase";
+import { convertDateFormat } from "../../../globalFunctions/globalFunctions";
+import { useAuth } from "../../../contexts/AuthContext";
+import { db } from "../../../firebase/firebase";
 import { doc, getDoc, query, onSnapshot, collection } from "firebase/firestore";
 import { parseISO } from "date-fns";
-import { createNewTripCalendarDoc, updateTripCalendarDoc, deleteTripCalendarDoc } from "../../globalFunctions/firebaseFunctions";
+import { createNewTripCalendarDoc, updateTripCalendarDoc, deleteTripCalendarDoc } from "../../../globalFunctions/firebaseFunctions";
+import GenerateItinerary from "./GenerateItinerary";
 
 //Chat GPT
 import { Configuration, OpenAIApi } from "openai";
 
 const TripItinerary = ({ trip }) => {
+  
   const { currentUser } = useAuth();
   const { tripid } = useParams();
   const [selectedStartDate, setSelectedStartDate] = useState(new Date());
@@ -111,6 +113,7 @@ const TripItinerary = ({ trip }) => {
   return (
     <>
       <ToastContainer />
+      <GenerateItinerary />
       <ScheduleComponent
         currentView={calendarView}
         height="650px"
