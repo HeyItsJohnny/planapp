@@ -34,6 +34,7 @@ export async function addNewTripPlan(
 ) {
   try {
     const docRef = await addDoc(collection(db, "userprofile", uid, "trips"), {
+      TripName: detailsData.TripName,
       Destination: detailsData.Destination,
       StartDate: detailsData.StartDate,
       EndDate: detailsData.EndDate,
@@ -391,6 +392,7 @@ export async function updateLodgingDoc(uid, tripid, lodgingData) {
 export async function createNewTrip(uid,data) {
   try {
     const docRef = await addDoc(collection(db, "userprofile", uid, "trips"), {
+      TripName: data.target.TripName.value,
       Destination: data.target.Destination.value,
       StartDate: data.target.StartDate.value,
       EndDate: data.target.EndDate.value,

@@ -74,7 +74,7 @@ const Trip = () => {
     <>
       <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white dark:text-gray-200 dark:bg-secondary-dark-bg rounded-3xl flex justify-between items-center">
         <div className="mt-5 w-72 md:w-400">
-          <Header category={tripDates} title={trip.Destination} />
+          <Header category={tripDates} title={trip.TripName + " (" + trip.Destination + ")"} />
         </div>
         <DeleteTrip />
       </div>

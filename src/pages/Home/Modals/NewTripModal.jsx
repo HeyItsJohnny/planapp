@@ -59,6 +59,15 @@ const NewTripModal = () => {
               autoFocus
               required
               margin="dense"
+              id="TripName"
+              label="Trip Name"
+              type="text"
+              fullWidth
+              variant="standard"
+            />
+            <TextField
+              required
+              margin="dense"
               id="Destination"
               label="Destination"
               type="text"

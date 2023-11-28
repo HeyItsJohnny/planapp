@@ -23,6 +23,7 @@ const Home = () => {
       querySnapshot.forEach((doc) => {
         var data = {
           id: doc.id,
+          TripName: doc.data().TripName,
           Destination: doc.data().Destination,
           StartDate: doc.data().StartDate,
           EndDate: doc.data().EndDate,

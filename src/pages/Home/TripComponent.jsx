@@ -23,11 +23,12 @@ const TripComponent = ({ trip }) => {
       <div className="bg-white dark:text-gray-200 dark:bg-secondary-dark-bg h-44 rounded-xl w-full lg:w-80 p-8 pt-5 m-3 bg-no-repeat bg-cover bg-center"> 
         <div className="flex justify-between items-center ">
           <div>
+            <p className="font-bold text-gray-400">{trip.TripName}</p>
             <p className="font-bold text-gray-400">{trip.Destination}</p>
             <p className="text-l">{convertDateFormat(trip.StartDate)} - {convertDateFormat(trip.EndDate)}</p>
           </div>
         </div>
-        <div className="mt-10">
+        <div className="mt-5">
           <button
             type="button"
             style={{
