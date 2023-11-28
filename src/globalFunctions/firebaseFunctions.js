@@ -436,4 +436,43 @@ export async function addNewItineraryDoc(userid, tripid, data) {
   }
 }
 
+//Delete Trip
+export function deleteTrip(uid, tripid, settingsdata, itinerarydata, activitiesdata, mealsdata) {
+  settingsdata.forEach((data) => {
+    deleteTripDataDoc(uid,tripid,data.id,"settings");
+  });
 
+  itinerarydata.forEach((data) => {
+    deleteTripDataDoc(uid,tripid,data.id,"itinerary");
+  });
+
+  activitiesdata.forEach((data) => {
+    deleteTripDataDoc(uid,tripid,data.id,"activities");
+  });
+
+  mealsdata.forEach((data) => {
+    deleteTripDataDoc(uid,tripid,data.id,"meals");
+  });
+
+  deleteTripDoc(uid,tripid);
+}
+
+export async function deleteTripDataDoc(userid, tripid, docid, collec) {
+  try {
+    await deleteDoc(
+      doc(db, "userprofile", userid, "trips", tripid, collec, docid)
+    );
+  } catch (error) {
+    alert("Error deleting data from Database: " + error);
+  }
+}
+
+export async function deleteTripDoc(userid, tripid) {
+  try {
+    await deleteDoc(
+      doc(db, "userprofile", userid, "trips", tripid)
+    );
+  } catch (error) {
+    alert("Error deleting data from Database: " + error);
+  }
+}

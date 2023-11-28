@@ -4,6 +4,7 @@ import { AiTwotoneDelete } from "react-icons/ai";
 import { TbListDetails } from "react-icons/tb";
 import { useNavigate } from "react-router-dom";
 import { convertDateFormat } from "../../globalFunctions/globalFunctions";
+import DeleteTripModal from "./Modals/DeleteTripModal";
 
 const TripComponent = ({ trip }) => {
   const { currentColor } = useStateContext();
@@ -39,18 +40,7 @@ const TripComponent = ({ trip }) => {
           >
             <TbListDetails />
           </button>
-          <button
-            type="button"
-            style={{
-              backgroundColor: "#FF0000",
-              color: "White",
-              borderRadius: "10px",
-            }}
-            className={`text-md p-3 hover:drop-shadow-xl float-right`}
-            onClick={handleDeletePlan}
-          >
-            <AiTwotoneDelete />
-          </button>
+          <DeleteTripModal tripid={trip.id} />
         </div>
       </div>
     </>

@@ -5,6 +5,7 @@ import TripActivities from "./TripActivities";
 import TripMeals from "./TripMeals";
 import TripSettings from "./TripSettings";
 import UpdateLodgingModal from "./Modals/UpdateLodgingModal";
+import DeleteTrip from "./Modals/DeleteTrip";
 
 //Functions
 import { useParams } from "react-router-dom";
@@ -72,7 +73,10 @@ const Trip = () => {
   return (
     <>
       <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white dark:text-gray-200 dark:bg-secondary-dark-bg rounded-3xl flex justify-between items-center">
-        <Header category={tripDates} title={trip.Destination} />
+        <div className="mt-5 w-72 md:w-400">
+          <Header category={tripDates} title={trip.Destination} />
+        </div>
+        <DeleteTrip />
       </div>
       <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white dark:text-gray-200 dark:bg-secondary-dark-bg rounded-3xl flex justify-between items-center">
         <div className="mt-5 w-72 md:w-400">

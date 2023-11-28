@@ -148,7 +148,7 @@ const AITripActivityModal = () => {
         Suggest
       </button>
       <Dialog open={show} onClose={() => setShow(false)}>
-        <DialogTitle>Select Meal Options</DialogTitle>
+        <DialogTitle>Select Activities</DialogTitle>
         <DialogContent>
           <List>
             {loading ? (
