@@ -9,9 +9,13 @@ import { formatDataIntoString } from "../../../globalFunctions/globalFunctions";
 import { useAuth } from "../../../contexts/AuthContext";
 import { db } from "../../../firebase/firebase";
 import { doc, getDoc, onSnapshot, query, collection } from "firebase/firestore";
+import { addChatGPTTripData } from "../../../globalFunctions/firebaseFunctions";
 
 //Chat GPT
 import { Configuration, OpenAIApi } from "openai";
+
+//Visual
+import ClipLoader from "react-spinners/ClipLoader";
 
 const GenerateItinerary = () => {
   const { currentColor } = useStateContext();
@@ -22,8 +26,7 @@ const GenerateItinerary = () => {
   //Trip Objects
   const [trip, setTrip] = useState({});
   const [lodging, setLodging] = useState({});
-  //const [meals, setMeals] = useState([]);
-  //const [activities, setActivities] = useState([]);
+  const [itinerary, setItinerary] = useState([]);
   const [activityString, setActivityString] = useState("");
   const [mealString, setMealString] = useState("");
 
@@ -35,7 +38,6 @@ const GenerateItinerary = () => {
   //Chat GPT +
 
   const generateAIItinerary = async () => {
-    //alert("Generate");
     try {
       var lodgingAddress = "";
       if (lodging.Address1 === "") {
@@ -56,7 +58,6 @@ const GenerateItinerary = () => {
       }
 
       setLoading(true);
-      //setItinerary([]);
 
       const response = await openai.createChatCompletion({
         model: "gpt-4",
@@ -96,8 +97,13 @@ const GenerateItinerary = () => {
         ""
       );
       const jsonObject = JSON.parse(returnText);
-      //setItinerary(jsonObject.itinerary);
-      console.log(jsonObject.itinerary);        //This is the itinerary
+      //console.log(jsonObject.itinerary);        //This is the itinerary
+      await addChatGPTTripData(
+        currentUser.uid,
+        tripid,
+        itinerary,
+        jsonObject.itinerary
+      );
       setLoading(false);
     } catch (error) {
       alert("ERROR: " + error);
@@ -133,9 +139,7 @@ const GenerateItinerary = () => {
   };
 
   const getTripMealsData = async () => {
-    const docCollection = query(
-      collection(db, "userprofile", currentUser.uid, "trips", tripid, "meals")
-    );
+    const docCollection = query(collection(db, "userprofile", currentUser.uid, "trips", tripid, "meals"));
     onSnapshot(docCollection, (querySnapshot) => {
       const list = [];
       var itemCount = 1;
@@ -152,7 +156,6 @@ const GenerateItinerary = () => {
         itemCount += 1;
       });
       setMealString(formatDataIntoString(list));
-      //setMeals(list);
     });
   };
 
@@ -174,7 +177,30 @@ const GenerateItinerary = () => {
         itemCount += 1;
       });
       setActivityString(formatDataIntoString(list));
-      //setActivities(list);
+    });
+  };
+
+  const getItineraryData = async () => {
+    const docCollection = query(collection(db,"userprofile",currentUser.uid,"trips",tripid,"itinerary"));
+    onSnapshot(docCollection, (querySnapshot) => {
+      const list = [];
+      querySnapshot.forEach((doc) => {
+        var data = {
+          Id: doc.id,
+          Subject: doc.data().Subject,
+          Location: doc.data().Location,
+          Description: doc.data().Description,
+          StartTime: doc.data().StartTime.toDate(),
+          EndTime: doc.data().EndTime.toDate(),
+          IsAllDay: doc.data().IsAllDay,
+          RecurrenceRule: doc.data().RecurrenceRule,
+          RecurrenceException: doc.data().RecurrenceException,
+          Color: "green",
+          EventColor: doc.data().EventColor,
+        };
+        list.push(data);
+      });
+      setItinerary(list);
     });
   };
 
@@ -183,28 +209,40 @@ const GenerateItinerary = () => {
     getTripLodging();
     getTripMealsData();
     getTripActivityData();
+    getItineraryData();
     return () => {
       setLodging({});
       setTrip({});
-      //setMeals([]);
-      //setActivities([]);
+      setItinerary([]);
     };
   }, []);
 
   return (
     <>
-      <button
-        type="button"
-        style={{
-          backgroundColor: currentColor,
-          color: "White",
-          borderRadius: "10px",
-        }}
-        onClick={generateAIItinerary}
-        className={`text-md p-3 hover:drop-shadow-xl mb-2 mr-5`}
-      >
-        Generate Itinerary
-      </button>
+      {loading ? (
+        <div className="flex justify-between items-center gap-2">
+          <ClipLoader
+            color="#ffffff"
+            loading={loading}
+            size={150}
+            aria-label="Loading Spinner"
+            data-testid="loader"
+          />
+        </div>
+      ) : (
+        <button
+          type="button"
+          style={{
+            backgroundColor: currentColor,
+            color: "White",
+            borderRadius: "10px",
+          }}
+          onClick={generateAIItinerary}
+          className={`text-md p-3 hover:drop-shadow-xl mb-2 mr-5`}
+        >
+          Generate Itinerary
+        </button>
+      )}
     </>
   );
 };

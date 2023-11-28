@@ -11,7 +11,7 @@ import {
   addDoc,
 } from "firebase/firestore";
 
-import { getDatesBetween, convertDateTimeString } from "./globalFunctions";
+import { getDatesBetween, convertDateTimeString, convertDateFormat2 } from "./globalFunctions";
 
 export async function createUserProfile(email, fullname, uid) {
   try {
@@ -401,3 +401,39 @@ export async function createNewTrip(uid,data) {
     throw error;
   }
 }
+
+//Add ChatGPT Items to Itinerary
+export function addChatGPTTripData(uid, tripid, itinerarydata, tripdata) {
+  itinerarydata.forEach((data) => {
+    deleteTripCalendarDoc(uid,tripid,data.Id);
+  });
+  tripdata.forEach((data) => {
+   addNewItineraryDoc(uid,tripid,data);
+  });
+}
+
+export async function addNewItineraryDoc(userid, tripid, data) {
+  try {
+    const StartTime = convertDateTimeString(convertDateFormat2(data.day),data.start_time);
+    const EndTime = convertDateTimeString(convertDateFormat2(data.day),data.end_time);
+
+    await addDoc(collection(db, "userprofile", userid, "trips", tripid, "itinerary"),
+      {
+        Subject: data.activity,
+        Location: "",
+        Description: "",
+        StartTime: StartTime,
+        EndTime: EndTime,
+        IsAllDay: false,
+        RecurrenceRule: "",
+        RecurrenceException: "",
+        CategoryColor: "",
+        EventColor: "",
+      }
+    );
+  } catch (error) {
+    alert("Error adding data to Database: " + error);
+  }
+}
+
+
