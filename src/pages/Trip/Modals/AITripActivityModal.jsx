@@ -88,7 +88,24 @@ const AITripActivityModal = () => {
     try {
       setLoading(true);
       setActivities([]);
-
+      console.log("Start");
+      const response = await fetch("https://planappapi.onrender.com/getTripActivity", {
+        method: 'POST',
+        headers: {
+          'Content-type': 'application/json'
+        },
+        body: JSON.stringify({
+          Destination: tripDestination
+        })
+      }) 
+      .catch(err => {
+        alert('Network Error: ' + err);
+      })
+      console.log("END");
+      console.log("RESPONSE: " + response);
+      console.log("RESPONSE STATUS: " + response.status);
+      //createNewOrder(response.status);
+      /*
       const response = await openai.createChatCompletion({
         model: "gpt-4",
         messages: [
@@ -116,7 +133,8 @@ const AITripActivityModal = () => {
         ""
       );
       const jsonObject = JSON.parse(returnText);
-      setActivities(jsonObject.activities);
+      */
+      //setActivities(jsonObject.activities);
 
       setLoading(false);
     } catch (error) {
