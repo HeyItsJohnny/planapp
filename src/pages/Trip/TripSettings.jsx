@@ -8,18 +8,9 @@ import NewSettingModal from "./Modals/NewSettingModal";
 //Functions
 import { useParams } from "react-router-dom";
 import { startAddingSettings, deleteSettingDoc } from "../../globalFunctions/firebaseFunctions";
-import { convertTo12HourFormat } from "../../globalFunctions/globalFunctions";
 import { useAuth } from "../../contexts/AuthContext";
-import { db } from "../../firebase/firebase";
-import {
-  doc,
-  getDoc,
-  query,
-  collection,
-  orderBy,
-  onSnapshot,
-} from "firebase/firestore";
 import { useStateContext } from "../../contexts/ContextProvider";
+import { getTripData, getSettingsData } from "../../globalFunctions/firebaseGETFunctions";
 
 //Toast
 import { ToastContainer, toast } from "react-toastify";
@@ -36,11 +27,8 @@ const TripSettings = () => {
   //Get Trip Destination -
   const setTripFromURL = async () => {
     try {
-      const docRef = doc(db, "userprofile", currentUser.uid, "trips", tripid);
-      const docSnap = await getDoc(docRef);
-      if (docSnap.exists()) {
-        setTrip(docSnap.data());
-      }
+      const data = await getTripData(currentUser.uid,tripid);
+      setTrip(data);
     } catch (err) {
       alert(err);
     }
@@ -48,25 +36,12 @@ const TripSettings = () => {
   //Get Trip Destination +
 
   const fetchPlanSettingsData = async () => {
-    const docCollection = query(
-      collection(db, "userprofile", currentUser.uid, "settings"),
-      orderBy("StartTime")
-    );
-    onSnapshot(docCollection, (querySnapshot) => {
-      const list = [];
-      querySnapshot.forEach((doc) => {
-        var data = {
-          id: doc.id,
-          CalendarEvent: doc.data().CalendarEvent,
-          StartTime: convertTo12HourFormat(doc.data().StartTime),
-          EndTime: convertTo12HourFormat(doc.data().EndTime),
-          StartTimeNonFormatted: doc.data().StartTime,
-          EndTimeNonFormatted: doc.data().EndTime,
-        };
-        list.push(data);
-      });
-      setSettings(list);
-    });
+    try {
+      const data = await getSettingsData(currentUser.uid);
+      setSettings(data);
+    } catch (err) {
+      alert(err);
+    }
   };
 
   const removeSetting = (setting) => {

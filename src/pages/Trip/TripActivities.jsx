@@ -13,8 +13,7 @@ import "react-toastify/dist/ReactToastify.css";
 //Functions
 import { useParams } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
-import { collection, query, onSnapshot } from "firebase/firestore";
-import { db } from "../../firebase/firebase";
+import { getTripActivityData } from "../../globalFunctions/firebaseGETFunctions";
 import { deleteActivityMealDoc } from "../../globalFunctions/firebaseFunctions";
 
 const TripActivities = () => {
@@ -23,33 +22,8 @@ const TripActivities = () => {
   const [tripActivities, setTripActivities] = useState([]);
 
   const fetchTripActivityData = async () => {
-    const docCollection = query(
-      collection(
-        db,
-        "userprofile",
-        currentUser.uid,
-        "trips",
-        tripid,
-        "activities"
-      )
-    );
-    onSnapshot(docCollection, (querySnapshot) => {
-      const list = [];
-      var itemCount = 1;
-      querySnapshot.forEach((doc) => {
-        var data = {
-          id: doc.id,
-          description: doc.data().description,
-          hours_spent: doc.data().hours_spent,
-          name: doc.data().name,
-          review_stars: doc.data().review_stars,
-          website: doc.data().website,
-        };
-        list.push(data);
-        itemCount += 1;
-      });
-      setTripActivities(list);
-    });
+    const data = await getTripActivityData(currentUser.uid,tripid);
+    setTripActivities(data)
   };
 
   const removeActivity = (activity) => {
