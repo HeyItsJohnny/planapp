@@ -8,6 +8,7 @@ import { formatDataIntoString } from "../../../globalFunctions/globalFunctions";
 //Firebase
 import { useAuth } from "../../../contexts/AuthContext";
 import { db } from "../../../firebase/firebase";
+import { getTripData } from "../../../globalFunctions/firebaseGETFunctions";
 import { doc, getDoc, onSnapshot, query, collection } from "firebase/firestore";
 import { addChatGPTTripData } from "../../../globalFunctions/firebaseFunctions";
 
@@ -113,11 +114,8 @@ const GenerateItinerary = () => {
 
   const getTripData = async () => {
     try {
-      const docRef = doc(db, "userprofile", currentUser.uid, "trips", tripid);
-      const docSnap = await getDoc(docRef);
-      if (docSnap.exists()) {
-        setTrip(docSnap.data());
-      }
+      const data = await getTripData();
+      setTrip(data);
     } catch (err) {
       alert(err);
     }

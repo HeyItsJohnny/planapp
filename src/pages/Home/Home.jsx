@@ -4,35 +4,21 @@ import TripComponent from "./TripComponent";
 
 //Firebase
 import { useAuth } from "../../contexts/AuthContext";
-import { collection, query, onSnapshot } from "firebase/firestore";
-import { db } from "../../firebase/firebase";
-import NewTripModal from "./Modals/NewTripModal";
+import { getTripsData } from "../../globalFunctions/firebaseGETFunctions";
 
+import NewTripModal from "./Modals/NewTripModal";
 
 const Home = () => {
   const { currentUser } = useAuth();
   const [trips, setTrips] = useState([]);
 
   const fetchTripsData = async () => {
-    const docCollection = query(
-      collection(db, "userprofile", currentUser.uid, "trips")
-    );
-    onSnapshot(docCollection, (querySnapshot) => {
-      const list = [];
-      var itemCount = 1;
-      querySnapshot.forEach((doc) => {
-        var data = {
-          id: doc.id,
-          TripName: doc.data().TripName,
-          Destination: doc.data().Destination,
-          StartDate: doc.data().StartDate,
-          EndDate: doc.data().EndDate,
-        };
-        list.push(data);
-        itemCount += 1;
-      });
-      setTrips(list);
-    });
+    try {
+      const data = await getTripsData(currentUser.uid);
+      setTrips(data);
+    } catch(e) {
+      alert("Error: " + e);
+    }
   };
 
   useEffect(() => {

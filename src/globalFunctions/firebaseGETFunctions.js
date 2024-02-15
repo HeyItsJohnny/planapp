@@ -26,6 +26,32 @@ export async function getTripData(uid, tripid) {
   }
 }
 
+export async function getTripsData(uid) {
+  return new Promise((resolve, reject) => {
+    const docCollection = query(collection(db, "userprofile", uid, "trips"));
+    onSnapshot(
+      docCollection,
+      (querySnapshot) => {
+        const list = [];
+        querySnapshot.forEach((doc) => {
+          var data = {
+            id: doc.id,
+            TripName: doc.data().TripName,
+            Destination: doc.data().Destination,
+            StartDate: doc.data().StartDate,
+            EndDate: doc.data().EndDate,
+          };
+          list.push(data);
+        });
+        resolve(list); // Resolve the promise with the list when the data is ready
+      },
+      (error) => {
+        reject(error); // Reject the promise if there's an error
+      }
+    );
+  });
+}
+
 export async function getTripLodgingData(uid, tripid) {
   try {
     const docRef = doc(
