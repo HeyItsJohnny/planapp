@@ -26,7 +26,30 @@ export async function getTripData(uid, tripid) {
   }
 }
 
-export async function getTripMealData(uid, tripid) {
+export async function getTripLodgingData(uid, tripid) {
+  try {
+    const docRef = doc(
+      db,
+      "userprofile",
+      uid,
+      "trips",
+      tripid,
+      "settings",
+      "lodgingdata"
+    );
+    const docSnap = await getDoc(docRef);
+    if (docSnap.exists()) {
+      return docSnap.data();
+    } else {
+      throw new Error("Document does not exist");
+    }
+  } catch (error) {
+    console.error("Error fetching player stats:", error);
+    throw error; // Propagate the error
+  }
+}
+
+export async function getTripMealsData(uid, tripid) {
   return new Promise((resolve, reject) => {
     const docCollection = query(
       collection(db, "userprofile", uid, "trips", tripid, "meals")
@@ -72,6 +95,40 @@ export async function getTripActivityData(uid, tripid) {
             name: doc.data().name,
             review_stars: doc.data().review_stars,
             website: doc.data().website,
+          };
+          list.push(data);
+        });
+        resolve(list); // Resolve the promise with the list when the data is ready
+      },
+      (error) => {
+        reject(error); // Reject the promise if there's an error
+      }
+    );
+  });
+}
+
+export async function getTripItineraryData(uid, tripid) {
+  return new Promise((resolve, reject) => {
+    const docCollection = query(
+      collection(db, "userprofile", uid, "trips", tripid, "itinerary")
+    );
+    onSnapshot(
+      docCollection,
+      (querySnapshot) => {
+        const list = [];
+        querySnapshot.forEach((doc) => {
+          var data = {
+            Id: doc.id,
+            Subject: doc.data().Subject,
+            Location: doc.data().Location,
+            Description: doc.data().Description,
+            StartTime: doc.data().StartTime.toDate(),
+            EndTime: doc.data().EndTime.toDate(),
+            IsAllDay: doc.data().IsAllDay,
+            RecurrenceRule: doc.data().RecurrenceRule,
+            RecurrenceException: doc.data().RecurrenceException,
+            Color: "green",
+            EventColor: doc.data().EventColor,
           };
           list.push(data);
         });

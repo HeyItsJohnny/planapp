@@ -38,6 +38,7 @@ const TripActivities = () => {
     };
   }, []);
 
+
   return (
     <>
       <ToastContainer />

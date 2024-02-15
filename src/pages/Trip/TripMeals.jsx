@@ -12,7 +12,7 @@ import "react-toastify/dist/ReactToastify.css";
 //Functions
 import { useParams } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
-import { getTripMealData } from "../../globalFunctions/firebaseGETFunctions";
+import { getTripMealsData } from "../../globalFunctions/firebaseGETFunctions";
 import { deleteActivityMealDoc } from "../../globalFunctions/firebaseFunctions";
 
 const TripMeals = () => {
@@ -21,7 +21,7 @@ const TripMeals = () => {
   const [tripMeals, setTripMeals] = useState([]);
 
   const fetchTripMealsData = async () => {
-    const data = await getTripMealData(currentUser.uid,tripid);
+    const data = await getTripMealsData(currentUser.uid,tripid);
     setTripMeals(data)
   };
 

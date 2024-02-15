@@ -445,7 +445,7 @@ export function deleteTrip(uid, tripid, settingsdata, itinerarydata, activitiesd
   });
 
   itinerarydata.forEach((data) => {
-    deleteTripDataDoc(uid,tripid,data.id,"itinerary");
+    deleteTripDataDoc(uid,tripid,data.Id,"itinerary");
   });
 
   activitiesdata.forEach((data) => {

@@ -22,18 +22,13 @@ import "react-toastify/dist/ReactToastify.css";
 
 //Functions
 import { useParams } from "react-router-dom";
-import { convertDateFormat } from "../../../globalFunctions/globalFunctions";
+import { getTripItineraryData, getTripData } from "../../../globalFunctions/firebaseGETFunctions";
 import { useAuth } from "../../../contexts/AuthContext";
-import { db } from "../../../firebase/firebase";
-import { doc, getDoc, query, onSnapshot, collection } from "firebase/firestore";
 import { parseISO } from "date-fns";
 import { createNewTripCalendarDoc, updateTripCalendarDoc, deleteTripCalendarDoc } from "../../../globalFunctions/firebaseFunctions";
 import GenerateItinerary from "./GenerateItinerary";
 
-//Chat GPT
-import { Configuration, OpenAIApi } from "openai";
-
-const TripItinerary = ({ trip }) => {
+const TripItinerary = () => {
   
   const { currentUser } = useAuth();
   const { tripid } = useParams();
@@ -42,48 +37,23 @@ const TripItinerary = ({ trip }) => {
   const [calendarView, setCalendarView] = useState("Week");
 
   const fetchCalendarData = async () => {
-    const docCollection = query(
-      collection(
-        db,
-        "userprofile",
-        currentUser.uid,
-        "trips",
-        tripid,
-        "itinerary"
-      )
-    );
-    onSnapshot(docCollection, (querySnapshot) => {
-      const list = [];
-      querySnapshot.forEach((doc) => {
-        var data = {
-          Id: doc.id,
-          Subject: doc.data().Subject,
-          Location: doc.data().Location,
-          Description: doc.data().Description,
-          StartTime: doc.data().StartTime.toDate(),
-          EndTime: doc.data().EndTime.toDate(),
-          IsAllDay: doc.data().IsAllDay,
-          RecurrenceRule: doc.data().RecurrenceRule,
-          RecurrenceException: doc.data().RecurrenceException,
-          Color: "green",
-          EventColor: doc.data().EventColor,
-        };
-        list.push(data);
-      });
-      setCalendarData(list);
-    });
+    try {
+      const data = await getTripItineraryData(currentUser.uid, tripid);
+      setCalendarData(data);
+    } catch(e) {
+      alert("Error: " + e)
+    }
   };
 
   const setTripFromURL = async () => {
     try {
-      const docRef = doc(db, "userprofile", currentUser.uid, "trips", tripid);
-      const docSnap = await getDoc(docRef);
-      if (docSnap.exists()) {
-        setSelectedStartDate(parseISO(docSnap.data().StartDate));
-        if (docSnap.data().StartDate === docSnap.data().EndDate) {
-          setCalendarView("Day")
+      const data = await getTripData(currentUser.uid, tripid);
+      if (data !== null) {
+        setSelectedStartDate(parseISO(data.StartDate));
+        if (data.StartDate === data.EndDate) {
+          setCalendarView("Day");
         } else {
-          setCalendarView("Week")
+          setCalendarView("Week");
         }
       }
     } catch (err) {

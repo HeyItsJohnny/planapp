@@ -1,10 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useAuth } from "../../../contexts/AuthContext";
-import { db } from "../../../firebase/firebase";
-import { onSnapshot, query, collection } from "firebase/firestore";
 import { deleteTrip } from "../../../globalFunctions/firebaseFunctions";
 import { useNavigate } from "react-router-dom";
+import {
+  getTripActivityData,
+  getTripMealsData,
+  getSettingsData,
+  getTripItineraryData
+} from "../../../globalFunctions/firebaseGETFunctions";
 
 //Modal
 import Dialog from "@mui/material/Dialog";
@@ -39,72 +43,46 @@ const DeleteTrip = () => {
   };
 
   const getTripSettingsData = async () => {
-    const docCollection = query(collection(db, "userprofile", currentUser.uid, "trips", tripid, "settings"));
-    onSnapshot(docCollection, (querySnapshot) => {
-      const list = [];
-      var itemCount = 1;
-      querySnapshot.forEach((doc) => {
-        var data = {
-          id: doc.id,
-        };
-        list.push(data);
-        itemCount += 1;
-      });
-      setSettings(list);
-    });
+    try {
+      const data = await getSettingsData(currentUser.uid);
+      setSettings(data);
+    } catch (e) {
+      alert("Error: " + e);
+    }
   };
 
-  const getTripMealsData = async () => {
-    const docCollection = query(collection(db, "userprofile", currentUser.uid, "trips", tripid, "meals"));
-    onSnapshot(docCollection, (querySnapshot) => {
-      const list = [];
-      var itemCount = 1;
-      querySnapshot.forEach((doc) => {
-        var data = {
-          id: doc.id,
-        };
-        list.push(data);
-        itemCount += 1;
-      });
-      setMeals(list);
-    });
+  const getTripDataMeals = async () => {
+    try {
+      const data = await getTripMealsData(currentUser.uid, tripid);
+      setMeals(data);
+    } catch (e) {
+      alert("Error: " + e);
+    }
   };
 
-  const getTripActivityData = async () => {
-    const docCollection = query(collection(db,"userprofile",currentUser.uid,"trips",tripid,"activities"));
-    onSnapshot(docCollection, (querySnapshot) => {
-      const list = [];
-      var itemCount = 1;
-      querySnapshot.forEach((doc) => {
-        var data = {
-          id: doc.id,
-        };
-        list.push(data);
-        itemCount += 1;
-      });
-      setActivities(list);
-    });
+  const getTripDataActivities = async () => {
+    try {
+      const data = await getTripActivityData(currentUser.uid, tripid);
+      setActivities(data);
+    } catch (e) {
+      alert("Error: " + e);
+    }
   };
 
-  const getItineraryData = async () => {
-    const docCollection = query(collection(db,"userprofile",currentUser.uid,"trips",tripid,"itinerary"));
-    onSnapshot(docCollection, (querySnapshot) => {
-      const list = [];
-      querySnapshot.forEach((doc) => {
-        var data = {
-          id: doc.id,
-        };
-        list.push(data);
-      });
-      setItinerary(list);
-    });
+  const getTripDataItinerary = async () => {
+    try {
+      const data = await getTripItineraryData(currentUser.uid, tripid);
+      setItinerary(data);
+    } catch (e) {
+      alert("Error: " + e);
+    }
   };
 
   useEffect(() => {
     getTripSettingsData();
-    getTripMealsData();
-    getTripActivityData();
-    getItineraryData();
+    getTripDataMeals();
+    getTripDataActivities();
+    getTripDataItinerary();
     return () => {
       setSettings([]);
       setItinerary([]);

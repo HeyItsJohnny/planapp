@@ -10,9 +10,10 @@ import DeleteTrip from "./Modals/DeleteTrip";
 //Functions
 import { useParams } from "react-router-dom";
 import { convertDateFormat } from "../../globalFunctions/globalFunctions";
+import { getTripData } from "../../globalFunctions/firebaseGETFunctions";
 import { useAuth } from "../../contexts/AuthContext";
 import { db } from "../../firebase/firebase";
-import { doc, getDoc, onSnapshot } from "firebase/firestore";
+import { doc, onSnapshot } from "firebase/firestore";
 
 const Trip = () => {
   const { currentUser } = useAuth();
@@ -23,16 +24,9 @@ const Trip = () => {
 
   const setTripFromURL = async () => {
     try {
-      const docRef = doc(db, "userprofile", currentUser.uid, "trips", tripid);
-      const docSnap = await getDoc(docRef);
-      if (docSnap.exists()) {
-        setTrip(docSnap.data());
-        setTripDates(
-          convertDateFormat(docSnap.data().StartDate) +
-            " - " +
-            convertDateFormat(docSnap.data().EndDate)
-        );
-      }
+      const data = await getTripData(currentUser.uid,tripid);
+      setTrip(data);
+      setTripDates(convertDateFormat(data.StartDate) + " - " + convertDateFormat(data.EndDate));
     } catch (err) {
       alert(err);
     }

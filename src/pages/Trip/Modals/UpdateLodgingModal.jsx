@@ -14,15 +14,10 @@ import "react-toastify/dist/ReactToastify.css";
 
 //Functions
 import { useParams } from "react-router-dom";
-import {
-  updateLodgingDoc,
-  createLodgingDataForTrip,
-} from "../../../globalFunctions/firebaseFunctions";
-
-//DATABASE
+import { updateLodgingDoc, createLodgingDataForTrip } from "../../../globalFunctions/firebaseFunctions";
+import { getTripLodgingData } from "../../../globalFunctions/firebaseGETFunctions";
 import { useAuth } from "../../../contexts/AuthContext";
-import { db } from "../../../firebase/firebase";
-import { doc, getDoc } from "firebase/firestore";
+
 
 const UpdateLodgingModal = () => {
   const { currentColor } = useStateContext();
@@ -91,24 +86,15 @@ const UpdateLodgingModal = () => {
 
   const setTripLodgingFromURL = async () => {
     try {
-      const docRef = doc(
-        db,
-        "userprofile",
-        currentUser.uid,
-        "trips",
-        tripid,
-        "settings",
-        "lodgingdata"
-      );
-      const docSnap = await getDoc(docRef);
-      if (docSnap.exists()) {
+      const data = await getTripLodgingData(currentUser.uid,tripid);
+      if (data !== null) {
         setLodgingExists(true);
-        setLodgingName(docSnap.data().Name);
-        setLodgingAddress1(docSnap.data().Address1);
-        setLodgingAddress2(docSnap.data().Address2);
-        setLodgingCity(docSnap.data().City);
-        setLodgingState(docSnap.data().State);
-        setLodgingZipCode(docSnap.data().ZipCode);
+        setLodgingName(data.Name);
+        setLodgingAddress1(data.Address1);
+        setLodgingAddress2(data.Address2);
+        setLodgingCity(data.City);
+        setLodgingState(data.State);
+        setLodgingZipCode(data.ZipCode);
       }
     } catch (err) {
       alert(err);
