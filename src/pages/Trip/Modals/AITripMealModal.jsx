@@ -13,18 +13,14 @@ import {
   ListItemText,
 } from "@mui/material";
 
-//Firebase
-import { db } from "../../../firebase/firebase";
-import { doc, getDoc } from "firebase/firestore";
 import { useAuth } from "../../../contexts/AuthContext";
 
 //Functions 
 import { useStateContext } from "../../../contexts/ContextProvider";
 import { useParams } from "react-router-dom";
 import { startCreateAIMealDocuments } from "../../../globalFunctions/firebaseFunctions";
-
-//Chat GPT
-import { Configuration, OpenAIApi } from "openai";
+import { getChatRestaurants } from "../../../globalFunctions/chatGPTFunctions";
+import { getTripData } from "../../../globalFunctions/firebaseGETFunctions";
 
 const AITripMealModal = () => {
   const { currentColor } = useStateContext();
@@ -41,11 +37,8 @@ const AITripMealModal = () => {
   //Get Trip Destination -
   const setTripFromURL = async () => {
     try {
-      const docRef = doc(db, "userprofile", currentUser.uid, "trips", tripid);
-      const docSnap = await getDoc(docRef);
-      if (docSnap.exists()) {
-        setTripDestination(docSnap.data().Destination);
-      }
+      const data = await getTripData(currentUser.uid,tripid);
+      setTripDestination(data.Destination);
     } catch (err) {
       alert(err);
     }
@@ -78,53 +71,17 @@ const AITripMealModal = () => {
   };
   //Dialog Functions +
 
-  //Chat GPT -
-  const configuration = new Configuration({
-    apiKey: "",
-  });
-  const openai = new OpenAIApi(configuration);
-
   const getAIGeneratedMeals = async () => {
     try {
       setLoading(true);
       setRestaurants([]);
-
-      const response = await openai.createChatCompletion({
-        model: "gpt-4",
-        messages: [
-          {
-            role: "system",
-            content:
-              "You will be provided with a question, and your task is to parse the answers it into JSON format with the key being restaurants, properties: resturant_name, review_stars, website, category. Please provide up to 10 restaurants.",
-          },
-          {
-            role: "user",
-            content:
-              "Please give me a list of popular resturants in " +
-              tripDestination +
-              "?",
-          },
-        ],
-        temperature: 0,
-        max_tokens: 1024,
-        top_p: 1,
-        frequency_penalty: 0,
-        presence_penalty: 0,
-      });
-      const returnText = response.data.choices[0].message.content.replace(
-        /(\r\n|\n|\r)/gm,
-        ""
-      );
-      const jsonObject = JSON.parse(returnText);
-      setRestaurants(jsonObject.restaurants);
-
+      const chatGPTRestaurants = await getChatRestaurants(tripDestination);
+      setRestaurants(chatGPTRestaurants.restaurants);
       setLoading(false);
     } catch (error) {
       alert("ERROR: " + error);
-      //setLoading(false);
     }
   };
-  //Chat GPT +
 
   useEffect(() => {
     setTripFromURL();

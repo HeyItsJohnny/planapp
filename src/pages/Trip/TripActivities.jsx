@@ -16,14 +16,43 @@ import { useAuth } from "../../contexts/AuthContext";
 import { getTripActivityData } from "../../globalFunctions/firebaseGETFunctions";
 import { deleteActivityMealDoc } from "../../globalFunctions/firebaseFunctions";
 
+//Firebase
+import { db } from "../../firebase/firebase";
+import { onSnapshot, query, collection } from "firebase/firestore";
+
 const TripActivities = () => {
   const { currentUser } = useAuth();
   const { tripid } = useParams();
   const [tripActivities, setTripActivities] = useState([]);
 
-  const fetchTripActivityData = async () => {
+  const fetchTripActivityData2 = async () => {
     const data = await getTripActivityData(currentUser.uid,tripid);
-    setTripActivities(data)
+    setTripActivities(data);
+  }
+
+  const fetchTripActivityData = async () => {
+    try {
+      const docCollection = query(collection(db,"userprofile",currentUser.uid,"trips",tripid,"activities"));
+      onSnapshot(docCollection, (querySnapshot) => {
+        const list = [];
+        var itemCount = 1;
+        querySnapshot.forEach((doc) => {
+          var data = {
+            id: doc.id,
+            description: doc.data().description,
+            hours_spent: doc.data().hours_spent,
+            name: doc.data().name,
+            review_stars: doc.data().review_stars,
+            website: doc.data().website,
+          };
+          list.push(data);
+          itemCount += 1;
+        });
+        setTripActivities(list);
+      });
+    } catch(e) {
+      alert(e)
+    }
   };
 
   const removeActivity = (activity) => {

@@ -40,6 +40,7 @@ const GenerateItinerary = () => {
 
   const generateAIItinerary = async () => {
     try {
+      //Delete all Itinerary here
       var lodgingAddress = "";
       if (lodging.Address1 === "") {
         lodgingAddress = ".";
@@ -112,9 +113,9 @@ const GenerateItinerary = () => {
     }
   };
 
-  const getTripData = async () => {
+  const getDataTrip = async () => {
     try {
-      const data = await getTripData();
+      const data = await getTripData(currentUser.uid, tripid);
       setTrip(data);
     } catch (err) {
       alert(err);
@@ -203,7 +204,7 @@ const GenerateItinerary = () => {
   };
 
   useEffect(() => {
-    getTripData();
+    getDataTrip();
     getTripLodging();
     getTripMealsData();
     getTripActivityData();

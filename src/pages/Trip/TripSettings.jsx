@@ -10,7 +10,12 @@ import { useParams } from "react-router-dom";
 import { startAddingSettings, deleteSettingDoc } from "../../globalFunctions/firebaseFunctions";
 import { useAuth } from "../../contexts/AuthContext";
 import { useStateContext } from "../../contexts/ContextProvider";
-import { getTripData, getSettingsData } from "../../globalFunctions/firebaseGETFunctions";
+import { getTripData } from "../../globalFunctions/firebaseGETFunctions";
+
+//Firebase
+import { db } from "../../firebase/firebase";
+import { onSnapshot, query, collection, orderBy } from "firebase/firestore";
+import { convertTo12HourFormat } from "../../globalFunctions/globalFunctions";
 
 //Toast
 import { ToastContainer, toast } from "react-toastify";
@@ -37,8 +42,27 @@ const TripSettings = () => {
 
   const fetchPlanSettingsData = async () => {
     try {
-      const data = await getSettingsData(currentUser.uid);
-      setSettings(data);
+      const docCollection = query(
+        collection(db, "userprofile", currentUser.uid, "settings"),
+        orderBy("StartTime")
+      );
+      onSnapshot(docCollection, (querySnapshot) => {
+        const list = [];
+        var itemCount = 1;
+        querySnapshot.forEach((doc) => {
+          var data = {
+            id: doc.id,
+            CalendarEvent: doc.data().CalendarEvent,
+            StartTime: convertTo12HourFormat(doc.data().StartTime),
+            EndTime: convertTo12HourFormat(doc.data().EndTime),
+            StartTimeNonFormatted: doc.data().StartTime,
+            EndTimeNonFormatted: doc.data().EndTime,
+          };
+          list.push(data);
+          itemCount += 1;
+        });
+        setSettings(list);
+      });
     } catch (err) {
       alert(err);
     }

@@ -14,17 +14,14 @@ import {
 } from "@mui/material";
 
 //Firebase
-import { db } from "../../../firebase/firebase";
-import { doc, getDoc } from "firebase/firestore";
 import { useAuth } from "../../../contexts/AuthContext";
 
 //Functions
 import { useStateContext } from "../../../contexts/ContextProvider";
 import { useParams } from "react-router-dom";
 import { startCreateAIActivityDocuments } from "../../../globalFunctions/firebaseFunctions";
-
-//Chat GPT
-import { Configuration, OpenAIApi } from "openai";
+import { getChatActivities } from "../../../globalFunctions/chatGPTFunctions";
+import { getTripData } from "../../../globalFunctions/firebaseGETFunctions";
 
 const AITripActivityModal = () => {
   const { currentColor } = useStateContext();
@@ -41,11 +38,8 @@ const AITripActivityModal = () => {
   //Get Trip Destination -
   const setTripFromURL = async () => {
     try {
-      const docRef = doc(db, "userprofile", currentUser.uid, "trips", tripid);
-      const docSnap = await getDoc(docRef);
-      if (docSnap.exists()) {
-        setTripDestination(docSnap.data().Destination);
-      }
+      const data = await getTripData(currentUser.uid, tripid);
+      setTripDestination(data.Destination);
     } catch (err) {
       alert(err);
     }
@@ -78,70 +72,15 @@ const AITripActivityModal = () => {
   };
   //Dialog Functions +
 
-  //Chat GPT -
-  const configuration = new Configuration({
-    apiKey: "",
-  });
-  const openai = new OpenAIApi(configuration);
-
   const getAIGeneratedMeals = async () => {
     try {
       setLoading(true);
       setActivities([]);
-      /*
-      console.log("Start");
-      const response = await fetch("https://planappapi.onrender.com/getTripActivity", {
-        method: 'POST',
-        headers: {
-          'Content-type': 'application/json'
-        },
-        body: JSON.stringify({
-          Destination: tripDestination
-        })
-      }) 
-      .catch(err => {
-        alert('Network Error: ' + err);
-      })
-      console.log("END");
-      console.log("RESPONSE: " + response);
-      console.log("RESPONSE STATUS: " + response.status);
-      //createNewOrder(response.status);
-      */
-      
-      const response = await openai.createChatCompletion({
-        model: "gpt-4",
-        messages: [
-          {
-            role: "system",
-            content:
-              "You will be provided with a question, and your task is to parse the answers it into JSON format with the key being activities, properties: activity_name, description, review_stars, website, hours_spent. Please limit to 10 activities.",
-          },
-          {
-            role: "user",
-            content:
-              "Please give me a list of things to do, sites and attractions in " +
-              tripDestination +
-              "?",
-          },
-        ],
-        temperature: 0,
-        max_tokens: 1024,
-        top_p: 1,
-        frequency_penalty: 0,
-        presence_penalty: 0,
-      });
-      const returnText = response.data.choices[0].message.content.replace(
-        /(\r\n|\n|\r)/gm,
-        ""
-      );
-      const jsonObject = JSON.parse(returnText);
-      
-      setActivities(jsonObject.activities);
-
+      const chatGPTActivities = await getChatActivities(tripDestination);
+      setActivities(chatGPTActivities.activities);
       setLoading(false);
     } catch (error) {
       alert("ERROR: " + error);
-      //setLoading(false);
     }
   };
   //Chat GPT +

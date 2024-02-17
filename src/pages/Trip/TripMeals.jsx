@@ -12,8 +12,12 @@ import "react-toastify/dist/ReactToastify.css";
 //Functions
 import { useParams } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
-import { getTripMealsData } from "../../globalFunctions/firebaseGETFunctions";
 import { deleteActivityMealDoc } from "../../globalFunctions/firebaseFunctions";
+
+//Firebase
+import { db } from "../../firebase/firebase";
+import { onSnapshot, query, collection } from "firebase/firestore";
+
 
 const TripMeals = () => {
   const { currentUser } = useAuth();
@@ -21,8 +25,28 @@ const TripMeals = () => {
   const [tripMeals, setTripMeals] = useState([]);
 
   const fetchTripMealsData = async () => {
-    const data = await getTripMealsData(currentUser.uid,tripid);
-    setTripMeals(data)
+    try {
+      const docCollection = query(collection(db,"userprofile",currentUser.uid,"trips",tripid,"meals"));
+      onSnapshot(docCollection, (querySnapshot) => {
+        const list = [];
+        var itemCount = 1;
+        querySnapshot.forEach((doc) => {
+          var data = {
+            id: doc.id,
+            description: doc.data().description,
+            category: doc.data().category,
+            name: doc.data().name,
+            review_stars: doc.data().review_stars,
+            website: doc.data().website,
+          };
+          list.push(data);
+          itemCount += 1;
+        });
+        setTripMeals(list);
+      });
+    } catch(e) {
+      alert(e)
+    }
   };
 
   const removeMeal = (meal) => {
