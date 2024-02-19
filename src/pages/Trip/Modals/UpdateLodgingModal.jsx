@@ -97,7 +97,7 @@ const UpdateLodgingModal = () => {
         setLodgingZipCode(data.ZipCode);
       }
     } catch (err) {
-      alert(err);
+      console.log("No Lodging: " + err);
     }
   };
 
