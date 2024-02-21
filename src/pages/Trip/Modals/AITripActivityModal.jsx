@@ -48,9 +48,13 @@ const AITripActivityModal = () => {
 
   //Dialog Functions -
   const handleShow = () => {
-    getAIGeneratedMeals();
+    getAIGeneratedActivities();
     setShow(true);
   };
+
+  const suggestMore = () => {
+    getAIGeneratedActivities();
+  }
 
   const handleClose = () => {
     startCreateAIActivityDocuments(currentUser.uid, tripid, selectedItems);
@@ -72,11 +76,12 @@ const AITripActivityModal = () => {
   };
   //Dialog Functions +
 
-  const getAIGeneratedMeals = async () => {
+  const getAIGeneratedActivities = async () => {
     try {
       setLoading(true);
       setActivities([]);
       const chatGPTActivities = await getChatActivities(tripDestination);
+      console.log(chatGPTActivities);
       setActivities(chatGPTActivities.activities);
       setLoading(false);
     } catch (error) {
@@ -134,6 +139,7 @@ const AITripActivityModal = () => {
         </DialogContent>
         <DialogActions>
           <Button onClick={() => setShow(false)}>Cancel</Button>
+          <Button onClick={suggestMore}>Suggest More</Button>
           <Button onClick={handleClose}>Add</Button>
         </DialogActions>
       </Dialog>

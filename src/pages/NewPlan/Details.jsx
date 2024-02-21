@@ -10,7 +10,6 @@ const Details = ({ detailsNext }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
     detailsNext(e);
   };
 

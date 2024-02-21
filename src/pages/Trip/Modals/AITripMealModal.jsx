@@ -51,6 +51,10 @@ const AITripMealModal = () => {
     setShow(true);
   };
 
+  const suggestMore = () => {
+    getAIGeneratedMeals();
+  }
+
   const handleClose = () => {
     startCreateAIMealDocuments(currentUser.uid, tripid, selectedItems);
     setSelectedItems([]);
@@ -132,6 +136,7 @@ const AITripMealModal = () => {
         </DialogContent>
         <DialogActions>
           <Button onClick={() => setShow(false)}>Cancel</Button>
+          <Button onClick={suggestMore}>Suggest More</Button>
           <Button onClick={handleClose}>Add</Button>
         </DialogActions>
       </Dialog>

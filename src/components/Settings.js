@@ -1,5 +1,6 @@
 import React from "react";
 import { AiOutlineHome, AiOutlinePieChart, AiFillSetting } from "react-icons/ai";
+import { IoIosAirplane } from "react-icons/io";
 import { FaCarSide } from "react-icons/fa";
 import { FcTodoList } from "react-icons/fc";
 import { MdDirectionsRun, MdFastfood } from "react-icons/md";
@@ -8,14 +9,33 @@ import { TbReportMoney } from "react-icons/tb";
 
 export const links = [
   {
-    title: "My Trips",
+    title: "Activities",
     links: [
       {
-        name: "home",
-        icon: <AiOutlineHome />,
+        name: "Vacations",
+        icon: <IoIosAirplane />,
         linktoname: "home"
       },
-
+      {
+        name: "Day Trips",
+        icon: <FaCarSide />,
+        linktoname: "daytrips"
+      },
+    ],
+  },
+  {
+    title: "Settings",
+    links: [
+      {
+        name: "Day Trip Starting",
+        icon: <GoDashboard />,
+        linktoname: "home"
+      },
+      {
+        name: "Start/End Times",
+        icon: <FcTodoList />,
+        linktoname: "settings"
+      },
     ],
   }
 ];

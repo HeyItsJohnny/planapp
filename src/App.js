@@ -45,6 +45,14 @@ function App() {
             }
           />
           <Route
+            path="/newtrip"
+            element={
+              <PrivateRoute>
+                <HomeTemplate page="NEWTRIP" />
+              </PrivateRoute>
+            }
+          />
+          <Route
             path="/trip/:tripid"
             element={
               <PrivateRoute>
