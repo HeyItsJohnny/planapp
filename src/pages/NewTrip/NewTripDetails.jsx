@@ -9,17 +9,43 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
 
+//OTHER SHIT
+import axios from "axios";
+import Autocomplete from "@mui/material/Autocomplete";
+
 const NewTripDetails = ({ detailsNext, backStep }) => {
   const { currentColor } = useStateContext();
   const [tripCategory, setTripCategory] = useState("");
+  const [destination, setDestination] = useState("");
+  const [options, setOptions] = useState([]);
 
   const handleTripCategoryChange = (event) => {
     setTripCategory(event.target.value);
   };
 
+  const handleDestinationChange = (event, value) => {
+    setDestination(value);
+  };
+
+  const handleSearch = (event, value) => {
+    if (!value) {
+      setOptions([]);
+      return;
+    }
+    axios
+      .get(`https://nominatim.openstreetmap.org/search?q=${value}&format=json`)
+      .then((response) => {
+        const data = response.data;
+        setOptions(data.map((item) => item.display_name));
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+      });
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    detailsNext(e, tripCategory);
+    detailsNext(e, tripCategory, destination);
   };
 
   return (
@@ -51,6 +77,26 @@ const NewTripDetails = ({ detailsNext, backStep }) => {
               <MenuItem value="FamilyFriendly">Family Friendly</MenuItem>
             </Select>
           </FormControl>
+
+          <Autocomplete
+            freeSolo
+            options={options}
+            onInputChange={handleSearch}
+            onChange={handleDestinationChange}
+            value={destination}
+            style={{ marginBottom: "20px" }} // Add margin bottom to create space
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                label="Search for a location"
+                variant="outlined"
+                InputLabelProps={{ style: { color: "white" } }}
+                inputProps={{ ...params.inputProps, style: { color: "white" } }}
+              />
+            )}
+          />
+
+          {/*
           <TextField
             required
             margin="dense"
@@ -60,13 +106,14 @@ const NewTripDetails = ({ detailsNext, backStep }) => {
             fullWidth
             variant="standard"
             InputLabelProps={{
-              style: { color: "white" } // Set label color to white
+              style: { color: "white" }, // Set label color to white
             }}
             InputProps={{
-              style: { color: "white" } // Set label color to white
+              style: { color: "white" }, // Set label color to white
             }}
             style={{ marginBottom: "20px" }} // Add margin bottom to create space
-          />
+          /> 
+          */}
           <TextField
             required
             margin="none"
@@ -74,12 +121,12 @@ const NewTripDetails = ({ detailsNext, backStep }) => {
             label=""
             type="date"
             fullWidth
-            variant="standard"
+            variant="outlined"
             InputLabelProps={{
-              style: { color: "white" } // Set label color to white
+              style: { color: "white" }, // Set label color to white
             }}
             InputProps={{
-              style: { color: "white" } // Set label color to white
+              style: { color: "white" }, // Set label color to white
             }}
             style={{ marginBottom: "20px" }} // Add margin bottom to create space
           />
@@ -90,12 +137,12 @@ const NewTripDetails = ({ detailsNext, backStep }) => {
             label=""
             type="date"
             fullWidth
-            variant="standard"
+            variant="outlined"
             InputLabelProps={{
-              style: { color: "white" } // Set label color to white
+              style: { color: "white" }, // Set label color to white
             }}
             InputProps={{
-              style: { color: "white" } // Set label color to white
+              style: { color: "white" }, // Set label color to white
             }}
             style={{ marginBottom: "20px" }} // Add margin bottom to create space
           />

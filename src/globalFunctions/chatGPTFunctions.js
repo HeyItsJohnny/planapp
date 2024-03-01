@@ -7,19 +7,19 @@ const configuration = new Configuration({
 });
 const openai = new OpenAIApi(configuration);
 
-export async function getChatActivities(tripDestination) {
+export async function getChatActivities(tripDestination, tripcategory) {
   const response = await openai.createChatCompletion({
     model: "gpt-3.5-turbo",
     messages: [
       {
         role: "system",
         content:
-          "You will be provided with a question, and your task is to parse the answers it into JSON format with the key being activities, properties: activity_name, description, review_stars, website, hours_spent. Please limit to 5 activities.",
+          "You will be provided with a question, and your task is to parse the answers it into JSON format with the key being activities, properties: activity_name, description. Please limit to 5 activities.",
       },
       {
         role: "user",
         content:
-          "Please give me a list of things to do, sites and attractions in " +
+          "The theme of my vacation is " + tripcategory + ". Please give me a list of things to do that correspond with my vacation theme including: sites and attractions in " +
           tripDestination +
           "?",
       },

@@ -29,7 +29,7 @@ export const links = [
       {
         name: "Day Trip Starting",
         icon: <GoDashboard />,
-        linktoname: "home"
+        linktoname: "startingpoint"
       },
       {
         name: "Start/End Times",

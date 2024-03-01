@@ -4,6 +4,7 @@ import { Stepper, Step, StepLabel } from "@material-ui/core";
 
 import NewTripSelection from "./NewTripSelection";
 import NewTripDetails from "./NewTripDetails";
+import NewTripConfirmation from "./NewTripConfirmation";
 
 const steps = ["Trip Type", "Details"];
 
@@ -11,7 +12,6 @@ const NewTrip = () => {
   const [activeStep, setActiveStep] = useState(0);
   const [tripType, setTripType] = useState("");
   const [tripDetails, setTripDetails] = useState({});
-  const [tripCategory, setTripCategory] = useState("");
 
   const nextStep = () => setActiveStep((prevActiveStep) => prevActiveStep + 1);
   const backStep = () => setActiveStep((prevActiveStep) => prevActiveStep - 1);
@@ -21,30 +21,22 @@ const NewTrip = () => {
     nextStep();
   };
 
-  const detailsNext = (data,category) => {
+  const detailsNext = (data,category,destination) => {
     const detailValues = {
-        Destination: data.target.Destination.value,
+        Destination: destination,
+        TripType: tripType,
         StartDate: data.target.StartDate.value,
         EndDate: data.target.EndDate.value,
+        Category: category
       };
-    setTripDetails(detailValues);
-    setTripCategory(category);
     console.log(detailValues);
-    console.log(category);
+    setTripDetails(detailValues);
     nextStep();
   };
 
   const Confirmation = () => (
     <>
-      <Header category="CONFIRMATION" title="New Plan" />
-      {/*
-      <ReviewPlan
-        detailsData={detailsData}
-        sitesData={sitesData}
-        mealsData={mealsData}
-        lodgingData={lodgingData}
-      />
-    */}
+      <NewTripConfirmation tripDetails={tripDetails}/>
     </>
   );
 
