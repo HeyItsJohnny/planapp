@@ -14,6 +14,7 @@ import axios from "axios";
 import Autocomplete from "@mui/material/Autocomplete";
 
 const NewTripDetails = ({ detailsNext, backStep }) => {
+  
   const { currentColor } = useStateContext();
   const [tripCategory, setTripCategory] = useState("");
   const [destination, setDestination] = useState("");

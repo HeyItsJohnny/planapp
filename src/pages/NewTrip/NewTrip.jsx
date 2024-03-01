@@ -5,13 +5,15 @@ import { Stepper, Step, StepLabel } from "@material-ui/core";
 import NewTripSelection from "./NewTripSelection";
 import NewTripDetails from "./NewTripDetails";
 import NewTripConfirmation from "./NewTripConfirmation";
+import NewTripWakeUpBedTimes from "./NewTripWakeUpBedTimes";
 
-const steps = ["Trip Type", "Details"];
+const steps = ["Trip Type", "Details", "Wake up and Bed Times"];
 
 const NewTrip = () => {
   const [activeStep, setActiveStep] = useState(0);
   const [tripType, setTripType] = useState("");
   const [tripDetails, setTripDetails] = useState({});
+  const [tripTimeDetails, setTripTimeDetails] = useState({});
 
   const nextStep = () => setActiveStep((prevActiveStep) => prevActiveStep + 1);
   const backStep = () => setActiveStep((prevActiveStep) => prevActiveStep - 1);
@@ -21,22 +23,31 @@ const NewTrip = () => {
     nextStep();
   };
 
-  const detailsNext = (data,category,destination) => {
+  const detailsNext = (data, category, destination) => {
     const detailValues = {
-        Destination: destination,
-        TripType: tripType,
-        StartDate: data.target.StartDate.value,
-        EndDate: data.target.EndDate.value,
-        Category: category
-      };
-    console.log(detailValues);
+      Destination: destination,
+      TripType: tripType,
+      StartDate: data.target.StartDate.value,
+      EndDate: data.target.EndDate.value,
+      Category: category,
+    };
     setTripDetails(detailValues);
+    nextStep();
+  };
+
+  const timesNext = (data) => {
+    const timeValues = {
+      WakeUpTime: data.target.WakeUpTime.value,
+      BedTime: data.target.BedTime.value,
+    };
+    console.log(timeValues);
+    setTripTimeDetails(timeValues);
     nextStep();
   };
 
   const Confirmation = () => (
     <>
-      <NewTripConfirmation tripDetails={tripDetails}/>
+      <NewTripConfirmation tripDetails={tripDetails} />
     </>
   );
 
@@ -45,11 +56,10 @@ const NewTrip = () => {
       case 0:
         return <NewTripSelection tripTypeNext={tripTypeNext} />;
       case 1:
+        return <NewTripDetails detailsNext={detailsNext} backStep={backStep} />;
+      case 2:
         return (
-          <NewTripDetails
-            detailsNext={detailsNext}
-            backStep={backStep}
-          />
+          <NewTripWakeUpBedTimes timesNext={timesNext} backStep={backStep} />
         );
       default:
         return <h1>Something went wrong.</h1>;
