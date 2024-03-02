@@ -4,7 +4,7 @@ import { Stepper, Step, StepLabel } from "@material-ui/core";
 
 import NewTripSelection from "./NewTripSelection";
 import NewTripDetails from "./NewTripDetails";
-import NewTripConfirmation from "./NewTripConfirmation";
+import NewTripConfirmation from "./Confirmation/NewTripConfirmation";
 import NewTripWakeUpBedTimes from "./NewTripWakeUpBedTimes";
 
 const steps = ["Trip Type", "Details", "Wake up and Bed Times"];
@@ -40,14 +40,13 @@ const NewTrip = () => {
       WakeUpTime: data.target.WakeUpTime.value,
       BedTime: data.target.BedTime.value,
     };
-    console.log(timeValues);
     setTripTimeDetails(timeValues);
     nextStep();
   };
 
   const Confirmation = () => (
     <>
-      <NewTripConfirmation tripDetails={tripDetails} />
+      <NewTripConfirmation tripDetails={tripDetails} tripTimeDetails={tripTimeDetails}/>
     </>
   );
 
