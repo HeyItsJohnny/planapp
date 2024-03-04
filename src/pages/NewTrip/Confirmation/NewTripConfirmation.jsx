@@ -13,39 +13,43 @@ import {
   getChatRestaurants,
   getChatItinerary,
 } from "../../../globalFunctions/chatGPTFunctions";
+import { addNewTripPlan } from "../../../globalFunctions/firebaseFunctions";
+import { useAuth } from "../../../contexts/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 //Components
 import NewTripItinerary from "./NewTripItinerary";
 
 const NewTripConfirmation = ({ tripDetails, tripTimeDetails }) => {
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
   const [progress, setProgress] = useState(0);
   const [progressText, setProgressText] = useState("");
-
-  const [activities, setActivities] = useState([]);
-  const [meals, setMeals] = useState([]);
+  const { currentUser } = useAuth();
   const [itineraryData, setItineraryData] = useState([]);
 
-  const createNewTrip = async () => {
-    //Create New Trip.
-  }
-
-  const getActivitiesMealsAndItinerary = async () => {
+  const getFinalizeTrip = async () => {
     //get Activities, Meals and Itinerary
-  }
+    setProgressText("Searching for Activities..");
+    const chatGPTActivities = await getChatActivities(
+      tripDetails.Destination,
+      tripDetails.Category,
+      getNumberOfDays()
+    );
+    setProgress(25);
+    setProgressText("Searching for Meals..");
+    const chatGPTRestaurants = await getChatRestaurants(
+      tripDetails.Destination,
+      getNumberOfDays()
+    );
+    setProgress(50);
+    await getAIGeneratedItinerary(
+      chatGPTActivities.activities,
+      chatGPTRestaurants.restaurants
+    );
+  };
 
-  const addActivitiesToTrip = async () => {
-    //Add Activities To Trip
-  }
-
-  const addMealsToTrip = async () => {
-    //Add Meals To Trip
-  }
-
-  const addItineraryToTrip = async () => {
-    //Add Itinerary To Trip
-    //Navigate to the new trip.
-  }
+  
 
   const getAIGeneratedItinerary = async (testActivities, testMeals) => {
     setProgressText("Creating Itinerary..");
@@ -58,24 +62,17 @@ const NewTripConfirmation = ({ tripDetails, tripTimeDetails }) => {
       tripTimeDetails.WakeUpTime,
       tripTimeDetails.BedTime
     );
-    generateItinerary(chatGPTItinerary.itinerary);
-    setProgress(100);
-    setLoading(false);
+    generateItinerary(testActivities, testMeals, chatGPTItinerary.itinerary);
+    setProgress(75);
   };
 
-  const generateItinerary = async (itineraryData) => {    
+  const generateItinerary = async (activityData, mealData, itineraryData) => {
     var tmpArray = [];
     var TempID = 0;
     itineraryData.forEach(function (item) {
-    const DateFormat = convertDateFormat2(item.day);
-      const StartTime = convertDateTimeString(
-        DateFormat,
-        item.start_time
-      );
-      const EndTime = convertDateTimeString(
-        DateFormat,
-        item.end_time
-      );
+      const DateFormat = convertDateFormat2(item.day);
+      const StartTime = convertDateTimeString(DateFormat, item.start_time);
+      const EndTime = convertDateTimeString(DateFormat, item.end_time);
       var newObj = {
         CategoryColor: "",
         Description: "",
@@ -92,8 +89,20 @@ const NewTripConfirmation = ({ tripDetails, tripTimeDetails }) => {
       tmpArray.push(newObj);
       TempID += 1;
     });
-    console.log(tmpArray);
-    setItineraryData(tmpArray);
+    createNewTrip(activityData, mealData, tmpArray);
+  };
+
+  const createNewTrip = async (activityData, mealData, itineraryData) => {
+    //Creating new trip
+    setProgressText("Creating Your Trip..");
+    console.log("Activity & Meal Data");
+    console.log(activityData);
+    console.log(mealData);
+    const docID = addNewTripPlan(currentUser.uid, tripDetails, tripTimeDetails, activityData, mealData, itineraryData);
+    setProgress(100);
+    console.log(docID);
+    //navigate("/trip/" + docID);
+    setLoading(false);
   };
 
   const getNumberOfDays = () => {
@@ -107,30 +116,11 @@ const NewTripConfirmation = ({ tripDetails, tripTimeDetails }) => {
   useEffect(() => {
     const runProcessFunctions = async () => {
       try {
-        setProgressText("Searching for Activities..");
-        const chatGPTActivities = await getChatActivities(
-          tripDetails.Destination,
-          tripDetails.Category,
-          getNumberOfDays()
-        );
-        setActivities(chatGPTActivities.activities);
-        setProgress(25);
-        setProgressText("Searching for Meals..");
-        const chatGPTRestaurants = await getChatRestaurants(
-          tripDetails.Destination,
-          getNumberOfDays()
-        );
-        setMeals(chatGPTRestaurants.restaurants);
-        setProgress(50);
-        await getAIGeneratedItinerary(
-          chatGPTActivities.activities,
-          chatGPTRestaurants.restaurants
-        );
+        getFinalizeTrip();
       } catch (error) {
         alert("ERROR: " + error);
       }
     };
-
     runProcessFunctions();
   }, []);
 

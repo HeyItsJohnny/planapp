@@ -27,34 +27,42 @@ export async function createUserProfile(email, fullname, uid) {
 export async function addNewTripPlan(
   uid,
   detailsData,
+  timeData,
   activityData,
   mealData,
-  lodgingData,
+  //lodgingData,
   itineraryData
 ) {
   try {
     const docRef = await addDoc(collection(db, "userprofile", uid, "trips"), {
-      TripName: detailsData.TripName,
+      TripType: detailsData.TripType,
       Destination: detailsData.Destination,
+      Category: detailsData.Category,
       StartDate: detailsData.StartDate,
       EndDate: detailsData.EndDate,
+      WakeUpTime: timeData.WakeUpTime,
+      BedTime: timeData.BedTime
+
     });
     startCreateActivityDocuments(uid, docRef.id, activityData);
     startCreateMealDocuments(uid, docRef.id, mealData);
     startCreateItineraryDocuments(uid, docRef.id, itineraryData);
-    createLodgingDataForTrip(uid, docRef.id, lodgingData);
+    //createLodgingDataForTrip(uid, docRef.id, lodgingData);
+    return docRef.id;
   } catch (error) {
     alert("Error adding data to Database: " + error);
   }
 }
 
 function startCreateActivityDocuments(uid, tripid, activityData) {
+  console.log(activityData);
   activityData.forEach((activity) => {
     addSavedActivitiesToTrip(uid, tripid, activity);
   });
 }
 
 function startCreateMealDocuments(uid, tripid, mealData) {
+  console.log(mealData);
   mealData.forEach((meal) => {
     addSavedMealsToTrip(uid, tripid, meal);
   });
@@ -73,9 +81,11 @@ export async function addSavedActivitiesToTrip(uid, tripid, activityData) {
       {
         name: activityData.name,
         description: activityData.description,
+        /*
         review_stars: activityData.review_stars,
         website: activityData.website,
         hours_spent: activityData.hours_spent,
+        */
       }
     );
     //return docRef.id;
@@ -88,9 +98,9 @@ export async function addSavedMealsToTrip(uid, tripid, activityData) {
   try {
     await addDoc(collection(db, "userprofile", uid, "trips", tripid, "meals"), {
       name: activityData.name,
-      description: activityData.description,
+      //description: activityData.description,
       review_stars: activityData.review_stars,
-      website: activityData.website,
+      //website: activityData.website,
       category: activityData.category,
     });
     //return docRef.id;
