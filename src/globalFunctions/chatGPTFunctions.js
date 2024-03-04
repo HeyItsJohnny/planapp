@@ -114,7 +114,7 @@ export async function getChatItinerary(
           activityString +
           ". I want to eat at " +
           mealString +
-          ". Please keep in mind I wake up at " + wakeupTime + " and would like 1 hour to get ready for the morning, I also go to bed at " + bedTime + ' and would like 1 hour to get ready for bed.',
+          ". Please keep in mind I wake up at " + wakeupTime + " and would like 1 hour to get ready for the morning, I also go to bed at " + bedTime + ' and would like 1 hour to get ready for bed. Do not include wakeup and bedtime in your data.',
       },
     ],
     temperature: 1,

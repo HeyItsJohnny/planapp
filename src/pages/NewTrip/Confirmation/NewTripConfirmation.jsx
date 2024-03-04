@@ -16,8 +16,6 @@ import {
 
 //Components
 import NewTripItinerary from "./NewTripItinerary";
-import NewTripMeals from "./NewTripMeals";
-import NewTripActivities from "./NewTripActivies";
 
 const NewTripConfirmation = ({ tripDetails, tripTimeDetails }) => {
   const [loading, setLoading] = useState(true);
@@ -27,6 +25,27 @@ const NewTripConfirmation = ({ tripDetails, tripTimeDetails }) => {
   const [activities, setActivities] = useState([]);
   const [meals, setMeals] = useState([]);
   const [itineraryData, setItineraryData] = useState([]);
+
+  const createNewTrip = async () => {
+    //Create New Trip.
+  }
+
+  const getActivitiesMealsAndItinerary = async () => {
+    //get Activities, Meals and Itinerary
+  }
+
+  const addActivitiesToTrip = async () => {
+    //Add Activities To Trip
+  }
+
+  const addMealsToTrip = async () => {
+    //Add Meals To Trip
+  }
+
+  const addItineraryToTrip = async () => {
+    //Add Itinerary To Trip
+    //Navigate to the new trip.
+  }
 
   const getAIGeneratedItinerary = async (testActivities, testMeals) => {
     setProgressText("Creating Itinerary..");
@@ -39,9 +58,7 @@ const NewTripConfirmation = ({ tripDetails, tripTimeDetails }) => {
       tripTimeDetails.WakeUpTime,
       tripTimeDetails.BedTime
     );
-    //console.log(chatGPTItinerary.itinerary);
     generateItinerary(chatGPTItinerary.itinerary);
-    //Iterate through itinerary and create itinerary Data
     setProgress(100);
     setLoading(false);
   };
@@ -136,12 +153,6 @@ const NewTripConfirmation = ({ tripDetails, tripTimeDetails }) => {
               itineraryData={itineraryData}
               startDate={tripDetails.StartDate}
             />
-          </div>
-          <div className="flex gap-10 flex-wrap justify-center">
-            <div className="flex gap-10 flex-wrap justify-center">
-              <NewTripActivities />
-              <NewTripMeals />
-            </div>
           </div>
         </>
       )}
