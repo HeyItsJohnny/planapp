@@ -79,16 +79,10 @@ export async function addSavedActivitiesToTrip(uid, tripid, activityData) {
     await addDoc(
       collection(db, "userprofile", uid, "trips", tripid, "activities"),
       {
-        name: activityData.name,
+        name: activityData.activity_name,
         description: activityData.description,
-        /*
-        review_stars: activityData.review_stars,
-        website: activityData.website,
-        hours_spent: activityData.hours_spent,
-        */
       }
     );
-    //return docRef.id;
   } catch (error) {
     alert("Error adding data to Database: " + error);
   }
@@ -97,13 +91,10 @@ export async function addSavedActivitiesToTrip(uid, tripid, activityData) {
 export async function addSavedMealsToTrip(uid, tripid, activityData) {
   try {
     await addDoc(collection(db, "userprofile", uid, "trips", tripid, "meals"), {
-      name: activityData.name,
-      //description: activityData.description,
+      name: activityData.restaurant_name,
       review_stars: activityData.review_stars,
-      //website: activityData.website,
       category: activityData.category,
     });
-    //return docRef.id;
   } catch (error) {
     alert("Error adding data to Database: " + error);
   }

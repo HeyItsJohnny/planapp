@@ -17,16 +17,12 @@ import { addNewTripPlan } from "../../../globalFunctions/firebaseFunctions";
 import { useAuth } from "../../../contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
 
-//Components
-import NewTripItinerary from "./NewTripItinerary";
 
 const NewTripConfirmation = ({ tripDetails, tripTimeDetails }) => {
-  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
   const [progress, setProgress] = useState(0);
   const [progressText, setProgressText] = useState("");
   const { currentUser } = useAuth();
-  const [itineraryData, setItineraryData] = useState([]);
 
   const getFinalizeTrip = async () => {
     //get Activities, Meals and Itinerary
@@ -48,8 +44,6 @@ const NewTripConfirmation = ({ tripDetails, tripTimeDetails }) => {
       chatGPTRestaurants.restaurants
     );
   };
-
-  
 
   const getAIGeneratedItinerary = async (testActivities, testMeals) => {
     setProgressText("Creating Itinerary..");
@@ -95,14 +89,16 @@ const NewTripConfirmation = ({ tripDetails, tripTimeDetails }) => {
   const createNewTrip = async (activityData, mealData, itineraryData) => {
     //Creating new trip
     setProgressText("Creating Your Trip..");
-    console.log("Activity & Meal Data");
-    console.log(activityData);
-    console.log(mealData);
-    const docID = addNewTripPlan(currentUser.uid, tripDetails, tripTimeDetails, activityData, mealData, itineraryData);
+    const newTripId = await addNewTripPlan(
+      currentUser.uid,
+      tripDetails,
+      tripTimeDetails,
+      activityData,
+      mealData,
+      itineraryData
+    );
+    navigate("/trip/" + newTripId);
     setProgress(100);
-    console.log(docID);
-    //navigate("/trip/" + docID);
-    setLoading(false);
   };
 
   const getNumberOfDays = () => {
@@ -125,27 +121,13 @@ const NewTripConfirmation = ({ tripDetails, tripTimeDetails }) => {
   }, []);
 
   return (
-    <div>
-      {loading ? (
-        <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white dark:text-gray-200 dark:bg-secondary-dark-bg rounded-3xl">
-          <h1 className="mb-2">
-            Please wait, your next vacation is being created.
-          </h1>
-          <h1 className="mb-20">{progressText}</h1>
-          <LinearProgress variant="determinate" value={progress} />
-          <div>{`${Math.round(progress)}%`}</div>
-        </div>
-      ) : (
-        <>
-          <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white dark:text-gray-200 dark:bg-secondary-dark-bg rounded-3xl">
-            <Header category="" title="Itinerary" />
-            <NewTripItinerary
-              itineraryData={itineraryData}
-              startDate={tripDetails.StartDate}
-            />
-          </div>
-        </>
-      )}
+    <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white dark:text-gray-200 dark:bg-secondary-dark-bg rounded-3xl">
+      <h1 className="mb-2">
+        Please wait, your next vacation is being created.
+      </h1>
+      <h1 className="mb-20">{progressText}</h1>
+      <LinearProgress variant="determinate" value={progress} />
+      <div>{`${Math.round(progress)}%`}</div>
     </div>
   );
 };
