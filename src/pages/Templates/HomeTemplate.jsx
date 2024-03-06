@@ -1,16 +1,13 @@
-import React, { useEffect } from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import React from "react";
 import { FiSettings } from "react-icons/fi";
 import { TooltipComponent } from "@syncfusion/ej2-react-popups";
 
 import {
   Navbar,
-  NavigationBar,
   Sidebar,
   ThemeSettings,
 } from "../../components";
-import { Trip, Home, NewPlan, Settings, NewTrip } from "../../pages";
-import { AuthProvider } from "../../contexts/AuthContext";
+import { Trip, Home, Settings, NewTrip } from "../../pages";
 import "../../App.css";
 
 import { useStateContext } from "../../contexts/ContextProvider";
@@ -32,8 +29,6 @@ const HomeTemplate = ({ page }) => {
         return <Settings />;
       case "TRIP":
         return <Trip />;
-      case "NEWPLAN":
-        return <NewPlan />;
       case "NEWTRIP":
         return <NewTrip/>;
       default:
