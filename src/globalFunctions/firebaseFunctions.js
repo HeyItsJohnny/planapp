@@ -35,6 +35,7 @@ export async function addNewTripPlan(
 ) {
   try {
     const docRef = await addDoc(collection(db, "userprofile", uid, "trips"), {
+      TripName: detailsData.TripName,
       TripType: detailsData.TripType,
       Destination: detailsData.Destination,
       Category: detailsData.Category,

@@ -4,7 +4,7 @@ import { Stepper, Step, StepLabel } from "@material-ui/core";
 
 import NewTripSelection from "./NewTripSelection";
 import NewTripDetails from "./NewTripDetails";
-import NewTripConfirmation from "./Confirmation/NewTripConfirmation";
+import NewTripConfirmation from "./NewTripConfirmation";
 import NewTripWakeUpBedTimes from "./NewTripWakeUpBedTimes";
 
 const steps = ["Trip Type", "Details", "Wake up and Bed Times"];
@@ -25,6 +25,7 @@ const NewTrip = () => {
 
   const detailsNext = (data, category, destination) => {
     const detailValues = {
+      TripName: data.target.TripName.value,
       Destination: destination,
       TripType: tripType,
       StartDate: data.target.StartDate.value,

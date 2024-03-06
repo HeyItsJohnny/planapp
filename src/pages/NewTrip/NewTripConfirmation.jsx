@@ -1,22 +1,21 @@
 import React, { useState, useEffect } from "react";
 import LinearProgress from "@mui/material/LinearProgress";
-import { Header } from "../../../components";
+import { Header } from "../../components";
 import {
   getDatesBetween,
   formatDataIntoString,
   convertDateTimeString,
   convertDateFormat2,
-} from "../../../globalFunctions/globalFunctions";
+} from "../../globalFunctions/globalFunctions";
 
 import {
   getChatActivities,
   getChatRestaurants,
   getChatItinerary,
-} from "../../../globalFunctions/chatGPTFunctions";
-import { addNewTripPlan } from "../../../globalFunctions/firebaseFunctions";
-import { useAuth } from "../../../contexts/AuthContext";
+} from "../../globalFunctions/chatGPTFunctions";
+import { addNewTripPlan } from "../../globalFunctions/firebaseFunctions";
+import { useAuth } from "../../contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
-
 
 const NewTripConfirmation = ({ tripDetails, tripTimeDetails }) => {
   const navigate = useNavigate();
@@ -109,10 +108,31 @@ const NewTripConfirmation = ({ tripDetails, tripTimeDetails }) => {
     return daysbetween.length;
   };
 
+  const getTheDays = () => {
+    const tripdays = getDatesBetween(
+      tripDetails.StartDate,
+      tripDetails.EndDate
+    );
+    tripdays.forEach((value, index) => {
+      console.log(`Number at index ${index}: ${value}`);
+      if (index === 0) {
+        //Regular Activities
+        //Regular Meals
+        //Regular Itinerary
+      } else {
+        //Activities with DO NOT Includes
+        //Meals with DO NOT Includes
+        //Regular Itinerary
+      }
+    })
+    setProgress(100);
+  };
+
   useEffect(() => {
     const runProcessFunctions = async () => {
       try {
-        getFinalizeTrip();
+        //getFinalizeTrip();
+        getTheDays();
       } catch (error) {
         alert("ERROR: " + error);
       }

@@ -24,9 +24,13 @@ const Trip = () => {
 
   const setTripFromURL = async () => {
     try {
-      const data = await getTripData(currentUser.uid,tripid);
+      const data = await getTripData(currentUser.uid, tripid);
       setTrip(data);
-      setTripDates(convertDateFormat(data.StartDate) + " - " + convertDateFormat(data.EndDate));
+      setTripDates(
+        convertDateFormat(data.StartDate) +
+          " - " +
+          convertDateFormat(data.EndDate)
+      );
     } catch (err) {
       alert(err);
     }
@@ -68,10 +72,14 @@ const Trip = () => {
     <>
       <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white dark:text-gray-200 dark:bg-secondary-dark-bg rounded-3xl flex justify-between items-center">
         <div className="mt-5 w-72 md:w-400">
-          <Header category={tripDates} title={trip.TripName + " (" + trip.Destination + ")"} />
+          <Header
+            category={tripDates}
+            title={trip.TripName + " (" + trip.Destination + ")"}
+          />
         </div>
         <DeleteTrip />
       </div>
+      {/*
       <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white dark:text-gray-200 dark:bg-secondary-dark-bg rounded-3xl flex justify-between items-center">
         <div className="mt-5 w-72 md:w-400">
           <p className="text-xl font-semibold">Lodging</p>
@@ -86,6 +94,7 @@ const Trip = () => {
         </div>
         <UpdateLodgingModal />
       </div>
+  */}
       <div className="flex gap-10 flex-wrap justify-center">
         <div className="flex gap-10 flex-wrap justify-center">
           <TripActivities />

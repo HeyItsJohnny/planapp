@@ -14,7 +14,6 @@ import axios from "axios";
 import Autocomplete from "@mui/material/Autocomplete";
 
 const NewTripDetails = ({ detailsNext, backStep }) => {
-  
   const { currentColor } = useStateContext();
   const [tripCategory, setTripCategory] = useState("");
   const [destination, setDestination] = useState("");
@@ -54,6 +53,23 @@ const NewTripDetails = ({ detailsNext, backStep }) => {
       <div className="m-2 md:m-10 mt-24 p-2 md:p-10 bg-white dark:text-gray-200 dark:bg-secondary-dark-bg rounded-3xl">
         <Header category="" title="Details" />
         <form onSubmit={handleSubmit}>
+          <TextField
+            autoFocus
+            required
+            margin="dense"
+            id="TripName"
+            label="Give your Trip a name."
+            type="text"
+            fullWidth
+            variant="standard"
+            InputLabelProps={{
+              style: { color: "white" }, // Set label color to white
+            }}
+            InputProps={{
+              style: { color: "white" }, // Set label color to white
+            }}
+            style={{ marginBottom: "20px" }} // Add margin bottom to create space
+          />
           <FormControl fullWidth>
             <InputLabel
               id="demo-simple-select-label"
@@ -96,25 +112,6 @@ const NewTripDetails = ({ detailsNext, backStep }) => {
               />
             )}
           />
-
-          {/*
-          <TextField
-            required
-            margin="dense"
-            id="Destination"
-            label="Destination"
-            type="text"
-            fullWidth
-            variant="standard"
-            InputLabelProps={{
-              style: { color: "white" }, // Set label color to white
-            }}
-            InputProps={{
-              style: { color: "white" }, // Set label color to white
-            }}
-            style={{ marginBottom: "20px" }} // Add margin bottom to create space
-          /> 
-          */}
           <TextField
             required
             margin="none"
