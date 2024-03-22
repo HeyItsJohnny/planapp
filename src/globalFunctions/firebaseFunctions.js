@@ -24,6 +24,29 @@ export async function createUserProfile(email, fullname, uid) {
   }
 }
 
+export async function createTrip(
+  uid,
+  detailsData,
+  timeData,
+) {
+  try {
+    const docRef = await addDoc(collection(db, "userprofile", uid, "trips"), {
+      TripName: detailsData.TripName,
+      TripType: detailsData.TripType,
+      Destination: detailsData.Destination,
+      Category: detailsData.Category,
+      StartDate: detailsData.StartDate,
+      EndDate: detailsData.EndDate,
+      WakeUpTime: timeData.WakeUpTime,
+      BedTime: timeData.BedTime
+
+    });
+    return docRef.id;
+  } catch (error) {
+    alert("Error adding data to Database: " + error);
+  }
+}
+
 export async function addNewTripPlan(
   uid,
   detailsData,
@@ -82,6 +105,7 @@ export async function addSavedActivitiesToTrip(uid, tripid, activityData) {
       {
         name: activityData.activity_name,
         description: activityData.description,
+        hours_spent: activityData.hours_spent,
       }
     );
   } catch (error) {
@@ -89,12 +113,13 @@ export async function addSavedActivitiesToTrip(uid, tripid, activityData) {
   }
 }
 
-export async function addSavedMealsToTrip(uid, tripid, activityData) {
+export async function addSavedMealsToTrip(uid, tripid, mealData) {
   try {
     await addDoc(collection(db, "userprofile", uid, "trips", tripid, "meals"), {
-      name: activityData.restaurant_name,
-      review_stars: activityData.review_stars,
-      category: activityData.category,
+      name: mealData.restaurant_name,
+      review_stars: mealData.review_stars,
+      category: mealData.category,
+      breakfast_lunch_dinner: mealData.breakfast_lunch_dinner
     });
   } catch (error) {
     alert("Error adding data to Database: " + error);

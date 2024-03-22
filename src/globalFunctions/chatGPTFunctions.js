@@ -9,45 +9,6 @@ const openai = new OpenAIApi(configuration);
 
 export async function getChatActivitiesPerDay(
   tripDestination,
-  tripcategory
-) {
-  const response = await openai.createChatCompletion({
-    model: "gpt-3.5-turbo",
-    messages: [
-      {
-        role: "system",
-        content:
-          "You will be provided with a question, and your task is to parse the answers it into JSON format with the key being activities, properties: activity_name, description, and hours_spent. " +
-          "Please provide 2 activities."
-      },
-      {
-        role: "user",
-        content:
-          "The theme of my vacation is " +
-          tripcategory +
-          ". Please give me two activities to do that correspond with my vacation theme including: sites and attractions in " +
-          tripDestination +
-          "?",
-      },
-    ],
-    temperature: 1.5,
-    max_tokens: 4096,
-    top_p: 1,
-    frequency_penalty: 0,
-    presence_penalty: 0,
-  });
-
-  const returnText = response.data.choices[0].message.content.replace(
-    /(\r\n|\n|\r)/gm,
-    ""
-  );
-  const jsonObject = JSON.parse(returnText);
-
-  return jsonObject;
-}
-
-export async function getChatActivitiesPerDayDoNotInclude(
-  tripDestination,
   tripcategory,
   actitivesToNotInclude
 ) {
@@ -58,7 +19,7 @@ export async function getChatActivitiesPerDayDoNotInclude(
         role: "system",
         content:
           "You will be provided with a question, and your task is to parse the answers it into JSON format with the key being activities, properties: activity_name, description, and hours_spent. " +
-          "Please provide 2 activities."
+          "Please provide 2 activities. Your response MUST be a JSON format. No other text, just the JSON array please."
       },
       {
         role: "user",
@@ -67,7 +28,7 @@ export async function getChatActivitiesPerDayDoNotInclude(
           tripcategory +
           ". Please give me two activities to do that correspond with my vacation theme including: sites and attractions in " +
           tripDestination +
-          "? Please do not include " + actitivesToNotInclude,
+          "? Please do not include the following activities " + actitivesToNotInclude,
       },
     ],
     temperature: 1.5,
@@ -81,7 +42,43 @@ export async function getChatActivitiesPerDayDoNotInclude(
     /(\r\n|\n|\r)/gm,
     ""
   );
-  const jsonObject = JSON.parse(returnText);
+  const returnText2 = returnText.replace(/```json|```/g, '');
+  const jsonObject = JSON.parse(returnText2);
+
+  return jsonObject;
+}
+
+export async function getChatRestaurantsPerDay(tripDestination, mealsToNotInclude) {
+  const response = await openai.createChatCompletion({
+    model: "gpt-3.5-turbo",
+    messages: [
+      {
+        role: "system",
+        content:
+          "You will be provided with a question, and your task is to parse the answers it into JSON format with the key being restaurants, properties: resturant_name, review_stars, category, breakfast_lunch_dinner. " + 
+          "Please provide restaurants for Breakfast, Lunch and Dinner. Your response MUST be a JSON format. No other text, just the JSON array please."
+      },
+      {
+        role: "user",
+        content:
+          "Please give me one breakfast, one lunch and one dinner restaurant, these restaurants need to be located in " +
+          tripDestination +
+          "? Please do not include the following restaurants " + mealsToNotInclude,
+      },
+    ],
+    temperature: 1.5,
+    max_tokens: 4096,
+    top_p: 1,
+    frequency_penalty: 0,
+    presence_penalty: 0,
+  });
+
+  const returnText = response.data.choices[0].message.content.replace(
+    /(\r\n|\n|\r)/gm,
+    ""
+  );
+  const returnText2 = returnText.replace(/```json|```/g, '');
+  const jsonObject = JSON.parse(returnText2);
 
   return jsonObject;
 }

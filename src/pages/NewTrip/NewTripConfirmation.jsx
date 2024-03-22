@@ -9,11 +9,13 @@ import {
 } from "../../globalFunctions/globalFunctions";
 
 import {
+  getChatActivitiesPerDay,
+  getChatRestaurantsPerDay,
   getChatActivities,
   getChatRestaurants,
   getChatItinerary,
 } from "../../globalFunctions/chatGPTFunctions";
-import { addNewTripPlan } from "../../globalFunctions/firebaseFunctions";
+import { addNewTripPlan, addSavedActivitiesToTrip, addSavedMealsToTrip } from "../../globalFunctions/firebaseFunctions";
 import { useAuth } from "../../contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
 
@@ -86,7 +88,6 @@ const NewTripConfirmation = ({ tripDetails, tripTimeDetails }) => {
   };
 
   const createNewTrip = async (activityData, mealData, itineraryData) => {
-    //Creating new trip
     setProgressText("Creating Your Trip..");
     const newTripId = await addNewTripPlan(
       currentUser.uid,
@@ -96,8 +97,8 @@ const NewTripConfirmation = ({ tripDetails, tripTimeDetails }) => {
       mealData,
       itineraryData
     );
-    navigate("/trip/" + newTripId);
-    setProgress(100);
+    //navigate("/trip/" + newTripId);
+    setProgress(0);
   };
 
   const getNumberOfDays = () => {
@@ -108,25 +109,63 @@ const NewTripConfirmation = ({ tripDetails, tripTimeDetails }) => {
     return daysbetween.length;
   };
 
-  const getTheDays = () => {
+  const getTheDays = async () => {
     const tripdays = getDatesBetween(
       tripDetails.StartDate,
       tripDetails.EndDate
     );
-    tripdays.forEach((value, index) => {
-      console.log(`Number at index ${index}: ${value}`);
-      if (index === 0) {
-        //Regular Activities
-        //Regular Meals
-        //Regular Itinerary
-      } else {
-        //Activities with DO NOT Includes
-        //Meals with DO NOT Includes
-        //Regular Itinerary
-      }
+
+    const activitiesArray = [];
+    const mealsArray = [];
+
+    //Create new trip
+    /*
+    const newTripId = await createNewTrip(
+      currentUser.uid,
+      tripDetails,
+      tripTimeDetails,
+    );
+    console.log(newTripId);
+    */
+
+    await tripdays.forEach(async (value, index) => {
+      //console.log(`Number at index ${index}: ${value}`);
+      console.log("Index: " + index);
+      //Get Chat CPT Activities
+      const chatGPTActivities = await getChatActivitiesPerDay(
+        tripDetails.Destination,
+        tripDetails.Category,
+        formatDataIntoString(activitiesArray)
+      );
+      activitiesArray.push(chatGPTActivities);
+      console.log(chatGPTActivities);
+
+      //Save Activities
+      //addSavedActivitiesToTrip(currentUser.uid, newTripId, chatGPTActivities);
+
+      //Get Chat GPT Regular Meals
+      const chatGPTMeals = await getChatRestaurantsPerDay(
+        tripDetails.Destination,
+        formatDataIntoString(mealsArray)
+      );
+      mealsArray.push(chatGPTMeals);
+      console.log(chatGPTMeals);
+      //Save Meals
+      //addSavedMealsToTrip(currentUser.uid, newTripId, chatGPTMeals);  
+
+      //Get Chat GPT Regular Itinerary
+      //Save Itinerary
     })
     setProgress(100);
   };
+
+  const getAllActivties = async () => {
+    const chatGPTActivities = await getChatActivitiesPerDay(
+      tripDetails.Destination,
+      tripDetails.Category
+    );
+    return chatGPTActivities
+  }
 
   useEffect(() => {
     const runProcessFunctions = async () => {
